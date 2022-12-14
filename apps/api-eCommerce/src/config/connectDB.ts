@@ -40,3 +40,8 @@ export const dbconfig = {
     },
   },
 };
+
+export const promiseRetryOptions = {
+  factor: 2,
+  maxTimeout: 5000,
+};
