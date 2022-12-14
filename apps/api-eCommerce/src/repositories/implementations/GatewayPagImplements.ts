@@ -8,20 +8,27 @@ class GatewayPagRepository implements IGatewayPagRepository {
     this.initMongo();
   }
   async initMongo() {
-    return promiseRetry(async (retry, number) => {
-      console.log(
-        `Gateway mongoose connecting to ${dbconfig.url} - retry number: ${number}`
-      );
-      return await mongoose
-        .connect(dbconfig.url, {
-          user: dbconfig.authMongo.user,
-          pass: dbconfig.authMongo.pass,
-        })
-        .then(() =>
-          console.log(`Gateway mongoose connected to ${dbconfig.url}`)
-        )
-        .catch(retry);
-    }, promiseRetryOptions);
+    await mongoose
+      .connect(dbconfig.url, {
+        user: dbconfig.authMongo.user,
+        pass: dbconfig.authMongo.pass,
+      })
+      .then(() => console.log(`Gateway mongoose connected to ${dbconfig.url}`))
+      .catch(console.log);
+    // return promiseRetry(async (retry, number) => {
+    //   console.log(
+    //     `Gateway mongoose connecting to ${dbconfig.url} - retry number: ${number}`
+    //   );
+    //   return await mongoose
+    //     .connect(dbconfig.url, {
+    //       user: dbconfig.authMongo.user,
+    //       pass: dbconfig.authMongo.pass,
+    //     })
+    //     .then(() =>
+    //       console.log(`Gateway mongoose connected to ${dbconfig.url}`)
+    //     )
+    //     .catch(retry);
+    // }, promiseRetryOptions);
   }
   async AddPayment(): Promise<any> {}
   async UpdatePayment(): Promise<any> {}
