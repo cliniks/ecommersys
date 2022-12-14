@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  cache:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass 1kg1i34g1o2i34g1lii23g4
+    volumes:
+      - cache:/data
+  db:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=cliniksDB
+      - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
+      - MONGO_INITDB_ROOT_DATABASE=cliniksdb
+      - MONGO_INITDB_DATABASE=cliniksdb
+      # - MONGODB_DATABASE=cliniks
+    ports:
+      - "27019:27017"
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+volumes:
+  cache:
+    driver: local
