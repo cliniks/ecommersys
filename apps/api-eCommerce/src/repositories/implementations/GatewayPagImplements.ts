@@ -7,10 +7,10 @@ class GatewayPagRepository implements IGatewayPagRepository {
     this.initMongo();
   }
   async initMongo() {
-    await mongoose.connect(dbconfig.url, {
-      user: dbconfig.authMongo.user,
-      pass: dbconfig.authMongo.pass,
-    });
+    // await mongoose.connect(dbconfig.url, {
+    //   user: dbconfig.authMongo.user,
+    //   pass: dbconfig.authMongo.pass,
+    // });
   }
   async AddPayment(): Promise<any> {}
   async UpdatePayment(): Promise<any> {}
