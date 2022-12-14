@@ -17,7 +17,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
       - MONGO_INITDB_ROOT_DATABASE=cliniksdb
       - MONGO_INITDB_DATABASE=cliniksdb
-      # - MONGODB_DATABASE=cliniks
     ports:
       - "27019:27017"
     volumes:
