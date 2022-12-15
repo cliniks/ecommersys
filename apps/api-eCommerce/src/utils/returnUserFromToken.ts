@@ -9,7 +9,8 @@ const returnUserFromToken = async (req: Request): Promise<User> => {
     const token = req.headers["x-access-token"];
     console.log({ token });
     const decoded: User | any = jwt.decode(`${token}`);
-    const userID = decoded.userId;
+    console.log({ decoded });
+    const userID = decoded._id;
     console.log({ userID });
     const user = (await repo.getOne({
       key: "_id",
