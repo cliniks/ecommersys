@@ -8,7 +8,11 @@ const returnUserFromToken = async (req: Request): Promise<User> => {
     const repo = new UsersRepository();
     const token = req.headers["x-access-token"];
     const decoded: User | any = jwt.decode(`${token}`);
-    const user = (await repo.getOne({ key: "id", value: decoded._id })) as User;
+    console.log(decoded);
+    const user = (await repo.getOne({
+      key: "id",
+      value: decoded.userId,
+    })) as User;
     return user;
   } catch (error) {
     throw new Error("Não foi possível achar um usuário a partir desse token!");
