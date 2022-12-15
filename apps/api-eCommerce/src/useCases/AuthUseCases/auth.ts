@@ -16,11 +16,15 @@ export const auth = async (req: Request, res: Response) => {
     if (user) {
       const match = await bcrypt.compare(password, user.password);
       const accessToken = jwt.sign(
-        { _id: user._id },
+        { _id: user._id, seller: user.storeId },
         `${process.env.TOKEN_SECRET}`
       );
       if (match) {
-        res.json({ accessToken: accessToken, userId: user?._id });
+        res.json({
+          accessToken: accessToken,
+          userId: user?._id,
+          seller: user.storeId,
+        });
       } else {
         res.status(400).send({ message: "Invalid Credentials" });
       }
