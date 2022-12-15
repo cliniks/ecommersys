@@ -27,7 +27,7 @@ export class MailSenderProvider implements IMailSenderProvider {
       return sender;
     } catch (err: any) {
       console.log(err);
-      throw new Error(err.tostring());
+      throw new Error("não foi possível conectar ao nodeMailer");
     }
   }
 }
