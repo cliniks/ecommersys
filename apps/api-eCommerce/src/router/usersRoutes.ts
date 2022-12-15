@@ -8,9 +8,9 @@ const upload = multer({ dest: "uploads/" });
 
 const UsersRoutes = Router();
 
-UsersRoutes.get("/", usersUseCases.getMyUser);
+UsersRoutes.get("/", usersUseCases.FindOne);
 
-UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.FineOne);
+UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.getMyUser);
 
 UsersRoutes.get("/all", usersUseCases.FindAll);
 

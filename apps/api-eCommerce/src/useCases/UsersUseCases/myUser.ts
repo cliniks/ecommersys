@@ -1,12 +1,7 @@
 import { Request, Response } from "express";
-import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
 
-export const myUser = async (
-  req: Request,
-  res: Response,
-  repository: IUsersRepository
-) => {
+export const myUser = async (req: Request, res: Response) => {
   try {
     const user = await returnUserFromToken(req);
 
@@ -36,4 +31,5 @@ const userDataValues = [
   "storeId",
   "storeData",
   "access",
+  "_id",
 ];

@@ -11,7 +11,7 @@ export const updateImage = async (
   repository: IUsersRepository
 ) => {
   try {
-    const user = await returnUserFromToken(req, repository);
+    const user = await returnUserFromToken(req);
 
     const file = req.file as fileType;
 

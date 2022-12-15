@@ -8,7 +8,7 @@ export const updateUserInfo = async (
   repository: IUsersRepository
 ) => {
   try {
-    const user = await returnUserFromToken(req, repository);
+    const user = await returnUserFromToken(req);
     res.json(await repository.updateUserInfo(user, req.body));
   } catch (err) {
     console.log(err);

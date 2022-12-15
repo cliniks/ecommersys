@@ -17,9 +17,8 @@ const users = new UsersRepository();
 const cache = new RedisImplementation();
 
 export const usersUseCases = {
-  FineOne: async (req: Request, res: Response) => await get(req, res, users),
-  getMyUser: async (req: Request, res: Response) =>
-    await myUser(req, res, users),
+  FindOne: async (req: Request, res: Response) => await get(req, res, users),
+  getMyUser: async (req: Request, res: Response) => await myUser(req, res),
   FindAll: async (req: Request, res: Response) => await getAll(req, res, users),
   newUser: async (req: Request, res: Response) =>
     await newUser(req, res, users),
