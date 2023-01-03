@@ -3,6 +3,8 @@ import { UsersRepository } from "../../repositories/implementations/UsersReposit
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/user.entitie";
+import { ErrorHandling } from "../../errors/ErrorHandling";
+import { EnumErrorHandling } from "../../errors/enumErrors";
 
 const User = new UsersRepository();
 
@@ -26,12 +28,13 @@ export const auth = async (req: Request, res: Response) => {
           seller: user.storeId,
         });
       } else {
-        res.status(400).send({ message: "Invalid Credentials" });
+        ErrorHandling({ code: EnumErrorHandling.incorrectPassword, res });
       }
     } else {
-      throw new Error("não foi possível achar o usuário");
+      ErrorHandling({ code: EnumErrorHandling.noUserWithThisEmail, res });
     }
   } catch (error) {
-    res.status(400).send({ error });
+    console.log(error);
+    ErrorHandling({ code: EnumErrorHandling.noUserWithThisEmail, res });
   }
 };

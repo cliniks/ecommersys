@@ -10,10 +10,7 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  wallet: {
-    amount: { type: Number, default: 0 },
-    history: [],
-  },
+  wallet: { type: String, require: true },
   img: {
     type: String,
     default: process.env.INITIAL_IMAGE,
@@ -59,10 +56,7 @@ export type User = {
   _id?: ObjectId;
   username: string;
   password: string;
-  wallet: {
-    amount: number;
-    history: [];
-  };
+  wallet: string;
   img: string;
   userInfo: {
     name: string;

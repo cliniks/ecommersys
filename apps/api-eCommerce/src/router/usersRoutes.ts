@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { verifyers } from "../middlewares/verifyers";
 import { usersUseCases } from "../useCases/UsersUseCases";
 
@@ -9,6 +9,14 @@ const upload = multer({ dest: "uploads/" });
 const UsersRoutes = Router();
 
 UsersRoutes.get("/", usersUseCases.FindOne);
+
+UsersRoutes.get("/verifyUser", verifyers.verifyToken, (_, res: Response) => {
+  try {
+    res.json(true);
+  } catch (err) {
+    res.json(false);
+  }
+});
 
 UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.getMyUser);
 
@@ -34,6 +42,7 @@ UsersRoutes.patch("/:id", verifyers.verifyToken, usersUseCases.Update);
 UsersRoutes.delete("/:id", verifyers.verifyToken, usersUseCases.Delete);
 
 UsersRoutes.post("/createEmailToken", usersUseCases.createEmailToken);
+
 UsersRoutes.post("/confirmEmailToken", usersUseCases.confirmEmailToken);
 
 export { UsersRoutes };
