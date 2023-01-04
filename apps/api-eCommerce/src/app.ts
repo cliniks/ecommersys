@@ -43,7 +43,7 @@ class App {
     );
     this.server.use("/sales", verifyers.verifyAppToken, SalesRoutes);
     this.server.use("/products", verifyers.verifyAppToken, ProductsRoutes);
-    this.server.use("/users", verifyers.verifyAppToken, UsersRoutes);
+    this.server.use("/users", UsersRoutes);
   }
 
   exceptionHandler() {

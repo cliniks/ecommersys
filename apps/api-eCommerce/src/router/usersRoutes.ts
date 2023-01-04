@@ -22,7 +22,12 @@ UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.getMyUser);
 
 UsersRoutes.get("/all", usersUseCases.FindAll);
 
-UsersRoutes.post("/", upload.single("img"), usersUseCases.newUser);
+UsersRoutes.post(
+  "/",
+  upload.single("img"),
+  verifyers.verifyAppToken,
+  usersUseCases.newUser
+);
 
 UsersRoutes.patch(
   "/image/:id",
