@@ -33,7 +33,7 @@ class App {
   routes() {
     // verifyers.verifyAppToken,
     this.server.use("/", router);
-    this.server.use("/auth", verifyers.verifyAppToken, AuthRoutes);
+    this.server.use("/auth", AuthRoutes);
     this.server.use("/carts", verifyers.verifyAppToken, CartRouter);
     this.server.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
     this.server.use(
