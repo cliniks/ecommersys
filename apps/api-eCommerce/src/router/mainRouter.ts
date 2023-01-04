@@ -2,9 +2,9 @@ import { Request, Response, Router } from "express";
 
 const router = Router();
 
-router.get("/", (req: Request, res: Response) => {
+router.get("/", (_, res: Response) => {
   try {
-    res.json({ msg: "api principal cliniks" });
+    res.json({ msg: "API eCommersys" });
   } catch (err) {
     res.status(400).send({ msg: "não foi possível abrir o servidor" });
   }

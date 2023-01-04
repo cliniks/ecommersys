@@ -1,4 +1,4 @@
-import express, { Request } from "express";
+import express, { NextFunction, Request } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { router } from "./router/mainRouter";
@@ -33,55 +33,37 @@ class App {
   routes() {
     // verifyers.verifyAppToken,
     this.server.use("/", router);
-    this.server.use("/auth", AuthRoutes);
-    this.server.use(
-      "/carts",
-      // verifyers.verifyAppToken,
-      CartRouter
-    );
-    this.server.use(
-      "/sellers",
-      // verifyers.verifyAppToken,
-      SellersRoutes
-    );
+    this.server.use("/auth", verifyers.verifyAppToken, AuthRoutes);
+    this.server.use("/carts", verifyers.verifyAppToken, CartRouter);
+    this.server.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
     this.server.use(
       "/sellerSolicitate",
-      // verifyers.verifyAppToken,
+      verifyers.verifyAppToken,
       SellerSolicitateRoutes
     );
-    this.server.use(
-      "/sales",
-      //  verifyers.verifyAppToken,
-      SalesRoutes
-    );
-    this.server.use(
-      "/products",
-      // verifyers.verifyAppToken,
-      ProductsRoutes
-    );
-    this.server.use(
-      "/users",
-      // verifyers.verifyAppToken,
-      UsersRoutes
-    );
+    this.server.use("/sales", verifyers.verifyAppToken, SalesRoutes);
+    this.server.use("/products", verifyers.verifyAppToken, ProductsRoutes);
+    this.server.use("/users", verifyers.verifyAppToken, UsersRoutes);
   }
 
   exceptionHandler() {
-    this.server.use(async (err: any, req: Request, res: any, _next: any) => {
-      if (process.env.NODE_ENV === "development") {
+    this.server.use(
+      async (err: any, _: Request, res: any, _next: NextFunction) => {
+        if (process.env.NODE_ENV === "development") {
+          return ErrorHandling({
+            code: EnumErrorHandling.exception,
+            message: err.response,
+            res,
+          });
+        }
+        // return res.status(500).json({ error: "Internal server error" });
         return ErrorHandling({
           code: EnumErrorHandling.exception,
           message: err.response,
           res,
         });
       }
-      // return res.status(500).json({ error: "Internal server error" });
-      return ErrorHandling({
-        code: EnumErrorHandling.exception,
-        message: err.response,
-        res,
-      });
-    });
+    );
   }
 }
 
