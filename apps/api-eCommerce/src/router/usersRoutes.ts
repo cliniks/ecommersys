@@ -20,7 +20,7 @@ UsersRoutes.get("/verifyUser", verifyers.verifyToken, (_, res: Response) => {
 
 UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.getMyUser);
 
-UsersRoutes.get("/all", usersUseCases.FindAll);
+UsersRoutes.get("/all", verifyers.verifyAppToken, usersUseCases.FindAll);
 
 UsersRoutes.post(
   "/",
@@ -42,9 +42,19 @@ UsersRoutes.patch(
   usersUseCases.updateUserInfo
 );
 
-UsersRoutes.patch("/:id", verifyers.verifyToken, usersUseCases.Update);
+UsersRoutes.patch(
+  "/:id",
+  verifyers.verifyAppToken,
+  verifyers.verifyToken,
+  usersUseCases.Update
+);
 
-UsersRoutes.delete("/:id", verifyers.verifyToken, usersUseCases.Delete);
+UsersRoutes.delete(
+  "/:id",
+  verifyers.verifyAppToken,
+  verifyers.verifyToken,
+  usersUseCases.Delete
+);
 
 UsersRoutes.post("/createEmailToken", usersUseCases.createEmailToken);
 
