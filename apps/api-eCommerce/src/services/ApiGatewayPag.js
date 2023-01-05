@@ -5,7 +5,10 @@ const ApiGP = {
     try {
       const response = await GPApi.post("/seller/addStore", obj);
       const { data } = response;
-      const updateStoreModel = await storeModel.findByIdAndUpdate(storeId, { asaasID: data.id, asaasApiKey: data.apiKey });
+      const updateStoreModel = await storeModel.findByIdAndUpdate(storeId, {
+        gatewayPagId: data.id,
+        gatewayPagApiKey: data.apiKey,
+      });
       return updateStoreModel;
     } catch (err) {
       console.log("asaas addClient", err);
@@ -16,9 +19,11 @@ const ApiGP = {
     try {
       const response = await GPApi.post("/client/newClient", obj);
       const { data } = response;
-      console.log("asaas", data);
-      const updateStoreModel = await userModel.findByIdAndUpdate(storeId, { asaasID: data.id, asaasApiKey: data.apiKey });
-      return updateStoreModel;
+      // const updateStoreModel = await userModel.findByIdAndUpdate(obj._id, {
+      //   gatewayPagId: data.id,
+      //   // gatewayPagApiKey: data.apiKey,
+      // });
+      return data;
     } catch (err) {
       console.log("asaas addClient", err);
 

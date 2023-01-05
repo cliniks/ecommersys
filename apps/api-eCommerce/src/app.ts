@@ -35,14 +35,14 @@ class App {
     this.server.use("/", router);
     this.server.use("/auth", AuthRoutes);
     this.server.use("/carts", verifyers.verifyAppToken, CartRouter);
-    this.server.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
+    this.server.use("/sellers", SellersRoutes);
     this.server.use(
       "/sellerSolicitate",
       verifyers.verifyAppToken,
       SellerSolicitateRoutes
     );
     this.server.use("/sales", verifyers.verifyAppToken, SalesRoutes);
-    this.server.use("/products", verifyers.verifyAppToken, ProductsRoutes);
+    this.server.use("/products", ProductsRoutes);
     this.server.use("/users", UsersRoutes);
   }
 

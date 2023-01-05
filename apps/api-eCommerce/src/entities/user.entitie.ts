@@ -34,6 +34,7 @@ export const UserSchema = new Schema({
   myBuys: [],
   melhorEnvioID: String,
   gatewayPagId: String,
+  gatewayPagApiKey: String,
   wishList: [],
   favorites: [],
   likes: [],
@@ -76,6 +77,7 @@ export type User = {
   myBuys: string[];
   melhorEnvioID: string;
   gatewayPagId: string;
+  gatewayPagApiKey: string;
   wishList: string[];
   favorites: string[];
   likes: string[];

@@ -5,6 +5,7 @@ import util from "util";
 import bcrypt from "bcrypt";
 import { S3Repository } from "../../repositories/implementations/S3Repository";
 import { fileType } from "../../repositories/Interfaces/IS3Repository";
+import { ApiGP } from "../../services/ApiGatewayPag";
 const unlinkFile = util.promisify(fs.unlink);
 const S3 = new S3Repository();
 
@@ -43,10 +44,14 @@ export const newUser = async (
 
     unlinkFile(file.path);
 
-    // await ApiGP.addClient(savedUser, UserModel);
+    const createAsaasIntegration = await ApiGP.addClient(user, repository);
+
+    const updateUser = await repository.update(user._id, {
+      gatewayPagId: createAsaasIntegration.id,
+    });
     // await ApiME.addClient(savedUser, UserModel);
 
-    res.json(user);
+    res.json(updateUser);
   } catch (err) {
     console.log(err);
     console.log({ newUser: err });
