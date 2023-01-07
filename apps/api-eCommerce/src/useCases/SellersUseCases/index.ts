@@ -18,6 +18,8 @@ import {
   updateCard,
 } from "./payments";
 import { getMyStore } from "./getMyStore";
+import { getMyProducts } from "./getMyProducts";
+import { getMyCategories } from "./getMyCategories";
 
 const sellersRepo = new SellersRepository();
 
@@ -37,12 +39,10 @@ export const sellersUseCases = {
     await getMyCoupons(req, res),
   getMyStore: async (req: Request, res: Response) =>
     await getMyStore(req, res, sellersRepo),
+  getMyProducts: async (req: Request, res: Response) =>
+    await getMyProducts(req, res),
   getMyCategories: async (req: Request, res: Response) =>
-    await getMyCategories(req, res, sellersRepo),
-  // DeleteCoupon: async (req: Request, res: Response) =>
-  //   await deleteCoupon(req, res, sellersRepo),
-  // UpdateCoupon: async (req: Request, res: Response) =>
-  //   await updateCoupon(req, res, sellersRepo),
+    await getMyCategories(req, res),
   GetCards: async (req: Request, res: Response) =>
     await getCards(req, res, sellersRepo),
   GetCard: async (req: Request, res: Response) =>

@@ -2,18 +2,18 @@ import { Request, Response } from "express";
 import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
 import { CouponRepository } from "../../repositories/implementations/CouponRepository";
+import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
 
 export const getMyCoupons = async (req: Request, res: Response) => {
   try {
-    const repo = new CouponRepository();
+    let { page, size, filter }: getAllProps = req.query;
     const user = await returnUserFromToken(req);
 
-    const findMyCoupons = await repo.getAll({
-      filter: {
-        key: "owner",
-        value: user.storeId,
-      },
-    });
+    const coupons = new CouponRepository();
+
+    filter = { key: "owner", value: user.storeId, fields: "" };
+
+    const findMyCoupons = await coupons.getAll({ page, size, filter });
 
     res.json(findMyCoupons);
   } catch (err) {

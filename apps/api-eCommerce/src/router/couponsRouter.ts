@@ -6,7 +6,7 @@ const CouponsRouter = Router();
 
 CouponsRouter.get("/", couponsUseCases.FineOne);
 
-CouponsRouter.get("/all", verifyers.verifyAdmin, couponsUseCases.FindAll);
+CouponsRouter.get("/all", couponsUseCases.FindAll);
 
 CouponsRouter.post("/", couponsUseCases.Add);
 

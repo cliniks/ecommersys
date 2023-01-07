@@ -18,15 +18,19 @@ export class CrudRepo implements ICrudRepository {
     const filterValue = pagFilter?.filter?.value;
     const regEx = new RegExp(filterValue, "i");
     const fields = pagFilter?.filter?.fields;
+
     var query = pagFilter?.filter
       ? { [pagFilter.filter.key]: { $regex: regEx } }
       : {};
+
+    console.log({ limit, page, filterValue, fields, query });
     let data = await this.model
       .find(query)
       .sort({ register: -1 })
       .skip(limit * page)
       .limit(limit)
       .select(fields);
+    console.log(data);
     const count = await this.model.countDocuments(data);
     let obj = {
       result: data,
