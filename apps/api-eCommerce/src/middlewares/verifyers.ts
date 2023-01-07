@@ -29,7 +29,7 @@ const verifyers = {
   async verifySeller(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await returnUserFromToken(req);
-      if (user.access === 2) return next();
+      if (user.access === 2 || user.access === 99) return next();
       else return res.status(400).send("Usuário não é um vendedor");
     } catch (error) {
       return res.status(400).send(error);
@@ -38,6 +38,7 @@ const verifyers = {
   async verifyThisSeller(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await returnUserFromToken(req);
+      console.log(user.storeId.toString(), req.params.id.toString());
       if (user.storeId.toString() === req.params.id.toString()) return next();
       else return res.status(400).send("Usuário não é um vendedor");
     } catch (error) {

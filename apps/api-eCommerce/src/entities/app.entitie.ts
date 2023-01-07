@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const appSchema = new Schema({
   tokens: {
@@ -23,6 +24,8 @@ export const appSchema = new Schema({
     default: Date.now,
   },
 });
+
+appSchema.plugin(mongoosePaginate);
 
 export type App = {
   _id?: ObjectId;

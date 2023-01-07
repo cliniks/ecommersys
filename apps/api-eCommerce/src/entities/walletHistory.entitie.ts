@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const WalletHistorySchema = new Schema({
   owner: {
@@ -16,6 +17,7 @@ export const WalletHistorySchema = new Schema({
     default: Date.now,
   },
 });
+WalletHistorySchema.plugin(mongoosePaginate);
 
 export type HistoryData = {
   _id?: ObjectId;

@@ -16,7 +16,7 @@ export class S3Repository implements IS3Repository {
     const uploadParams: any = {
       Bucket: s3Config.bucketName,
       Body: fileStream,
-      Key: file.originalname,
+      Key: `Cliniks/Imagens/${file.originalname}`,
     };
 
     return this.s3.upload(uploadParams).promise();

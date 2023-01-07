@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const CouponSchema = new Schema({
   assined: [],
@@ -10,14 +11,14 @@ export const CouponSchema = new Schema({
   description: String,
   type: String,
   value: String,
-  minimunValue: String,
-  maximunValue: String,
-  used: Number,
+  minValue: String,
+  maxValue: String,
+  used: { type: Number, default: 0 },
   limitForUse: Number,
-  isCashBack: Boolean,
-  isFreeShipping: Boolean,
-  isActive: Boolean,
-  startDate: Date,
+  isCashBack: { type: Boolean, default: false },
+  isFreeShipping: { type: Boolean, default: false },
+  isActive: { type: Boolean, default: true },
+  startDate: { type: Date, default: new Date() },
   endDate: Date,
   owner: String,
   register: {
@@ -25,6 +26,7 @@ export const CouponSchema = new Schema({
     default: Date.now,
   },
 });
+CouponSchema.plugin(mongoosePaginate);
 
 export type Coupon = {
   _id?: ObjectId;
@@ -33,12 +35,12 @@ export type Coupon = {
   description: string;
   type: "percentage" | "fixed" | "shipping"; //confrimar todos os tipos
   value: string;
-  minimunValue: string;
-  maximunValue?: String;
+  minValue: string;
+  maxValue?: String;
   used: number;
   limitForUse: number;
   isCashBack: boolean;
-  startDate: Date;
+  startDate?: Date;
   endDate?: Date;
   isActive: boolean;
   isFreeShipping: boolean;

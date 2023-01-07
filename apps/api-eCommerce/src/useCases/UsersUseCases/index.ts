@@ -12,6 +12,7 @@ import { myUser } from "./myUser";
 import { newUser } from "./newUser";
 import { updateImage } from "./updateImage";
 import { updateUserInfo } from "./updateUserInfo";
+import { userGetProduct } from "./userGetProduct";
 
 const users = new UsersRepository();
 const cache = new RedisImplementation();
@@ -32,4 +33,6 @@ export const usersUseCases = {
     createEmailToken(req, res, cache),
   confirmEmailToken: async (req: Request, res: Response) =>
     confirmEmailToken(req, res, cache),
+  seeProduct: async (req: Request, res: Response) =>
+    userGetProduct(req, res, users),
 };

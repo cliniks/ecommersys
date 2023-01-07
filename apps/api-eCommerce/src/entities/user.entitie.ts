@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const UserSchema = new Schema({
   username: {
@@ -47,11 +48,15 @@ export const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
+  statistics: {
+    productsViews: [String],
+  },
   register: {
     type: Date,
     default: Date.now,
   },
 });
+UserSchema.plugin(mongoosePaginate);
 
 export type User = {
   _id?: ObjectId;
@@ -85,6 +90,9 @@ export type User = {
   cart: string[];
   storeId: string;
   storeData: {};
+  statistics: {
+    productsViews: string[];
+  };
   access: number;
   orders: number;
   register?: Date;

@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const ProductSchema = new Schema({
   name: {
@@ -6,24 +7,16 @@ export const ProductSchema = new Schema({
     required: true,
   },
   description: String,
-  value: String,
-  img: [String],
+  price: String,
+  virtualProduct: Boolean,
+  imgs: [String],
   partners: [String],
-  qnt: Number,
-  sizes: [
-    {
-      qnt: Number,
-      sizeType: String,
-    },
-  ],
-  height: String,
-  width: String,
-  weight: String,
+  shippingInfo: {
+    height: String,
+    width: String,
+    weight: String,
+  },
   owner: String,
-  ownerData: {},
-  likes: Number,
-  likers: [String],
-  favorites: [String],
   discount: [
     {
       key: [String],
@@ -33,46 +26,59 @@ export const ProductSchema = new Schema({
     },
   ],
   status: Boolean,
-  group: [String],
-  subgroup: [String],
+  categories: [String],
   statistics: {
+    likes: Number,
+    likers: [String],
     views: Number,
-    buyeds: Number,
+    favorite: Number,
+    favorites: [String],
+    buys: Number,
   },
-  register: Date,
+  stockInfo: {
+    qnt: Number,
+    sku: String,
+    SoldIndividually: Boolean,
+  },
+  tags: [String],
+  hangTags: [String],
+  register: { type: Date, default: new Date() },
 });
+ProductSchema.plugin(mongoosePaginate);
 
 export type Product = {
   _id?: ObjectId;
   name: string;
   description: string;
-  value: string;
-  img: [];
+  price: string;
+  imgs: string[];
   partners: string[];
-  qnt: number;
-  sizes: sizesType[];
-  height: string;
-  width: string;
-  weight: string;
+  virtualProduct: boolean;
+  shippingInfo: {
+    height: String;
+    width: String;
+    weight: String;
+  };
   owner: string;
-  ownerData: {};
-  likes: number;
-  likers: string[];
-  favorites: string[];
   discount: discountType[];
   status: boolean;
-  group: [];
-  subgroup: [];
+  categories: [];
   statistics: {
+    likes: number;
+    likers: string[];
     views: number;
-    buyeds: number;
+    favorite: number;
+    favorites: string[];
+    buys: number;
   };
+  stockInfo: {
+    qnt: number;
+    sku: string;
+    SoldIndividually: boolean;
+  };
+  tags: string[];
+  hangTags: string[];
   register?: Date;
-};
-
-export type sizesType = {
-  qnt: number;
-  sizeType: string;
 };
 
 export type discountType = {

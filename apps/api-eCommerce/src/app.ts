@@ -13,9 +13,11 @@ import { SellerSolicitateRoutes } from "./router/sellerSolicitateRoutes";
 import { ErrorHandling } from "./errors/ErrorHandling";
 import { EnumErrorHandling } from "./errors/enumErrors";
 import { verifyers } from "./middlewares/verifyers";
+import { CategoryRouter } from "./router/categoryRouter";
 
 class App {
   public server: any;
+
   constructor() {
     this.server = express();
     this.middlewares();
@@ -44,6 +46,8 @@ class App {
     this.server.use("/sales", verifyers.verifyAppToken, SalesRoutes);
     this.server.use("/products", ProductsRoutes);
     this.server.use("/users", UsersRoutes);
+    this.server.use("/categories", CategoryRouter);
+    this.server.use("/coupons", CategoryRouter);
   }
 
   exceptionHandler() {

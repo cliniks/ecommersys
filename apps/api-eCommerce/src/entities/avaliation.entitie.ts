@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const avaliationSchema = new Schema({
   productId: String,
@@ -9,6 +10,8 @@ export const avaliationSchema = new Schema({
     default: Date.now,
   },
 });
+
+avaliationSchema.plugin(mongoosePaginate);
 
 export type Avaliation = {
   _id?: ObjectId;

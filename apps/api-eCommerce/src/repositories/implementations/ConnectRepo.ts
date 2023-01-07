@@ -4,6 +4,12 @@ export class ConnectRepo {
   public cartsRepository = mongoose.createConnection(
     `${process.env.REPO_CARTS_CONNECTION}`
   );
+  public couponsRepository = mongoose.createConnection(
+    `${process.env.REPO_CARTS_CONNECTION}`
+  );
+  public categoriesRepository = mongoose.createConnection(
+    `${process.env.REPO_CARTS_CONNECTION}`
+  );
   public productsRepository = mongoose.createConnection(
     `${process.env.REPO_PRODUCTS_CONNECTION}`
   );

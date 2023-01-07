@@ -14,8 +14,8 @@ ProductsRoutes.get("/all", productsUseCases.FindAll);
 ProductsRoutes.post(
   "/",
   verifyers.verifySeller,
-  verifyers.verifyThisSeller,
-  upload.single("img"),
+  // verifyers.verifyThisSeller,
+  upload.array("img", 3),
   productsUseCases.CreateProduct
 );
 

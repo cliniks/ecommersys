@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const StoreSchema = new Schema({
   name: { type: String, required: true, unique: true },
@@ -43,6 +44,7 @@ export const StoreSchema = new Schema({
     default: Date.now,
   },
 });
+StoreSchema.plugin(mongoosePaginate);
 
 export type Store = {
   _id?: ObjectId;

@@ -5,5 +5,7 @@ const AuthRoutes = Router();
 
 AuthRoutes.post("/", authUseCases.auth);
 AuthRoutes.post("/verifyToken", authUseCases.verifyToken);
+AuthRoutes.post("/createEmailToken", authUseCases.createEmailToken);
+AuthRoutes.post("/confirmEmailToken", authUseCases.confirmEmailToken);
 
 export { AuthRoutes };

@@ -1,15 +1,14 @@
-import { Product, ProductSchema } from "../../entities/product.entitie";
+import { Category, CategorySchema } from "../../entities/category.entitie";
+import { ICategoryRepository } from "../Interfaces/ICategoryRepository";
 import { getAllProps, getOneProps } from "../interfaces/ICrudRepository";
-import { IProductsRepository } from "../interfaces/IProductsRepository";
 import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
-export class ProductsRepository
+export class CategoryRepository
   extends ConnectRepo
-  implements IProductsRepository
+  implements ICategoryRepository
 {
-  private model = this.productsRepository.model("products", ProductSchema);
-
+  private model = this.categoriesRepository.model("categories", CategorySchema);
   private crud = new CrudRepo(this.model);
 
   constructor() {
@@ -20,7 +19,7 @@ export class ProductsRepository
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
 
-  addOne = (data: Product) => this.crud.addOne(data);
+  addOne = (data: Category) => this.crud.addOne(data);
 
   update = (id: string, data: any) => this.crud.update(id, data);
 

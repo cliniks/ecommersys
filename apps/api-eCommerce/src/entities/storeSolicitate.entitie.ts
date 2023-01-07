@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+import { Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const StoreSolicitateSchema = new Schema({
   name: { type: String, required: true, unique: true },
@@ -19,6 +19,7 @@ export const StoreSolicitateSchema = new Schema({
     default: Date.now,
   },
 });
+StoreSolicitateSchema.plugin(mongoosePaginate);
 
 export type StoreSolicitate = {
   name: string;

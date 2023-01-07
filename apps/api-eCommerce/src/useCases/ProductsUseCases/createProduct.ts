@@ -3,6 +3,9 @@ import util from "util";
 import { IProductsRepository } from "../../repositories/interfaces/IProductsRepository";
 import { fileType } from "../../repositories/Interfaces/IS3Repository";
 import fs from "fs";
+import { S3Repository } from "../../repositories/implementations/S3Repository";
+import { returnUserFromToken } from "../../utils/returnUserFromToken";
+import { Product } from "../../entities/product.entitie";
 const unlinkFile = util.promisify(fs.unlink);
 
 export const createProduct = async (
@@ -13,12 +16,29 @@ export const createProduct = async (
   try {
     const { body } = req;
 
-    const file = req.file as fileType;
-    console.log(body);
+    const files = req.files as fileType[];
 
-    unlinkFile(file.path);
+    let product: Product = { ...body };
 
-    res.json("produto criado");
+    const user = await returnUserFromToken(req);
+
+    const upload = new S3Repository();
+
+    const uploadedLinks = async () => {
+      const mappedFiles = files?.map(async (file) => {
+        const submit = await upload.uploadImage(file);
+        unlinkFile(file.path);
+        return submit.Location;
+      });
+      return Promise.all(mappedFiles);
+    };
+
+    product.imgs = await uploadedLinks();
+    product.owner = user.storeId;
+
+    const resolveProductAdd = await repo.addOne(product);
+
+    res.json(resolveProductAdd);
   } catch (err) {
     console.log("createProduct", err);
     res.status(400).send("não foi possível criar.");

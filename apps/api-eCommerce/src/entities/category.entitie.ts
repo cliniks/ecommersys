@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const CategorySchema = new Schema({
   name: String,
@@ -11,6 +12,7 @@ export const CategorySchema = new Schema({
     default: Date.now,
   },
 });
+CategorySchema.plugin(mongoosePaginate);
 
 export type Category = {
   _id?: ObjectId;

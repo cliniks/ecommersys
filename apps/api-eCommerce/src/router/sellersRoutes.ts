@@ -8,6 +8,12 @@ SellersRoutes.get("/", sellersUseCases.FineOne);
 
 SellersRoutes.get("/all", sellersUseCases.FindAll);
 
+SellersRoutes.get("/getMyStore", sellersUseCases.FindAll);
+
+SellersRoutes.get("/getMyCategories", sellersUseCases.FindAll);
+
+SellersRoutes.get("/getMyCoupons", sellersUseCases.FindAll);
+
 SellersRoutes.post("/", sellersUseCases.Add);
 
 SellersRoutes.patch("/:id", sellersUseCases.Update);

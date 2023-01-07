@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const WalletSchema = new Schema({
   owner: {
@@ -11,6 +12,7 @@ export const WalletSchema = new Schema({
     default: Date.now,
   },
 });
+WalletSchema.plugin(mongoosePaginate);
 
 export type Wallet = {
   _id?: ObjectId;

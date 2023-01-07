@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const Checkout = new Schema({
   owner: String,
@@ -17,6 +18,7 @@ export const Checkout = new Schema({
     default: Date.now,
   },
 });
+Checkout.plugin(mongoosePaginate);
 
 export type Checkout = {
   _id?: ObjectId;

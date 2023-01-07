@@ -42,6 +42,12 @@ UsersRoutes.patch(
   usersUseCases.updateUserInfo
 );
 
+UsersRoutes.get(
+  "/seeProduct/:id",
+  verifyers.verifyToken,
+  usersUseCases.seeProduct
+);
+
 UsersRoutes.patch(
   "/:id",
   verifyers.verifyAppToken,

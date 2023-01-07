@@ -7,7 +7,7 @@ import { del } from "../CrudUseCases/delete";
 import { get } from "../CrudUseCases/get";
 import { getAll } from "../CrudUseCases/getAll";
 import { update } from "../CrudUseCases/update";
-import { createCoupon, deleteCoupon, updateCoupon } from "./coupon";
+import { getMyCoupons } from "./coupon";
 import { dashboardStats } from "./dashboardStats";
 import {
   addCard,
@@ -17,6 +17,7 @@ import {
   paymentsPageInfo,
   updateCard,
 } from "./payments";
+import { getMyStore } from "./getMyStore";
 
 const sellersRepo = new SellersRepository();
 
@@ -32,12 +33,16 @@ export const sellersUseCases = {
     await del(req, res, sellersRepo),
   DashboardStats: async (req: Request, res: Response) =>
     await dashboardStats(req, res, sellersRepo),
-  CreateCoupon: async (req: Request, res: Response) =>
-    await createCoupon(req, res, sellersRepo),
-  DeleteCoupon: async (req: Request, res: Response) =>
-    await deleteCoupon(req, res, sellersRepo),
-  UpdateCoupon: async (req: Request, res: Response) =>
-    await updateCoupon(req, res, sellersRepo),
+  getMyCoupons: async (req: Request, res: Response) =>
+    await getMyCoupons(req, res),
+  getMyStore: async (req: Request, res: Response) =>
+    await getMyStore(req, res, sellersRepo),
+  getMyCategories: async (req: Request, res: Response) =>
+    await getMyCategories(req, res, sellersRepo),
+  // DeleteCoupon: async (req: Request, res: Response) =>
+  //   await deleteCoupon(req, res, sellersRepo),
+  // UpdateCoupon: async (req: Request, res: Response) =>
+  //   await updateCoupon(req, res, sellersRepo),
   GetCards: async (req: Request, res: Response) =>
     await getCards(req, res, sellersRepo),
   GetCard: async (req: Request, res: Response) =>

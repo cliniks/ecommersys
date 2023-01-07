@@ -1,6 +1,6 @@
 import { Cart, CartSchema } from "../../entities/cart.entitie";
 import { ICartsRepository } from "../interfaces/ICartsRepository";
-import { getOneProps } from "../interfaces/ICrudRepository";
+import { getAllProps, getOneProps } from "../interfaces/ICrudRepository";
 import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
@@ -14,7 +14,7 @@ export class CartsRepository extends ConnectRepo implements ICartsRepository {
 
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
 
-  getAll = () => this.crud.getAll();
+  getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
   addOne = (data: Cart) => this.crud.addOne(data);
 

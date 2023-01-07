@@ -1,4 +1,5 @@
 import { ObjectId, Schema } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 export const SalesSchema = new Schema({
   seller: String,
@@ -15,6 +16,7 @@ export const SalesSchema = new Schema({
     default: Date.now,
   },
 });
+SalesSchema.plugin(mongoosePaginate);
 
 export type Sales = {
   _id?: ObjectId;

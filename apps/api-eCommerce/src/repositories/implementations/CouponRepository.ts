@@ -1,15 +1,11 @@
-import { Product, ProductSchema } from "../../entities/product.entitie";
+import { Coupon, CouponSchema } from "../../entities/coupon.entitie";
+import { ICouponRepository } from "../Interfaces/ICouponRepository";
 import { getAllProps, getOneProps } from "../interfaces/ICrudRepository";
-import { IProductsRepository } from "../interfaces/IProductsRepository";
 import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
-export class ProductsRepository
-  extends ConnectRepo
-  implements IProductsRepository
-{
-  private model = this.productsRepository.model("products", ProductSchema);
-
+export class CouponRepository extends ConnectRepo implements ICouponRepository {
+  private model = this.couponsRepository.model("coupons", CouponSchema);
   private crud = new CrudRepo(this.model);
 
   constructor() {
@@ -20,7 +16,7 @@ export class ProductsRepository
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
 
-  addOne = (data: Product) => this.crud.addOne(data);
+  addOne = (data: Coupon) => this.crud.addOne(data);
 
   update = (id: string, data: any) => this.crud.update(id, data);
 

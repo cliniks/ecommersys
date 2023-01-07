@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
-import { getOneProps, ICrudRepository } from "../interfaces/ICrudRepository";
+import {
+  getAllProps,
+  getOneProps,
+  ICrudRepository,
+} from "../interfaces/ICrudRepository";
 
 export class CrudRepo implements ICrudRepository {
   constructor(private model: mongoose.Model<any>) {}
@@ -8,8 +12,29 @@ export class CrudRepo implements ICrudRepository {
     return await this.model.findOne({ [key]: value });
   }
 
-  async getAll() {
-    return await this.model.find();
+  async getAll(pagFilter: getAllProps) {
+    let limit = pagFilter?.size ? pagFilter.size : 10;
+    let page = pagFilter?.page ? pagFilter.page - 1 : 0;
+    const filterValue = pagFilter?.filter?.value;
+    const regEx = new RegExp(filterValue, "i");
+    const fields = pagFilter?.filter?.fields;
+    var query = pagFilter?.filter
+      ? { [pagFilter.filter.key]: { $regex: regEx } }
+      : {};
+    let data = await this.model
+      .find(query)
+      .sort({ register: -1 })
+      .skip(limit * page)
+      .limit(limit)
+      .select(fields);
+    const count = await this.model.countDocuments(data);
+    let obj = {
+      result: data,
+      totalItems: count,
+      pageSize: limit,
+      thisPage: page + 1,
+    };
+    return obj;
   }
 
   async addOne(data: any) {

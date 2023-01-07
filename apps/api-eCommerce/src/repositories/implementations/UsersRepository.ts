@@ -1,5 +1,5 @@
 import { User, UserSchema } from "../../entities/user.entitie";
-import { getOneProps } from "../interfaces/ICrudRepository";
+import { getAllProps, getOneProps } from "../interfaces/ICrudRepository";
 import { IUsersRepository, UserInfo } from "../interfaces/IUsersRepository";
 import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
@@ -27,7 +27,7 @@ export class UsersRepository extends ConnectRepo implements IUsersRepository {
 
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
 
-  getAll = () => this.crud.getAll();
+  getAll = (props: getAllProps) => this.crud.getAll(props);
 
   addOne = (data: User) => this.crud.addOne(data);
 
