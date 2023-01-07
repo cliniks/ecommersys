@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import util from "util";
+import fs from "fs";
 import { IProductsRepository } from "../../repositories/interfaces/IProductsRepository";
 import { fileType } from "../../repositories/Interfaces/IS3Repository";
-import fs from "fs";
 import { S3Repository } from "../../repositories/implementations/S3Repository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
 import { Product } from "../../entities/product.entitie";

@@ -14,24 +14,36 @@ export class CrudRepo implements ICrudRepository {
 
   async getAll(pagFilter: getAllProps) {
     let limit = pagFilter?.size ? pagFilter.size : 10;
+
     let page = pagFilter?.page ? pagFilter.page - 1 : 0;
-    const filterValue = pagFilter?.filter?.value;
+
+    const filter = pagFilter?.filter
+      ? typeof pagFilter.filter === "string"
+        ? JSON.parse(pagFilter.filter)
+        : pagFilter.filter
+      : null;
+
+    console.log("filter", filter);
+
+    const filterValue = filter?.value;
     const regEx = new RegExp(filterValue, "i");
-    const fields = pagFilter?.filter?.fields;
+    const fields = filter?.fields;
 
-    var query = pagFilter?.filter
-      ? { [pagFilter.filter.key]: { $regex: regEx } }
-      : {};
+    // console.log({ filterValue, fields });
 
-    console.log({ limit, page, filterValue, fields, query });
+    var query = filter ? { [filter.key]: { $regex: regEx } } : {};
+
+    console.log("query", query);
+
     let data = await this.model
       .find(query)
       .sort({ register: -1 })
       .skip(limit * page)
       .limit(limit)
       .select(fields);
-    console.log(data);
+
     const count = await this.model.countDocuments(data);
+
     let obj = {
       result: data,
       totalItems: count,
