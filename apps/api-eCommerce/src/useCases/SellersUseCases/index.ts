@@ -20,6 +20,8 @@ import {
 import { getMyStore } from "./getMyStore";
 import { getMyProducts } from "./getMyProducts";
 import { getMyCategories } from "./getMyCategories";
+import { updateStoreImage } from "./updateStoreImage";
+import { updateStoreBanner } from "./updateStoreBanner";
 
 const sellersRepo = new SellersRepository();
 
@@ -43,6 +45,10 @@ export const sellersUseCases = {
     await getMyProducts(req, res),
   getMyCategories: async (req: Request, res: Response) =>
     await getMyCategories(req, res),
+  updateStoreImage: async (req: Request, res: Response) =>
+    await updateStoreImage(req, res, sellersRepo),
+  updateStoreBanner: async (req: Request, res: Response) =>
+    await updateStoreBanner(req, res, sellersRepo),
   GetCards: async (req: Request, res: Response) =>
     await getCards(req, res, sellersRepo),
   GetCard: async (req: Request, res: Response) =>

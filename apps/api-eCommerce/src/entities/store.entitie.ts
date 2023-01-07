@@ -11,6 +11,10 @@ export const StoreSchema = new Schema({
     type: String,
     default: process.env.INITIAL_IMAGE,
   },
+  banner: {
+    type: String,
+    default: process.env.INITIAL_IMAGE,
+  },
   segments: [],
   storeInfo: {
     cnpj: String,
@@ -51,6 +55,7 @@ export type Store = {
   name: string;
   wallet?: wallet;
   img?: string;
+  banner?: string;
   segments?: [];
   storeInfo: storeInfo;
   melhorEnvioID?: string;

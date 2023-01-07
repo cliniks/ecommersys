@@ -1,6 +1,8 @@
 import { Router } from "express";
 // import { verifyers } from "../middlewares/verifyers";
 import { sellersUseCases } from "../useCases/SellersUseCases";
+import multer from "multer";
+const upload = multer({ dest: "uploads/" });
 
 const SellersRoutes = Router();
 
@@ -17,6 +19,18 @@ SellersRoutes.get("/getMyCategories", sellersUseCases.getMyCategories);
 SellersRoutes.get("/getMyCoupons", sellersUseCases.getMyCoupons);
 
 SellersRoutes.post("/", sellersUseCases.Add);
+
+SellersRoutes.patch(
+  "/updateStoreImage",
+  upload.single("img"),
+  sellersUseCases.updateStoreImage
+);
+
+SellersRoutes.patch(
+  "/updateStoreBanner",
+  upload.single("banner"),
+  sellersUseCases.updateStoreBanner
+);
 
 SellersRoutes.patch("/:id", sellersUseCases.Update);
 
