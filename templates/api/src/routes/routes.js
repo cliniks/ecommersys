@@ -75,7 +75,7 @@ routes.get("/getMyUser", verifyToken, userController.getMyUser);
 
 const productsController = require("../controllers/products.controller");
 routes.get("/product/:id", verifyToken, productsController.searchOneProduct);
-routes.get("/products", productsController.searchAllProducts);
+routes.get("/products/all", productsController.searchAllProducts);
 routes.get(
   "/productsFromSeller/:id",
   verifyToken,

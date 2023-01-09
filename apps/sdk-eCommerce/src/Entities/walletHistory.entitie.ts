@@ -1,0 +1,11 @@
+export type HistoryData = {
+  _id?: string;
+  owner: string;
+  description: string;
+  in?: number;
+  out?: number;
+  orderId?: string;
+  transactionId?: string;
+  // Usuário responsável pela movimentação
+  operator: string;
+};

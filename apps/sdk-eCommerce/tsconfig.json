@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "dist",
+    "target": "ES2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    // "noEmit": true,
+    "allowJs": true,
+    // "sourceMap": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    // "declarationMap": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
+    // "emitDeclarationOnly": true,
+    "strictFunctionTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false
+  },
+  "include": ["src/**/*", "Tests/tests.ts", "Tests/testesDist.ts"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "Tests", "**/*.tests.ts"]
+}

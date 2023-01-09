@@ -1,9 +1,15 @@
 import { Request, Response } from "express";
-import { CalculateProps, clientProps, InsetCartShippingProps, IUserCheckoutProvider } from "../../providers/IUserCheckoutProvider";
+import {
+  CalculateProps,
+  clientProps,
+  InsetCartShippingProps,
+  IUserCheckoutProvider,
+} from "../../providers/IUserCheckoutProvider";
 
 export class UserUseCases {
   constructor(private UserProvider: IUserCheckoutProvider) {}
   async addClient(req: Request, res: Response) {
+    console.log("addingClient");
     try {
       const { userInfo, password } = req.body;
       const obj = {
@@ -32,7 +38,7 @@ export class UserUseCases {
       const addClient = await this.UserProvider.addClient(obj);
       res.json(addClient);
     } catch (err) {
-      console.log("ME error addClient", err.response.data);
+      console.log("ME error addClient", err);
       res.status(400).send({ err });
     }
   }
@@ -55,7 +61,15 @@ export class UserUseCases {
   // inserir fretes no carrinho
   async insertCartShipping(req: Request, res: Response) {
     try {
-      const { service, agency, from, to, products, volumes, options }: InsetCartShippingProps | any = req.body;
+      const {
+        service,
+        agency,
+        from,
+        to,
+        products,
+        volumes,
+        options,
+      }: InsetCartShippingProps | any = req.body;
 
       const insertCartShipping = await this.UserProvider.insertCartShipping({
         service,
@@ -128,7 +142,8 @@ export class UserUseCases {
   // Consulta saldo do usuário
   async creditBalanceUser(req: Request, res: Response) {
     try {
-      const responseCreditBalanceUser = await this.UserProvider.creditBalanceUser();
+      const responseCreditBalanceUser =
+        await this.UserProvider.creditBalanceUser();
       res.json(responseCreditBalanceUser);
     } catch (err) {
       console.log(err);
@@ -139,7 +154,8 @@ export class UserUseCases {
   // Adicionado crédito na carteira
   async inserCreditUser(req: Request, res: Response) {
     try {
-      const responseInserCreditUser = await this.UserProvider.insertCreditUser();
+      const responseInserCreditUser =
+        await this.UserProvider.insertCreditUser();
       res.json(responseInserCreditUser);
     } catch (err) {
       res.status(400).send({ err });

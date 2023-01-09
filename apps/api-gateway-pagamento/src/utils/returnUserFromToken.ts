@@ -8,6 +8,7 @@ const returnUserFromToken = async (req) => {
   try {
     const token = req.headers["x-access-token"];
     const decoded = jwt.decode(token);
+    console.log(decoded);
     const user = await UserModel.findById(decoded._id);
     return user;
   } catch (error) {

@@ -1,0 +1,10 @@
+node_modules/
+tsconfig.json
+.env
+Demandas.md
+jest.config.js
+nodemon.json
+Tests/
+src/
+bin
+package.json

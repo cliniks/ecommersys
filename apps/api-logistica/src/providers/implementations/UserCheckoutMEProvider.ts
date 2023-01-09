@@ -3,6 +3,7 @@ import { Request, Response, Router } from "express";
 import { MEApi } from "../../services/axiosInstance";
 export class UserCheckoutMEProvider {
   constructor() {}
+
   // adicionar usuário
   async addClient(client: clientProps) {
     try {
@@ -16,7 +17,9 @@ export class UserCheckoutMEProvider {
         form.append(item, client[item]);
       });
       console.log("addClient", { form });
-      const add = await MEApi.post("/api/v2/register", form, { headers: { "Content-Type": "multipart/form-data" } });
+      const add = await MEApi.post("/api/v2/register", form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       console.log(add.data);
       return add.data;
     } catch (err) {
@@ -27,7 +30,10 @@ export class UserCheckoutMEProvider {
   // calculo de frete (produtos)
   async calculateShipping({ from, to, products }: CalculateProps) {
     try {
-      const calculateResponse = await MEApi.post("/api/v2/me/shipment/calculate", { from, to, products });
+      const calculateResponse = await MEApi.post(
+        "/api/v2/me/shipment/calculate",
+        { from, to, products }
+      );
 
       return calculateResponse.data;
     } catch (err) {
@@ -35,7 +41,15 @@ export class UserCheckoutMEProvider {
     }
   }
   // inserir fretes no carrinho
-  async insertCartShipping({ service, agency, from, to, products, volumes, options }) {
+  async insertCartShipping({
+    service,
+    agency,
+    from,
+    to,
+    products,
+    volumes,
+    options,
+  }) {
     try {
       const insertCartResponse = await MEApi.post("/api/v2/me/cart", {
         service,

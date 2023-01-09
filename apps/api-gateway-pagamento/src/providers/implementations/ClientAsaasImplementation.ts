@@ -1,6 +1,11 @@
 import { UserModel, UserModelType } from "../../models/user.model";
 import { AsassAPI } from "../../services/axiosInstance";
-import { chargeType, clientProps, creditCardChargeType, queryProps } from "../IClientAsaasProvider";
+import {
+  chargeType,
+  clientProps,
+  creditCardChargeType,
+  queryProps,
+} from "../IClientAsaasProvider";
 
 export class ClientAsaasImplementation {
   constructor() {}
@@ -8,6 +13,7 @@ export class ClientAsaasImplementation {
   async newClient({ data }: { data: UserModelType }) {
     try {
       const { userInfo, _id } = data;
+
       const customerData = {
         name: userInfo.name,
         email: userInfo.email,
@@ -22,17 +28,27 @@ export class ClientAsaasImplementation {
         notificationDisabled: false,
         municipalInscription: userInfo.cep,
       };
+
       const addClient = await AsassAPI.post("customers", customerData);
-      console.log();
-      const updateUser = await UserModel.findByIdAndUpdate(_id, { gatewayPagId: addClient.data.id });
-      return updateUser;
+
+      // const updateUser = await UserModel.findByIdAndUpdate(_id, {
+      //   gatewayPagId: addClient?.data?.id,
+      // });
+
+      return addClient.data;
     } catch (err) {
-      console.log(err.response.data);
+      console.log("err", err.response.data);
       throw new Error(err);
     }
   }
   // update a client
-  async updateClient({ data, clientId }: { data: clientProps; clientId: string }): Promise<any> {
+  async updateClient({
+    data,
+    clientId,
+  }: {
+    data: clientProps;
+    clientId: string;
+  }): Promise<any> {
     try {
       const calculateResponse = await AsassAPI.post("customers", data);
       return calculateResponse.data;
@@ -43,7 +59,9 @@ export class ClientAsaasImplementation {
   // return clients
   async listClients({ queryProps }: { queryProps: queryProps }): Promise<any> {
     try {
-      const calculateResponse = await AsassAPI.post("customers", { params: { query: queryProps } });
+      const calculateResponse = await AsassAPI.post("customers", {
+        params: { query: queryProps },
+      });
       return calculateResponse.data;
     } catch (err) {
       throw new Error(err);
@@ -59,25 +77,44 @@ export class ClientAsaasImplementation {
     }
   }
   // generate a charge
-  async genCharge({ data, client, cartID }: { data: chargeType; client: UserModelType; cartID: string }): Promise<any> {
+  async genCharge({
+    data,
+    client,
+    cartID,
+  }: {
+    data: chargeType;
+    client: UserModelType;
+    cartID: string;
+  }): Promise<any> {
     try {
-      const chargeConfig = {
-        ...data,
-        dueDate: new Date().toISOString(),
-        description: "Pedido 056984",
-        externalReference: cartID,
-        customer: client.gatewayPagId,
-      };
-      const createCharge = await AsassAPI.post("payments", chargeConfig);
-      await UserModel.updateOne({ _id: client._id }, { $push: { buysUnderProcess: createCharge.data.id } });
-      return createCharge.data;
+      // const chargeConfig = {
+      //   ...data,
+      //   dueDate: new Date().toISOString(),
+      //   description: "Pedido 056984",
+      //   externalReference: cartID,
+      //   customer: client.gatewayPagId,
+      // };
+      console.log("gerando pagamento", data, client, cartID);
+      // const createCharge = await AsassAPI.post("payments", chargeConfig);
+      // await UserModel.updateOne(
+      //   { _id: client._id },
+      //   { $push: { buysUnderProcess: createCharge.data.id } }
+      // );
+      // return createCharge.data;
+      return true;
     } catch (err) {
       console.log(err.response.data);
       throw new Error(err);
     }
   }
   // get a charge
-  async getCharge({ client, chargeId }: { client: UserModelType; chargeId: string }): Promise<any> {
+  async getCharge({
+    client,
+    chargeId,
+  }: {
+    client: UserModelType;
+    chargeId: string;
+  }): Promise<any> {
     try {
       const getCharge = await AsassAPI.get(`payments/${chargeId}`);
       return getCharge.data;
@@ -87,7 +124,13 @@ export class ClientAsaasImplementation {
     }
   }
   // generate a credicard charge
-  async genCreditCardCharge({ data, creditcard }: { data: chargeType; creditcard: creditCardChargeType }): Promise<any> {
+  async genCreditCardCharge({
+    data,
+    creditcard,
+  }: {
+    data: chargeType;
+    creditcard: creditCardChargeType;
+  }): Promise<any> {
     try {
       const calculateResponse = await AsassAPI.post("customers", data);
       return calculateResponse.data;
