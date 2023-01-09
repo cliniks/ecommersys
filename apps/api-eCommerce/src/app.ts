@@ -35,19 +35,19 @@ class App {
   routes() {
     // verifyers.verifyAppToken,
     this.server.use("/", router);
-    this.server.use("/auth", AuthRoutes);
+    this.server.use("/auth", verifyers.verifyAppToken, AuthRoutes);
     this.server.use("/carts", verifyers.verifyAppToken, CartRouter);
-    this.server.use("/sellers", SellersRoutes);
+    this.server.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
     this.server.use(
       "/sellerSolicitate",
       verifyers.verifyAppToken,
       SellerSolicitateRoutes
     );
     this.server.use("/sales", verifyers.verifyAppToken, SalesRoutes);
-    this.server.use("/products", ProductsRoutes);
-    this.server.use("/users", UsersRoutes);
-    this.server.use("/categories", CategoryRouter);
-    this.server.use("/coupons", CategoryRouter);
+    this.server.use("/products", verifyers.verifyAppToken, ProductsRoutes);
+    this.server.use("/users", verifyers.verifyAppToken, UsersRoutes);
+    this.server.use("/categories", verifyers.verifyAppToken, CategoryRouter);
+    this.server.use("/coupons", verifyers.verifyAppToken, CategoryRouter);
   }
 
   exceptionHandler() {
