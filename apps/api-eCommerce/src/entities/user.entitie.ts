@@ -1,61 +1,58 @@
 import { ObjectId, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-export const UserSchema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
+export const UserSchema = new Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    wallet: { type: String },
+    img: {
+      type: String,
+      default: process.env.INITIAL_IMAGE,
+    },
+    isActive: { type: Boolean, default: true },
+    userInfo: {
+      name: String,
+      lastName: String,
+      fone: String,
+      cpf: String,
+      address: String,
+      number: Number,
+      complement: String,
+      birthDate: String,
+      city: String,
+      state: String,
+      cep: String,
+      email: String,
+      otherAddress: [String],
+    },
+    melhorEnvioID: String,
+    gatewayPagId: String,
+    gatewayPagApiKey: String,
+    wishList: [],
+    favorites: [],
+    likes: [],
+    storeId: String,
+    orders: Number,
+    access: {
+      type: Number,
+      default: 0,
+    },
+    statistics: {
+      productsViews: [String],
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  wallet: { type: String, require: true },
-  img: {
-    type: String,
-    default: process.env.INITIAL_IMAGE,
-  },
-  userInfo: {
-    name: String,
-    lastName: String,
-    fone: String,
-    cpf: String,
-    address: String,
-    number: Number,
-    complement: String,
-    birthDate: String,
-    city: String,
-    state: String,
-    cep: String,
-    email: String,
-  },
-  myOrders: [],
-  buysUnderProcess: [],
-  myBuys: [],
-  melhorEnvioID: String,
-  gatewayPagId: String,
-  gatewayPagApiKey: String,
-  wishList: [],
-  favorites: [],
-  likes: [],
-  messages: [],
-  cart: [],
-  storeId: String,
-  orders: Number,
-  storeData: {},
-  access: {
-    type: Number,
-    default: 0,
-  },
-  statistics: {
-    productsViews: [String],
-  },
-  register: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 UserSchema.plugin(mongoosePaginate);
 
 export type User = {
@@ -64,36 +61,37 @@ export type User = {
   password: string;
   wallet: string;
   img: string;
-  userInfo: {
-    name: string;
-    lastName: string;
-    fone: string;
-    cpf: string;
-    address: string;
-    number: Number;
-    complement: string;
-    city: string;
-    state: string;
-    cep: string;
-    email: string;
-  };
-  myOrders: string[];
-  buysUnderProcess: string[];
-  myBuys: string[];
+  userInfo: userInfo;
   melhorEnvioID: string;
   gatewayPagId: string;
   gatewayPagApiKey: string;
   wishList: string[];
   favorites: string[];
   likes: string[];
-  messages: string[];
-  cart: string[];
   storeId: string;
-  storeData: {};
-  statistics: {
-    productsViews: string[];
-  };
-  access: number;
+  statistics: userStatistics;
+  isActive: boolean;
+  access: 0 | 1 | 2 | 99;
   orders: number;
-  register?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type userInfo = {
+  name: string;
+  lastName: string;
+  fone: string;
+  cpf: string;
+  address: string;
+  number: Number;
+  complement: string;
+  city: string;
+  state: string;
+  cep: string;
+  email: string;
+  otherAddress: string[];
+};
+
+export type userStatistics = {
+  productsViews: string[];
 };

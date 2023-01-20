@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
-import { UserModelType } from "../../models/user.model";
 import { IUserCheckoutProvider } from "../../providers/IClientAsaasProvider";
-import { IGatewayPagRepository } from "../../repositories/interfaces/IGatewayPagRepository";
+// import { IGatewayPagRepository } from "../../repositories/interfaces/IGatewayPagRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
+import { User } from "../../entities/user.entitie";
 
 export class UserUseCases {
   constructor(
-    private GPProvider: IUserCheckoutProvider,
-    Repository: IGatewayPagRepository
+    private GPProvider: IUserCheckoutProvider // Repository: IGatewayPagRepository
   ) {}
   async newClient(req: Request, res: Response) {
     try {
@@ -19,7 +18,7 @@ export class UserUseCases {
   }
   async genCharge(req: Request, res: Response) {
     try {
-      const userData: UserModelType = await returnUserFromToken(req);
+      const userData: User = await returnUserFromToken(req);
       const calculateShipping = await this.GPProvider.genCharge({
         data: req.body,
         client: userData,
@@ -32,10 +31,12 @@ export class UserUseCases {
   }
   async getCharge(req: Request, res: Response) {
     try {
-      const userData: UserModelType = await returnUserFromToken(req);
+      const id = req.params.id;
+      if (!id) res.status(400).send("não foi possível encontrar Id");
+      const userData: User = await returnUserFromToken(req);
       const calculateShipping = await this.GPProvider.getCharge({
         client: userData,
-        chargeId: req.params.id,
+        chargeId: id as string,
       });
       res.json(calculateShipping);
     } catch (err) {

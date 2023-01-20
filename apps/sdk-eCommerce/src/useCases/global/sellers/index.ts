@@ -5,11 +5,11 @@ import { sellerErrors, sellerMutations } from "../../../services";
 import { Try } from "../../../utils";
 
 export class GlobalSellers implements IGlobalSellers {
-  async getSingle(
-    key: string,
-    value: string
-  ): Promise<Response<sellerErrors, Store>> {
-    return await Try(sellerMutations.getOneStore, key, value);
+  async getSingle(props: {
+    key: string;
+    value: string;
+  }): Promise<Response<sellerErrors, Store>> {
+    return await Try(sellerMutations.getOneStore, props);
   }
   async getAll(
     props: getAllProps

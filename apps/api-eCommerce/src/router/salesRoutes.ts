@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { verifyers } from "../middlewares/verifyers";
+// import { verifyers } from "../middlewares/verifyers";
 import { salesUseCases } from "../useCases/SalesUseCases";
 
-const SalesRoutes = Router();
+const SalesRoutes: Router = Router();
 
 SalesRoutes.get("/", salesUseCases.FineOne);
 

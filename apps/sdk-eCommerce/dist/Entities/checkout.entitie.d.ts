@@ -2,9 +2,11 @@ export declare type Checkout = {
     _id?: string;
     owner: String;
     products: Products[];
+    isActive?: boolean;
     meId: String;
     asaasId: String;
-    register?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 };
 export declare type Products = {
     storeId: String;

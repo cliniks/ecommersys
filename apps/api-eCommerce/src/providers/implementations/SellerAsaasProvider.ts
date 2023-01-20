@@ -1,6 +1,6 @@
 // import { StoreModel } from "../../models/store.model";
 import { UserModel } from "../../models/user.model";
-import { Api, AsassAPI } from "../../services/axiosInstance";
+import { AsassAPI } from "../../services/axiosInstance";
 import { ISellerCheckoutProvider } from "../ISellerCheckoutProvider";
 export class SellerAsaasImplementation implements ISellerCheckoutProvider {
   constructor() {}

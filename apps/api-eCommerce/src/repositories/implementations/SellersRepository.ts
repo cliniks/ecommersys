@@ -8,7 +8,7 @@ export class SellersRepository
   extends ConnectRepo
   implements ISellersRepository
 {
-  private model = this.sellersRepository.model("sellers", StoreSchema);
+  private model = this.sellers.model("sellers", StoreSchema);
 
   private crud = new CrudRepo(this.model);
 

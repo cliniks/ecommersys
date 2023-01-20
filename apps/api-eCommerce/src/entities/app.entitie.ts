@@ -1,29 +1,31 @@
 import { ObjectId, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-export const appSchema = new Schema({
-  tokens: {
-    appToken: String,
-    devAppToken: String,
+export const appSchema = new Schema(
+  {
+    tokens: {
+      appToken: String,
+      devAppToken: String,
+    },
+    username: String,
+    password: String,
+    appInfo: {
+      name: String,
+      cnpj: String,
+      address: String,
+      number: Number,
+      complement: String,
+      city: String,
+      state: String,
+      cep: String,
+      email: String,
+    },
+    isActive: { type: Boolean, default: true },
   },
-  username: String,
-  password: String,
-  appInfo: {
-    name: String,
-    cnpj: String,
-    address: String,
-    number: Number,
-    complement: String,
-    city: String,
-    state: String,
-    cep: String,
-    email: String,
-  },
-  register: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 appSchema.plugin(mongoosePaginate);
 
@@ -32,8 +34,10 @@ export type App = {
   tokens: Tokens;
   appInfo: AppInfo;
   username: string;
+  isActive: boolean;
   password: string;
-  register?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type Tokens = {

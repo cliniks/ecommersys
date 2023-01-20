@@ -3,5 +3,10 @@ import { Response } from "../../Errors";
 import { IUserProduct } from "../../interfaces";
 import { productErrors } from "../../services";
 export declare class userProduct implements IUserProduct {
-    seeProduct(productId: string): Promise<Response<productErrors, Product>>;
+    seeProduct({ productId, }: {
+        productId: string;
+    }): Promise<Response<productErrors, Product>>;
+    likeProduct({ productId, }: {
+        productId: string;
+    }): Promise<Response<productErrors, Product>>;
 }

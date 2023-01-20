@@ -1,31 +1,32 @@
 import { ObjectId, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-export const CouponSchema = new Schema({
-  assined: [],
-  name: {
+export const CouponSchema = new Schema(
+  {
+    assined: [],
+    name: {
+      type: String,
+      require: true,
+      unique: true,
+    },
+    description: String,
     type: String,
-    require: true,
-    unique: true,
+    value: String,
+    minValue: String,
+    maxValue: String,
+    used: { type: Number, default: 0 },
+    limitForUse: Number,
+    isCashBack: { type: Boolean, default: false },
+    isFreeShipping: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
+    startDate: { type: Date, default: new Date() },
+    endDate: Date,
+    owner: String,
   },
-  description: String,
-  type: String,
-  value: String,
-  minValue: String,
-  maxValue: String,
-  used: { type: Number, default: 0 },
-  limitForUse: Number,
-  isCashBack: { type: Boolean, default: false },
-  isFreeShipping: { type: Boolean, default: false },
-  isActive: { type: Boolean, default: true },
-  startDate: { type: Date, default: new Date() },
-  endDate: Date,
-  owner: String,
-  register: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 CouponSchema.plugin(mongoosePaginate);
 
 export type Coupon = {
@@ -45,5 +46,6 @@ export type Coupon = {
   isActive: boolean;
   isFreeShipping: boolean;
   owner: string;
-  register?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

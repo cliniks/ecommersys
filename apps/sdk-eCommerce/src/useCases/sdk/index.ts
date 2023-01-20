@@ -1,5 +1,4 @@
 import { Response } from "../../Errors/ErrorHandling";
-
 import { ConnectErrors, ConnectProps, ISdk } from "../../interfaces/ISdk";
 import { updateInterceptor } from "../../services/axiosInstances";
 import { middlewares } from "../../services/middlewares/validations";

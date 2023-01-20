@@ -5,7 +5,7 @@ import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
 export class UsersRepository extends ConnectRepo implements IUsersRepository {
-  public model = this.usersRepository.model("users", UserSchema);
+  public model = this.users.model("users", UserSchema);
 
   private crud = new CrudRepo(this.model);
 

@@ -34,7 +34,7 @@ exports.sellerMutations = {
         return (0, Either_1.throwSuccess)(request.data);
     },
     /* Getting the user from the database. */
-    getOneStore: async (key, value) => {
+    getOneStore: async ({ key, value, }) => {
         const request = await axiosInstances_1.apiEcommerce.get(`/sellers`, {
             params: { key, value },
         });
@@ -50,7 +50,7 @@ exports.sellerMutations = {
         return (0, Either_1.throwSuccess)(request.data);
     },
     /* Updating the user info. */
-    updateSellerInfo: async (id, data) => {
+    updateSellerInfo: async ({ id, data, }) => {
         const update = await axiosInstances_1.apiEcommerce.patch(`/sellers/info/${id}`, data);
         if (!update.data)
             return (0, Either_1.throwError)("Não foi possível atualizar este Usuário");

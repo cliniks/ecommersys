@@ -1,27 +1,31 @@
 import { ObjectId, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-export const CartSchema = new Schema({
-  buyer: String,
-  productsInfo: [
-    {
-      productId: String,
-      amount: Number,
-      size: String,
-    },
-  ],
-  register: {
-    type: Date,
-    default: Date.now,
+export const CartSchema = new Schema(
+  {
+    buyer: String,
+    productsInfo: [
+      {
+        productId: String,
+        amount: Number,
+        size: String,
+      },
+    ],
+    isActive: { type: Boolean, default: true },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 CartSchema.plugin(mongoosePaginate);
 
 export type Cart = {
   _id?: ObjectId;
   buyer: string;
+  isActive: boolean;
   productsInfo: ProductInfo[];
-  register?: Date;
+  createdAt?: Date;
+  uodatedAt?: Date;
 };
 
 export type ProductInfo = {

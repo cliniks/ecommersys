@@ -20,13 +20,13 @@ export const tests = async () => {
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2FiMjM2MjlhNDBjMDJjYmRlOTdhM2MiLCJzZWxsZXIiOiI2M2FiMjQxODlhNDBjMDJjYmRlOTdhNTAiLCJpYXQiOjE2NzIxNjAyODJ9.RwEEkMTwJCmJEEnvKIfNIEz3ctGPj9mVNUTbSaFtFto"
   // );
 
-  const authClient = await User.account.auth(
-    "valgusto2000@hotmail.com",
-    "123153"
-  );
+  // const authClient = await User.account.auth(
+  //   "valgusto2000@hotmail.com",
+  //   "123153"
+  // );
 
-  if (authClient.isError)
-    return console.log("não foi possível autenticar usuário");
+  // if (authClient.isError)
+  // return console.log("não foi possível autenticar usuário");
 
   const getUser = await User.account.getMyUser();
 
@@ -35,12 +35,14 @@ export const tests = async () => {
 
   const myUser = getUser.isSuccess;
 
-  const updateUserInfo = await User.account.updateUserInfo(`${myUser._id}`, {
-    name: "Victor",
-  });
+  console.log(myUser);
 
-  if (updateUserInfo.isError)
-    return console.log("não foi possível atualizar o usuário");
+  // const updateUserInfo = await User.account.updateUserInfo(`${myUser._id}`, {
+  //   name: "Victor",
+  // });
+
+  // if (updateUserInfo.isError)
+  //   return console.log("não foi possível atualizar o usuário");
 
   // await Global.emailSender.sendEmailToken({
   //   email: `${myUser.userInfo.email}`,

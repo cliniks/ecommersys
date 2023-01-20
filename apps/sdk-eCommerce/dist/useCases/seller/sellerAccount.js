@@ -7,8 +7,11 @@ class sellerAccount {
     async getMyStore() {
         return await (0, utils_1.Try)(services_1.sellerMutations.getMyStore);
     }
-    async updateSellerInfo(id, data) {
-        return await (0, utils_1.Try)(services_1.sellerMutations.updateSellerInfo, id, data);
+    async updateSellerInfo(props) {
+        return await (0, utils_1.Try)(services_1.sellerMutations.updateSellerInfo, props);
+    }
+    async updateStoreInfo(props) {
+        return await (0, utils_1.Try)(services_1.sellerMutations.updateSellerInfo, props);
     }
     async updateStoreImage(formData) {
         return await (0, utils_1.Try)(services_1.sellerMutations.updateStoreImage, formData);

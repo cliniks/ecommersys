@@ -5,8 +5,8 @@ const services_1 = require("../../services");
 const coupon_1 = require("../../services/mutations/coupon");
 const utils_1 = require("../../utils");
 class sellerCoupon {
-    async getSingle(key, value) {
-        return await (0, utils_1.Try)(coupon_1.couponMutation.getSingle, key, value);
+    async getSingle(props) {
+        return await (0, utils_1.Try)(coupon_1.couponMutation.getSingle, props);
     }
     async getMyCoupons(props) {
         return await (0, utils_1.Try)(services_1.sellerMutations.getMyCoupons, props);
@@ -14,14 +14,14 @@ class sellerCoupon {
     async create(data) {
         return await (0, utils_1.Try)(coupon_1.couponMutation.createCoupon, data);
     }
-    async update(couponId, data) {
-        return await (0, utils_1.Try)(coupon_1.couponMutation.updateCoupon, couponId, data);
+    async update(props) {
+        return await (0, utils_1.Try)(coupon_1.couponMutation.updateCoupon, props);
     }
-    async utilize(couponId) {
-        return await (0, utils_1.Try)(coupon_1.couponMutation.utilizeCoupon, couponId);
+    async utilize(props) {
+        return await (0, utils_1.Try)(coupon_1.couponMutation.utilizeCoupon, props);
     }
-    async cancel(couponId) {
-        return await (0, utils_1.Try)(coupon_1.couponMutation.cancelCoupon, couponId);
+    async cancel(props) {
+        return await (0, utils_1.Try)(coupon_1.couponMutation.cancelCoupon, props);
     }
 }
 exports.sellerCoupon = sellerCoupon;

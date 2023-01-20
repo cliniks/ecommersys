@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
-import fs from "fs";
-import util from "util";
 import bcrypt from "bcrypt";
-import { S3Repository } from "../../repositories/implementations/S3Repository";
-import { fileType } from "../../repositories/Interfaces/IS3Repository";
 import { ApiGP } from "../../services/ApiGatewayPag";
+import { fileType } from "../../repositories/Interfaces/IS3Repository";
+import { S3Repository } from "../../repositories/implementations/S3Repository";
+import util from "util";
+import fs from "fs";
+const s3 = new S3Repository();
 const unlinkFile = util.promisify(fs.unlink);
-const S3 = new S3Repository();
 
 export const newUser = async (
   req: Request,
@@ -19,10 +19,11 @@ export const newUser = async (
 
     const file = req.file as fileType;
 
-    const img = async () => {
-      if (req.file) {
+    const upload = async () => {
+      if (file) {
         try {
-          const upload = await S3.uploadImage(file);
+          const upload = await s3.uploadImage(file);
+          await unlinkFile(file.path);
           return upload.Location;
         } catch (err) {
           return null;
@@ -31,30 +32,30 @@ export const newUser = async (
       return null;
     };
 
+    const img = await upload();
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const userData = {
+      ...req.body,
       username,
       userInfo,
-      img: await img(),
+      img,
+      access: 1,
       password: hashedPassword,
     };
 
     const user = await repository.addOne(userData);
-
-    unlinkFile(file.path);
 
     const createAsaasIntegration = await ApiGP.addClient(user, repository);
 
     const updateUser = await repository.update(user._id, {
       gatewayPagId: createAsaasIntegration.id,
     });
-    // await ApiME.addClient(savedUser, UserModel);
 
     res.json(updateUser);
-  } catch (err) {
-    console.log(err);
-    console.log({ newUser: err });
-    res.json("Erro ao adicionar usuário");
+  } catch (err: any) {
+    const { code, keyValue } = err;
+    res.json(`Código ${code}: Erro ao adicionar usuário: ${err.toString()}`);
   }
 };

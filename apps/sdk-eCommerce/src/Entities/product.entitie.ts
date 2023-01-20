@@ -2,33 +2,37 @@ export type Product = {
   _id?: string;
   name: string;
   description: string;
-  value: string;
-  img: [];
+  price: string;
+  imgs: string[];
   partners: string[];
-  qnt: number;
-  sizes: sizesType[];
-  height: string;
-  width: string;
-  weight: string;
+  virtualProduct: boolean;
+  isActive?: boolean;
+  shippingInfo: {
+    height: String;
+    width: String;
+    weight: String;
+  };
   owner: string;
-  ownerData: {};
-  likes: number;
-  likers: string[];
-  favorites: string[];
   discount: discountType[];
   status: boolean;
-  group: [];
-  subgroup: [];
+  categories: [];
   statistics: {
+    likes: number;
+    likers: string[];
     views: number;
-    buyeds: number;
+    favorite: number;
+    favorites: string[];
+    buys: number;
   };
-  register?: Date;
-};
-
-export type sizesType = {
-  qnt: number;
-  sizeType: string;
+  stockInfo: {
+    qnt: number;
+    sku: string;
+    SoldIndividually: boolean;
+  };
+  tags: string[];
+  hangTags: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type discountType = {

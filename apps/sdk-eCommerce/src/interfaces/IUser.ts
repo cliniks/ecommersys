@@ -19,7 +19,7 @@ import {
   userOrder,
   userProduct,
 } from "../useCases";
-import { getAllProps } from "./IGlobal";
+import { getSingleProps } from "./IGlobal";
 
 export interface IUser {
   account: userAccount;
@@ -31,26 +31,38 @@ export interface IUser {
 }
 
 export interface IUserAccount {
-  auth: (username: string, password: string) => Promise<Response<any, authRes>>;
+  auth: (props: {
+    username: string;
+    password: string;
+  }) => Promise<Response<any, authRes>>;
   createNewUser: (data: FormData) => Promise<Response<userErrors, User>>;
   getMyUser: () => Promise<Response<userErrors, User>>;
-  updateUserInfo: (
-    id: string,
-    data: Partial<UserInfo>
-  ) => Promise<Response<userErrors, User>>;
-  updateUserImage: (
-    id: string,
-    img: any
-  ) => Promise<Response<userErrors, User>>;
+  updateUserInfo: (props: {
+    id: string;
+    data: Partial<UserInfo>;
+  }) => Promise<Response<userErrors, User>>;
+  updateUserImage: (props: {
+    id: string;
+    img: any;
+  }) => Promise<Response<userErrors, User>>;
   solicitSeller: () => Promise<Response<sellerErrors, Store>>;
 }
 
 export interface IUserProduct {
-  seeProduct(productId: string): Promise<Response<productErrors, Product>>;
+  seeProduct({
+    productId,
+  }: {
+    productId: string;
+  }): Promise<Response<productErrors, Product>>;
+  likeProduct({
+    productId,
+  }: {
+    productId: string;
+  }): Promise<Response<productErrors, Product>>;
 }
 
 export interface IUserCart {
-  getMyCart(props: getAllProps): Promise<Response<cartErrors, Cart>>;
+  getMyCart(): Promise<Response<cartErrors, Cart>>;
   insertProduct: (data: {
     productId: string;
     amount: string;
@@ -70,7 +82,7 @@ export interface IUserOrder {}
 
 export interface IUserCheckout {
   getSingle: (
-    checkoutId: string
+    props: getSingleProps
   ) => Promise<Response<checkoutErrors, Checkout>>;
   generate: (orderId: string) => Promise<Response<checkoutErrors, Checkout>>;
   createPayment: (data: {

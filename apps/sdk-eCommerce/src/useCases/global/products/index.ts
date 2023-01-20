@@ -9,11 +9,11 @@ import { productErrors, productMutations } from "../../../services";
 import { Try } from "../../../utils";
 
 export class GlobalProducts implements IGlobalProducts {
-  async getSingle(
-    key: string,
-    value: string
-  ): Promise<Response<productErrors, Product>> {
-    return await Try(productMutations.getProductSingle, key, value);
+  async getSingle(props: {
+    key: string;
+    value: string;
+  }): Promise<Response<productErrors, Product>> {
+    return await Try(productMutations.getProductSingle, props);
   }
   async getAll(
     props: getAllProps

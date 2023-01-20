@@ -3,18 +3,19 @@ import { defaultErrors } from "./defaultErrors";
 import { EnumErrorHandling } from "./enumErrors";
 
 export const ErrorHandling = ({ code, message, res }: ErrorHandling) => {
-  return res
-    .status(400)
-    .json({ code: code, message: !message ? Response(code) : message });
+  return res.status(400).json({
+    code: code,
+    message: !message ? Response(code) : message,
+  });
 };
 
-const Response = (code: number): { message: string } => {
+const Response = (code: EnumErrorHandling): { message: string } => {
   let response: { message: string } = { message: "" };
-  if (!defaultErrors[code]) {
+  if (!code) {
     response.message = defaultErrors.default;
     return response;
   }
-  response.message = defaultErrors[code];
+  response.message = EnumErrorHandling[code] || defaultErrors.default;
   return response;
 };
 

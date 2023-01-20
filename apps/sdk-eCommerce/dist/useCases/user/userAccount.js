@@ -4,8 +4,8 @@ exports.userAccount = void 0;
 const services_1 = require("../../services");
 const utils_1 = require("../../utils");
 class userAccount {
-    async auth(username, password) {
-        return (0, utils_1.Try)(services_1.authMutations.auth, username, password);
+    async auth(props) {
+        return (0, utils_1.Try)(services_1.authMutations.auth, props);
     }
     async createNewUser(data) {
         return await (0, utils_1.Try)(services_1.userMutations.createNewUser, data);
@@ -13,11 +13,11 @@ class userAccount {
     async getMyUser() {
         return await (0, utils_1.Try)(services_1.userMutations.getMyUser);
     }
-    async updateUserInfo(id, data) {
-        return await (0, utils_1.Try)(services_1.userMutations.updateUserInfo, id, data);
+    async updateUserInfo(props) {
+        return await (0, utils_1.Try)(services_1.userMutations.updateUserInfo, props);
     }
-    async updateUserImage(id, img) {
-        return await (0, utils_1.Try)(services_1.userMutations.updateUserImage, id, img);
+    async updateUserImage(props) {
+        return await (0, utils_1.Try)(services_1.userMutations.updateUserImage, props);
     }
     async solicitSeller() {
         return await (0, utils_1.Try)(services_1.sellerMutations.solicitation);

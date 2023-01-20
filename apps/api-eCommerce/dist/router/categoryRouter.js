@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CategoryRouter = void 0;
+const express_1 = require("express");
+const CategoryUseCases_1 = require("../useCases/CategoryUseCases");
+const CategoryRouter = (0, express_1.Router)();
+exports.CategoryRouter = CategoryRouter;
+CategoryRouter.get("/", CategoryUseCases_1.categoryUseCases.FineOne);
+CategoryRouter.get("/all", CategoryUseCases_1.categoryUseCases.FindAll);
+CategoryRouter.post("/", CategoryUseCases_1.categoryUseCases.Add);
+CategoryRouter.patch("/:id", CategoryUseCases_1.categoryUseCases.Update);
+CategoryRouter.delete("/:id", CategoryUseCases_1.categoryUseCases.Delete);

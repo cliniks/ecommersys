@@ -4,10 +4,13 @@ import { getAllProps } from "../../interfaces";
 import { apiEcommerce } from "../axiosInstances";
 
 export const productMutations = {
-  getProductSingle: async (
-    key: string,
-    value: string
-  ): Promise<Either<productErrors, Product>> => {
+  getProductSingle: async ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+  }): Promise<Either<productErrors, Product>> => {
     const product = await apiEcommerce.get(`/products`, {
       params: { key, value },
     });
@@ -32,10 +35,14 @@ export const productMutations = {
 
     return throwSuccess(products.data);
   },
-  update: async (
-    data: Partial<Product>
-  ): Promise<Either<productErrors, Product>> => {
-    const products = await apiEcommerce.patch(`/products`, data);
+  update: async ({
+    productId,
+    data,
+  }: {
+    productId: string;
+    data: Partial<Product>;
+  }): Promise<Either<productErrors, Product>> => {
+    const products = await apiEcommerce.patch(`/products/${productId}`, data);
 
     if (!products) return throwError("Não foi possível adicionar o produto");
 

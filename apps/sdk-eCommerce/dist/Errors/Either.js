@@ -4,14 +4,9 @@ exports.throwSuccess = exports.throwError = exports.isSuccess = exports.isError 
 const unwrapEither = ({ isError, isSuccess, }) => {
     if (isSuccess !== undefined && isError !== undefined) {
         throw new Error(`Received both isError and isSuccess values at runtime when opening an Either\nisError: ${JSON.stringify(isError)}\nisSuccess: ${JSON.stringify(isSuccess)}`);
-        /*
-         We're throwing in this function because this can only occur at runtime if something
-         happens that the TypeScript compiler couldn't anticipate. That means the application
-         is in an unexpected state and we should terminate immediately.
-        */
     }
     if (isError !== undefined) {
-        return isError; // Typescript is getting confused and returning this type as `T | undefined` unless we add the type assertion
+        return isError;
     }
     if (isSuccess !== undefined) {
         return isSuccess;

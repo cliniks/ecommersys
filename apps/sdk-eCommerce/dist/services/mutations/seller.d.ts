@@ -11,9 +11,15 @@ export declare const sellerMutations: {
         code: number;
     }) => Promise<Either<sellerErrors, string>>;
     getMyStore: () => Promise<Either<sellerErrors, Store>>;
-    getOneStore: (key: string, value: string) => Promise<Either<sellerErrors, Store>>;
+    getOneStore: ({ key, value, }: {
+        key: string;
+        value: string;
+    }) => Promise<Either<sellerErrors, Store>>;
     getAllStore: (props: getAllProps) => Promise<Either<sellerErrors, Store>>;
-    updateSellerInfo: (id: string, data: Partial<Store>) => Promise<Either<sellerErrors, Store>>;
+    updateSellerInfo: ({ id, data, }: {
+        id: string;
+        data: Partial<Store>;
+    }) => Promise<Either<sellerErrors, Store>>;
     updateStoreImage: (formData: FormData) => Promise<Either<sellerErrors, Store>>;
     updateStoreBanner: (formData: FormData) => Promise<Either<sellerErrors, Store>>;
     getMyProducts: (props: getAllProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;

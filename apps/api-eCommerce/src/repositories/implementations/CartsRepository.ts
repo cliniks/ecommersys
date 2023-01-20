@@ -5,7 +5,7 @@ import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
 export class CartsRepository extends ConnectRepo implements ICartsRepository {
-  private model = this.cartsRepository.model("carts", CartSchema);
+  private model = this.carts.model("carts", CartSchema);
   private crud = new CrudRepo(this.model);
 
   constructor() {

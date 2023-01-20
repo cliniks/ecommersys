@@ -4,6 +4,8 @@ export type StoreSolicitate = {
   _id?: string;
   name: string;
   storeInfo: storeInfo;
-  owner: string;
-  register: Date;
+  isActive?: boolean;
+  owner?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

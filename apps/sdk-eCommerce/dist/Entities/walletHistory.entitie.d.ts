@@ -6,5 +6,8 @@ export declare type HistoryData = {
     out?: number;
     orderId?: string;
     transactionId?: string;
+    isActive?: boolean;
     operator: string;
+    createdAt?: string;
+    updateAt?: string;
 };

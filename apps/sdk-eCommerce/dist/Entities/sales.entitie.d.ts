@@ -3,6 +3,8 @@ export declare type Sales = {
     _id?: string;
     seller: string;
     buyer: string;
+    isActive?: boolean;
     productsInfo: ProductInfo[];
-    register?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 };

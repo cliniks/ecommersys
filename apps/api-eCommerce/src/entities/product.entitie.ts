@@ -1,49 +1,54 @@
 import { ObjectId, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-export const ProductSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  description: String,
-  price: String,
-  virtualProduct: Boolean,
-  imgs: [String],
-  partners: [String],
-  shippingInfo: {
-    height: String,
-    width: String,
-    weight: String,
-  },
-  owner: String,
-  discount: [
-    {
-      key: [String],
+export const ProductSchema = new Schema(
+  {
+    name: {
       type: String,
-      active: Boolean,
-      percentage: Number,
+      required: true,
     },
-  ],
-  status: Boolean,
-  categories: [String],
-  statistics: {
-    likes: Number,
-    likers: [String],
-    views: Number,
-    favorite: Number,
-    favorites: [String],
-    buys: Number,
+    description: String,
+    price: String,
+    virtualProduct: Boolean,
+    imgs: [String],
+    partners: [String],
+    isActive: { type: Boolean, default: true },
+    shippingInfo: {
+      height: String,
+      width: String,
+      weight: String,
+    },
+    owner: String,
+    discount: [
+      {
+        key: [String],
+        type: String,
+        active: Boolean,
+        percentage: Number,
+      },
+    ],
+    status: Boolean,
+    categories: [String],
+    statistics: {
+      likes: Number,
+      likers: [String],
+      views: Number,
+      favorite: Number,
+      favorites: [String],
+      buys: Number,
+    },
+    stockInfo: {
+      qnt: Number,
+      sku: String,
+      SoldIndividually: Boolean,
+    },
+    tags: [String],
+    hangTags: [String],
   },
-  stockInfo: {
-    qnt: Number,
-    sku: String,
-    SoldIndividually: Boolean,
-  },
-  tags: [String],
-  hangTags: [String],
-  register: { type: Date, default: new Date() },
-});
+  {
+    timestamps: true,
+  }
+);
 ProductSchema.plugin(mongoosePaginate);
 
 export type Product = {
@@ -54,6 +59,7 @@ export type Product = {
   imgs: string[];
   partners: string[];
   virtualProduct: boolean;
+  isActive: boolean;
   shippingInfo: {
     height: String;
     width: String;
@@ -78,7 +84,8 @@ export type Product = {
   };
   tags: string[];
   hangTags: string[];
-  register?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type discountType = {

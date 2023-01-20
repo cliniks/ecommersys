@@ -4,6 +4,8 @@ export type Category = {
   description: String;
   hierarchy?: String;
   isGlobal?: Boolean;
+  isActive?: Boolean;
   owner?: String;
-  register?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

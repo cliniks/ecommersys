@@ -4,14 +4,14 @@ exports.userCart = void 0;
 const services_1 = require("../../services");
 const utils_1 = require("../../utils");
 class userCart {
-    async getMyCart(props) {
-        return await (0, utils_1.Try)(services_1.cartMutations.getMyCart, props);
+    async getMyCart() {
+        return await (0, utils_1.Try)(services_1.cartMutations.getMyCart);
     }
-    async insertProduct({ productId, amount, }) {
-        return await (0, utils_1.Try)(services_1.cartMutations.insertProduct, { productId, amount });
+    async insertProduct(props) {
+        return await (0, utils_1.Try)(services_1.cartMutations.insertProduct, props);
     }
-    async removeProduct({ productId, amount, }) {
-        return await (0, utils_1.Try)(services_1.cartMutations.removeProduct, { productId, amount });
+    async removeProduct(props) {
+        return await (0, utils_1.Try)(services_1.cartMutations.removeProduct, props);
     }
     async insertCoupon(CouponId) {
         return await (0, utils_1.Try)(services_1.cartMutations.insertCoupon, CouponId);

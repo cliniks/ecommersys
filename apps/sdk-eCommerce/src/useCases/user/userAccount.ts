@@ -12,11 +12,11 @@ import {
 import { Try } from "../../utils";
 
 export class userAccount implements IUserAccount {
-  async auth(
-    username: string,
-    password: string
-  ): Promise<Response<userErrors, authRes>> {
-    return Try(authMutations.auth, username, password);
+  async auth(props: {
+    username: string;
+    password: string;
+  }): Promise<Response<userErrors, authRes>> {
+    return Try(authMutations.auth, props);
   }
 
   async createNewUser(data: FormData): Promise<Response<userErrors, User>> {
@@ -27,18 +27,18 @@ export class userAccount implements IUserAccount {
     return await Try(userMutations.getMyUser);
   }
 
-  async updateUserInfo(
-    id: string,
-    data: Partial<UserInfo>
-  ): Promise<Response<userErrors, User>> {
-    return await Try(userMutations.updateUserInfo, id, data);
+  async updateUserInfo(props: {
+    id: string;
+    data: Partial<UserInfo>;
+  }): Promise<Response<userErrors, User>> {
+    return await Try(userMutations.updateUserInfo, props);
   }
 
-  async updateUserImage(
-    id: string,
-    img: any
-  ): Promise<Response<userErrors, User>> {
-    return await Try(userMutations.updateUserImage, id, img);
+  async updateUserImage(props: {
+    id: string;
+    img: any;
+  }): Promise<Response<userErrors, User>> {
+    return await Try(userMutations.updateUserImage, props);
   }
 
   async solicitSeller(): Promise<Response<sellerErrors, Store>> {

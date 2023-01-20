@@ -1,19 +1,45 @@
-import { UserModel, UserModelType } from "../models/user.model";
+import { User } from "../entities/user.entitie";
 export interface IUserCheckoutProvider {
   // add a client
   newClient({ data }: { data: any }): Promise<any>;
   // update a client
-  updateClient({ data, clientId }: { data: clientProps; clientId: string }): Promise<any>;
+  updateClient({
+    data,
+    clientId,
+  }: {
+    data: clientProps;
+    clientId: string;
+  }): Promise<any>;
   // return clients
   listClients({ queryProps }: { queryProps: queryProps }): Promise<any>;
   // return one client
   getClient({ clientId }: { clientId: string }): Promise<any>;
   // generate a charge
-  genCharge({ data, client, cartID }: { data: chargeType; client: UserModelType; cartID: string }): Promise<any>;
+  genCharge({
+    data,
+    client,
+    cartID,
+  }: {
+    data: chargeType;
+    client: User;
+    cartID: string;
+  }): Promise<any>;
   // getCharge
-  getCharge({ client, chargeId }: { client: UserModelType; chargeId: string }): Promise<any>;
+  getCharge({
+    client,
+    chargeId,
+  }: {
+    client: User;
+    chargeId: string;
+  }): Promise<any>;
   // generate a credicard charge
-  genCreditCardCharge({ data, creditcard }: { data: chargeType; creditcard: creditCardChargeType }): Promise<any>;
+  genCreditCardCharge({
+    data,
+    creditcard,
+  }: {
+    data: chargeType;
+    creditcard: creditCardChargeType;
+  }): Promise<any>;
   // generate a pix code
   genPixCode({ id }: { id: string }): Promise<any>; // Ao gerar uma cobrança com as formas de pagamento "PIX", "BOLETO" ou "UNDEFINED" o pagamento via Pix é habilitado.
   // adicionar banco para recebimento

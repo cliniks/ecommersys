@@ -37,9 +37,14 @@ const verifyers = {
   },
   async verifyThisSeller(req: Request, res: Response, next: NextFunction) {
     try {
+      const id = req.params.id;
+      if (!id)
+        return res
+          .status(400)
+          .send("É preciso encaminhar um id para continuar");
       const user = await returnUserFromToken(req);
-      console.log(user.storeId.toString(), req.params.id.toString());
-      if (user.storeId.toString() === req.params.id.toString()) return next();
+      console.log(user.storeId.toString(), id.toString());
+      if (user.storeId.toString() === id.toString()) return next();
       else return res.status(400).send("Usuário não é um vendedor");
     } catch (error) {
       return res.status(400).send(error);

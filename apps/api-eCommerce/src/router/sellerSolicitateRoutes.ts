@@ -2,7 +2,7 @@ import { Router } from "express";
 import { sellersSolicitateUseCases } from "../useCases/SellerSolicitateUseCases";
 import { verifyers } from "../middlewares/verifyers";
 
-const SellerSolicitateRoutes = Router();
+const SellerSolicitateRoutes: Router = Router();
 
 SellerSolicitateRoutes.get("/", sellersSolicitateUseCases.FineOne);
 

@@ -50,10 +50,13 @@ export const sellerMutations = {
   },
 
   /* Getting the user from the database. */
-  getOneStore: async (
-    key: string,
-    value: string
-  ): Promise<Either<sellerErrors, Store>> => {
+  getOneStore: async ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+  }): Promise<Either<sellerErrors, Store>> => {
     const request = await apiEcommerce.get(`/sellers`, {
       params: { key, value },
     });
@@ -77,10 +80,13 @@ export const sellerMutations = {
   },
 
   /* Updating the user info. */
-  updateSellerInfo: async (
-    id: string,
-    data: Partial<Store>
-  ): Promise<Either<sellerErrors, Store>> => {
+  updateSellerInfo: async ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: Partial<Store>;
+  }): Promise<Either<sellerErrors, Store>> => {
     const update = await apiEcommerce.patch(`/sellers/info/${id}`, data);
 
     if (!update.data)

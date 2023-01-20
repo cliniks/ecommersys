@@ -2,17 +2,24 @@ import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
 import { ProductsRepository } from "../../repositories/implementations/ProductsRepository";
 import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
+import { addMyOwnStoreInMySearch } from "../../utils/searchsUtils";
 
 export const getMyProducts = async (req: Request, res: Response) => {
   try {
-    let { page, size, filter }: getAllProps = req.query;
+    let {
+      page = 1,
+      size = 10,
+      filter = { key: "", value: "", fields: "" },
+    }: getAllProps = req.query;
     const user = await returnUserFromToken(req);
 
     const products = new ProductsRepository();
 
-    filter = { key: "owner", value: user.storeId, fields: "" };
-
-    const findMyProducts = await products.getAll({ page, size, filter });
+    const findMyProducts = await products.getAll({
+      page,
+      size,
+      filter: addMyOwnStoreInMySearch(filter, user),
+    });
 
     res.json(findMyProducts);
   } catch (err) {

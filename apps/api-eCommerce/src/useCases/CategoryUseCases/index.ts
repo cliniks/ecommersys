@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
-import { add } from "../CrudUseCases/add";
+/* Importing the add function from the add.ts file in the CrudUseCases folder. */
+// import { add } from "../CrudUseCases/add";
 import { del } from "../CrudUseCases/delete";
 import { get } from "../CrudUseCases/get";
 import { getAll } from "../CrudUseCases/getAll";

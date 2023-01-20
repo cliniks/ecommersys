@@ -4,6 +4,7 @@ import {
   ISellerDashboardCoupon,
   getAllProps,
   getAllReturn,
+  getSingleProps,
 } from "../../interfaces";
 import { sellerMutations } from "../../services";
 import { couponErrors, couponMutation } from "../../services/mutations/coupon";
@@ -11,10 +12,9 @@ import { Try } from "../../utils";
 
 export class sellerCoupon implements ISellerDashboardCoupon {
   async getSingle(
-    key: string,
-    value: string
+    props: getSingleProps
   ): Promise<Response<couponErrors, Coupon>> {
-    return await Try(couponMutation.getSingle, key, value);
+    return await Try(couponMutation.getSingle, props);
   }
   async getMyCoupons(
     props: getAllProps
@@ -25,16 +25,20 @@ export class sellerCoupon implements ISellerDashboardCoupon {
   async create(data: Coupon): Promise<Response<couponErrors, Coupon>> {
     return await Try(couponMutation.createCoupon, data);
   }
-  async update(
-    couponId: string,
-    data: Partial<Coupon>
-  ): Promise<Response<couponErrors, Coupon>> {
-    return await Try(couponMutation.updateCoupon, couponId, data);
+  async update(props: {
+    couponId: string;
+    data: Partial<Coupon>;
+  }): Promise<Response<couponErrors, Coupon>> {
+    return await Try(couponMutation.updateCoupon, props);
   }
-  async utilize(couponId: string): Promise<Response<couponErrors, Coupon>> {
-    return await Try(couponMutation.utilizeCoupon, couponId);
+  async utilize(props: {
+    couponId: string;
+  }): Promise<Response<couponErrors, Coupon>> {
+    return await Try(couponMutation.utilizeCoupon, props);
   }
-  async cancel(couponId: string): Promise<Response<couponErrors, Coupon>> {
-    return await Try(couponMutation.cancelCoupon, couponId);
+  async cancel(props: {
+    couponId: string;
+  }): Promise<Response<couponErrors, Coupon>> {
+    return await Try(couponMutation.cancelCoupon, props);
   }
 }

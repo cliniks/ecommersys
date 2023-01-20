@@ -54,10 +54,13 @@ export const userMutations = {
   },
 
   /* Updating the user info. */
-  updateUserInfo: async (
-    id: string,
-    data: Partial<UserInfo>
-  ): Promise<Either<userErrors, User>> => {
+  updateUserInfo: async ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: Partial<UserInfo>;
+  }): Promise<Either<userErrors, User>> => {
     const update = await apiEcommerce.patch(`/users/info/${id}`, data);
 
     if (!update.data)
@@ -67,10 +70,13 @@ export const userMutations = {
   },
 
   /* Updating the user image. */
-  updateUserImage: async (
-    id: string,
-    img: any
-  ): Promise<Either<userErrors, User>> => {
+  updateUserImage: async ({
+    id,
+    img,
+  }: {
+    id: string;
+    img: any;
+  }): Promise<Either<userErrors, User>> => {
     const formdata = new FormData();
     formdata.append("img", img);
     const update = await apiEcommerce.patch(`/users/image/${id}`, formdata);

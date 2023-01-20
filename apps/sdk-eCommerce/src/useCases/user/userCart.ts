@@ -1,30 +1,24 @@
 import { Cart } from "../../Entities";
 import { Response } from "../../Errors";
-import { IUserCart, getAllProps } from "../../interfaces";
+import { IUserCart } from "../../interfaces";
 import { cartErrors, cartMutations } from "../../services";
 import { Try } from "../../utils";
 
 export class userCart implements IUserCart {
-  async getMyCart(props: getAllProps): Promise<Response<cartErrors, Cart>> {
-    return await Try(cartMutations.getMyCart, props);
+  async getMyCart(): Promise<Response<cartErrors, Cart>> {
+    return await Try(cartMutations.getMyCart);
   }
-  async insertProduct({
-    productId,
-    amount,
-  }: {
+  async insertProduct(props: {
     productId: string;
     amount: string;
   }): Promise<Response<cartErrors, Cart>> {
-    return await Try(cartMutations.insertProduct, { productId, amount });
+    return await Try(cartMutations.insertProduct, props);
   }
-  async removeProduct({
-    productId,
-    amount,
-  }: {
+  async removeProduct(props: {
     productId: string;
     amount: string;
   }): Promise<Response<cartErrors, Cart>> {
-    return await Try(cartMutations.removeProduct, { productId, amount });
+    return await Try(cartMutations.removeProduct, props);
   }
   async insertCoupon(CouponId: string): Promise<Response<cartErrors, Cart>> {
     return await Try(cartMutations.insertCoupon, CouponId);

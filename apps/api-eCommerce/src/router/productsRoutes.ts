@@ -1,11 +1,8 @@
 import { Router } from "express";
 import { verifyers } from "../middlewares/verifyers";
 import { productsUseCases } from "../useCases/ProductsUseCases";
-import multer from "multer";
 
-const upload = multer({ dest: "uploads/" });
-
-const ProductsRoutes = Router();
+const ProductsRoutes: Router = Router();
 
 ProductsRoutes.get("/", productsUseCases.FineOne);
 
@@ -15,7 +12,6 @@ ProductsRoutes.post(
   "/",
   verifyers.verifySeller,
   // verifyers.verifyThisSeller,
-  upload.array("img", 3),
   productsUseCases.CreateProduct
 );
 

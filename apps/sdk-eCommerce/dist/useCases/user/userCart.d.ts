@@ -1,14 +1,14 @@
 import { Cart } from "../../Entities";
 import { Response } from "../../Errors";
-import { IUserCart, getAllProps } from "../../interfaces";
+import { IUserCart } from "../../interfaces";
 import { cartErrors } from "../../services";
 export declare class userCart implements IUserCart {
-    getMyCart(props: getAllProps): Promise<Response<cartErrors, Cart>>;
-    insertProduct({ productId, amount, }: {
+    getMyCart(): Promise<Response<cartErrors, Cart>>;
+    insertProduct(props: {
         productId: string;
         amount: string;
     }): Promise<Response<cartErrors, Cart>>;
-    removeProduct({ productId, amount, }: {
+    removeProduct(props: {
         productId: string;
         amount: string;
     }): Promise<Response<cartErrors, Cart>>;

@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
+// import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
 
 export const getCards = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // retornar todos os cards
@@ -16,9 +16,9 @@ export const getCards = async (
 };
 
 export const getCard = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // retornar um card
@@ -30,9 +30,9 @@ export const getCard = async (
 };
 
 export const addCard = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // adicionar um card
@@ -44,9 +44,9 @@ export const addCard = async (
 };
 
 export const updateCard = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // atualizar um card
@@ -58,9 +58,9 @@ export const updateCard = async (
 };
 
 export const deleteCard = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // deletar um card
@@ -72,9 +72,9 @@ export const deleteCard = async (
 };
 
 export const paymentsPageInfo = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // retornar transferências

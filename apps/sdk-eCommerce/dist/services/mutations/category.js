@@ -5,7 +5,7 @@ const Errors_1 = require("../../Errors");
 const axiosInstances_1 = require("../axiosInstances");
 /* A object with all the mutations that the checkout can do. */
 exports.categoryMutation = {
-    getSingle: async (key, value) => {
+    getSingle: async ({ key, value, }) => {
         const response = await axiosInstances_1.apiEcommerce.get(`/categories/`, {
             params: { key, value },
         });
@@ -21,20 +21,30 @@ exports.categoryMutation = {
             return (0, Errors_1.throwError)("Não foi possível achar o category");
         return (0, Errors_1.throwSuccess)(response.data);
     },
+    getAllGlobalCategories: async (props) => {
+        const response = await axiosInstances_1.apiEcommerce.get(`/categories`, {
+            params: Object.assign(Object.assign({}, props), { filter: { key: "isGlobal", value: true } }),
+        });
+        if (!response.data)
+            return (0, Errors_1.throwError)("Não foi possível achar o category");
+        return (0, Errors_1.throwSuccess)(response.data);
+    },
     create: async (data) => {
-        const response = await axiosInstances_1.apiEcommerce.post(`/categories/}`, data);
+        const response = await axiosInstances_1.apiEcommerce.post(`/categories/`, data);
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível criar category");
         return (0, Errors_1.throwSuccess)(response.data);
     },
-    update: async (categoryId, data) => {
+    update: async ({ categoryId, data, }) => {
         const response = await axiosInstances_1.apiEcommerce.patch(`/categories/${categoryId}`, data);
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível atualizar category");
         return (0, Errors_1.throwSuccess)(response.data);
     },
     cancel: async (categoryId) => {
-        const response = await axiosInstances_1.apiEcommerce.patch(`/categories/cancel/${categoryId}`);
+        const response = await axiosInstances_1.apiEcommerce.patch(`/categories/${categoryId}`, {
+            isActive: false,
+        });
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível cancelar category");
         return (0, Errors_1.throwSuccess)(response.data);

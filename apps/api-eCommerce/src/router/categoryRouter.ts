@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { verifyers } from "../middlewares/verifyers";
 import { categoryUseCases } from "../useCases/CategoryUseCases";
 
-const CategoryRouter = Router();
+const CategoryRouter: Router = Router();
 
 CategoryRouter.get("/", categoryUseCases.FineOne);
 
-CategoryRouter.get("/all", verifyers.verifyAdmin, categoryUseCases.FindAll);
+CategoryRouter.get("/all", categoryUseCases.FindAll);
 
 CategoryRouter.post("/", categoryUseCases.Add);
 

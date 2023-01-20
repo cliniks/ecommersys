@@ -36,7 +36,7 @@ export const sellersUseCases = {
   Delete: async (req: Request, res: Response) =>
     await del(req, res, sellersRepo),
   DashboardStats: async (req: Request, res: Response) =>
-    await dashboardStats(req, res, sellersRepo),
+    await dashboardStats(req, res /*sellersRepo*/),
   getMyCoupons: async (req: Request, res: Response) =>
     await getMyCoupons(req, res),
   getMyStore: async (req: Request, res: Response) =>
@@ -50,15 +50,15 @@ export const sellersUseCases = {
   updateStoreBanner: async (req: Request, res: Response) =>
     await updateStoreBanner(req, res, sellersRepo),
   GetCards: async (req: Request, res: Response) =>
-    await getCards(req, res, sellersRepo),
+    await getCards(req, res /*sellersRepo*/),
   GetCard: async (req: Request, res: Response) =>
-    await getCard(req, res, sellersRepo),
+    await getCard(req, res /*sellersRepo*/),
   AddCard: async (req: Request, res: Response) =>
-    await addCard(req, res, sellersRepo),
+    await addCard(req, res /*sellersRepo*/),
   UpdateCard: async (req: Request, res: Response) =>
-    await updateCard(req, res, sellersRepo),
+    await updateCard(req, res /*sellersRepo*/),
   DeleteCard: async (req: Request, res: Response) =>
-    await deleteCard(req, res, sellersRepo),
+    await deleteCard(req, res /*sellersRepo*/),
   GetPaymentsPageInfo: async (req: Request, res: Response) =>
-    await paymentsPageInfo(req, res, sellersRepo),
+    await paymentsPageInfo(req, res /*sellersRepo*/),
 };

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { verifyers } from "../middlewares/verifyers";
 import { cartsUseCases } from "../useCases/CartsUseCases";
 
-const CartRouter = Router();
+const CartRouter: Router = Router();
 
 CartRouter.get("/", cartsUseCases.FineOne);
 

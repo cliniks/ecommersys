@@ -1,28 +1,19 @@
 export type Store = {
   _id?: string;
   name: string;
-  wallet?: wallet;
+  wallet?: string;
   img?: string;
+  banner?: string;
   segments?: [];
   storeInfo: storeInfo;
   melhorEnvioID?: string;
   asaasID?: string;
   asaasApiKey?: string;
   owner: string;
-  products?: string[];
-  productsCount?: number;
+  isActive?: boolean;
   statistics?: statistics;
-  openOrders?: [];
-  salesHistory?: [];
-  salesToSend?: [];
-  messages?: [];
-  tokenStripe?: string;
-  register?: Date;
-};
-
-export type wallet = {
-  amount: number;
-  history: [];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type storeInfo = {
@@ -34,6 +25,7 @@ export type storeInfo = {
   state: string;
   cep: string;
   email: string;
+  otherAddress: string[];
 };
 
 export type statistics = {

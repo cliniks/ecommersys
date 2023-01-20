@@ -5,10 +5,13 @@ import { apiEcommerce } from "../axiosInstances";
 
 /* A object with all the mutations that the checkout can do. */
 export const categoryMutation = {
-  getSingle: async (
-    key: string,
-    value: string
-  ): Promise<Either<categoryErrors, Checkout>> => {
+  getSingle: async ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+  }): Promise<Either<categoryErrors, Checkout>> => {
     const response = await apiEcommerce.get(`/categories/`, {
       params: { key, value },
     });
@@ -30,18 +33,33 @@ export const categoryMutation = {
     return throwSuccess(response.data);
   },
 
+  getAllGlobalCategories: async (
+    props: getAllProps
+  ): Promise<Either<categoryErrors, Checkout>> => {
+    const response = await apiEcommerce.get(`/categories`, {
+      params: { ...props, filter: { key: "isGlobal", value: true } },
+    });
+
+    if (!response.data) return throwError("Não foi possível achar o category");
+
+    return throwSuccess(response.data);
+  },
+
   create: async (data: Category): Promise<Either<categoryErrors, Category>> => {
-    const response = await apiEcommerce.post(`/categories/}`, data);
+    const response = await apiEcommerce.post(`/categories/`, data);
 
     if (!response.data) return throwError("Não foi possível criar category");
 
     return throwSuccess(response.data);
   },
 
-  update: async (
-    categoryId: string,
-    data: Partial<Category>
-  ): Promise<Either<categoryErrors, Category>> => {
+  update: async ({
+    categoryId,
+    data,
+  }: {
+    categoryId: string;
+    data: Partial<Category>;
+  }): Promise<Either<categoryErrors, Category>> => {
     const response = await apiEcommerce.patch(
       `/categories/${categoryId}`,
       data
@@ -56,9 +74,9 @@ export const categoryMutation = {
   cancel: async (
     categoryId: String
   ): Promise<Either<categoryErrors, Category>> => {
-    const response = await apiEcommerce.patch(
-      `/categories/cancel/${categoryId}`
-    );
+    const response = await apiEcommerce.patch(`/categories/${categoryId}`, {
+      isActive: false,
+    });
 
     if (!response.data) return throwError("Não foi possível cancelar category");
 

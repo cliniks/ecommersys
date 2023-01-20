@@ -14,6 +14,8 @@ import { ErrorHandling } from "./errors/ErrorHandling";
 import { EnumErrorHandling } from "./errors/enumErrors";
 import { verifyers } from "./middlewares/verifyers";
 import { CategoryRouter } from "./router/categoryRouter";
+import { WebsocketImplementation } from "./providers/websobket/WebSocketImplementation";
+import { globalRouter } from "./router/globalRouter";
 
 class App {
   public server: any;
@@ -30,6 +32,7 @@ class App {
     this.server.use(cors());
     this.server.use(bodyParser.json());
     this.server.use(bodyParser.urlencoded({ extended: true }));
+    new WebsocketImplementation();
   }
 
   routes() {
@@ -48,6 +51,7 @@ class App {
     this.server.use("/users", verifyers.verifyAppToken, UsersRoutes);
     this.server.use("/categories", verifyers.verifyAppToken, CategoryRouter);
     this.server.use("/coupons", verifyers.verifyAppToken, CategoryRouter);
+    this.server.use("/globals", verifyers.verifyAppToken, globalRouter);
   }
 
   exceptionHandler() {
@@ -56,14 +60,14 @@ class App {
         if (process.env.NODE_ENV === "development") {
           return ErrorHandling({
             code: EnumErrorHandling.exception,
-            message: err.response,
+            message: err.toString(),
             res,
           });
         }
         // return res.status(500).json({ error: "Internal server error" });
         return ErrorHandling({
           code: EnumErrorHandling.exception,
-          message: err.response,
+          message: err.toString(),
           res,
         });
       }

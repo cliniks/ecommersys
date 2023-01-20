@@ -40,14 +40,14 @@ exports.userMutations = {
         return (0, Either_1.throwSuccess)(request.data);
     },
     /* Updating the user info. */
-    updateUserInfo: async (id, data) => {
+    updateUserInfo: async ({ id, data, }) => {
         const update = await axiosInstances_1.apiEcommerce.patch(`/users/info/${id}`, data);
         if (!update.data)
             return (0, Either_1.throwError)("Não foi possível atualizar este Usuário");
         return (0, Either_1.throwSuccess)(update.data);
     },
     /* Updating the user image. */
-    updateUserImage: async (id, img) => {
+    updateUserImage: async ({ id, img, }) => {
         const formdata = new FormData();
         formdata.append("img", img);
         const update = await axiosInstances_1.apiEcommerce.patch(`/users/image/${id}`, formdata);

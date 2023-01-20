@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { verifyers } from "../middlewares/verifyers";
+// import { verifyers } from "../middlewares/verifyers";
 import { couponsUseCases } from "../useCases/CouponsUseCases";
 
-const CouponsRouter = Router();
+const CouponsRouter: Router = Router();
 
 CouponsRouter.get("/", couponsUseCases.FineOne);
 

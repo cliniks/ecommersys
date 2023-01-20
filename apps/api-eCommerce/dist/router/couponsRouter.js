@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CouponsRouter = void 0;
+const express_1 = require("express");
+// import { verifyers } from "../middlewares/verifyers";
+const CouponsUseCases_1 = require("../useCases/CouponsUseCases");
+const CouponsRouter = (0, express_1.Router)();
+exports.CouponsRouter = CouponsRouter;
+CouponsRouter.get("/", CouponsUseCases_1.couponsUseCases.FineOne);
+CouponsRouter.get("/all", CouponsUseCases_1.couponsUseCases.FindAll);
+CouponsRouter.post("/", CouponsUseCases_1.couponsUseCases.Add);
+CouponsRouter.patch("/:id", CouponsUseCases_1.couponsUseCases.Update);
+CouponsRouter.delete("/:id", CouponsUseCases_1.couponsUseCases.Delete);

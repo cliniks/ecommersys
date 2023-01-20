@@ -1,20 +1,16 @@
-import mongoose from "mongoose";
-import { dbconfig } from "../../config/connectDB";
 import { IGatewayPagRepository } from "../interfaces/IGatewayPagRepository";
+import { ConnectRepo } from "./ConnectRepo";
 
-class GatewayPagRepository implements IGatewayPagRepository {
+class GatewayPagRepository
+  extends ConnectRepo
+  implements IGatewayPagRepository
+{
+  // private repo = this.gatewayPagDB.model();
+
   constructor() {
-    this.initMongo();
+    super();
   }
-  async initMongo() {
-    await mongoose
-      .connect(dbconfig.url, {
-        user: dbconfig.authMongo.user,
-        pass: dbconfig.authMongo.pass,
-      })
-      .then(() => console.log(`Gateway mongoose connected to ${dbconfig.url}`))
-      .catch(console.log);
-  }
+
   async AddPayment(): Promise<any> {}
   async UpdatePayment(): Promise<any> {}
 }

@@ -4,10 +4,13 @@ import { apiEcommerce } from "../axiosInstances";
 
 /* A object with all the mutations that the checkout can do. */
 export const checkoutMutations = {
-  getSingle: async (
-    key: string,
-    value: string
-  ): Promise<Either<checkoutErrors, Checkout>> => {
+  getSingle: async ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+  }): Promise<Either<checkoutErrors, Checkout>> => {
     const response = await apiEcommerce.get(`/checkouts/`, {
       params: { key, value },
     });
@@ -17,7 +20,11 @@ export const checkoutMutations = {
     return throwSuccess(response.data);
   },
 
-  generate: async (orderId: string): Promise<Either<checkoutErrors, Cart>> => {
+  generate: async ({
+    orderId,
+  }: {
+    orderId: string;
+  }): Promise<Either<checkoutErrors, Cart>> => {
     const response = await apiEcommerce.post(`/checkouts/generate`, {
       orderId,
     });
@@ -67,9 +74,11 @@ export const checkoutMutations = {
     return throwSuccess(response.data);
   },
 
-  confirmPayment: async (
-    checkoutId: String
-  ): Promise<Either<checkoutErrors, Cart>> => {
+  confirmPayment: async ({
+    checkoutId,
+  }: {
+    checkoutId: String;
+  }): Promise<Either<checkoutErrors, Cart>> => {
     const request = await apiEcommerce.get(
       `/checkouts/confirmPayment/${checkoutId}`
     );
@@ -80,11 +89,14 @@ export const checkoutMutations = {
     return throwSuccess(request.data);
   },
 
-  cancelOpen: async (
-    checkoutId: String
-  ): Promise<Either<checkoutErrors, Cart>> => {
+  cancelOpen: async ({
+    checkoutId,
+  }: {
+    checkoutId: String;
+  }): Promise<Either<checkoutErrors, Cart>> => {
     const response = await apiEcommerce.patch(
-      `/checkouts/cancel/${checkoutId}`
+      `/checkouts/cancel/${checkoutId}`,
+      { checkoutId }
     );
 
     if (!response.data) return throwError("Não foi possível cancelar checkout");

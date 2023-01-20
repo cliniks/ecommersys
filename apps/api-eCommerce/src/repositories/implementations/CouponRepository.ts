@@ -5,7 +5,7 @@ import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
 export class CouponRepository extends ConnectRepo implements ICouponRepository {
-  private model = this.couponsRepository.model("coupons", CouponSchema);
+  private model = this.coupons.model("coupons", CouponSchema);
   private crud = new CrudRepo(this.model);
 
   constructor() {

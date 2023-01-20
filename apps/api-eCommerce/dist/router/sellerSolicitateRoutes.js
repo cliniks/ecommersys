@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SellerSolicitateRoutes = void 0;
+const express_1 = require("express");
+const SellerSolicitateUseCases_1 = require("../useCases/SellerSolicitateUseCases");
+const verifyers_1 = require("../middlewares/verifyers");
+const SellerSolicitateRoutes = (0, express_1.Router)();
+exports.SellerSolicitateRoutes = SellerSolicitateRoutes;
+SellerSolicitateRoutes.get("/", SellerSolicitateUseCases_1.sellersSolicitateUseCases.FineOne);
+SellerSolicitateRoutes.get("/all", SellerSolicitateUseCases_1.sellersSolicitateUseCases.FindAll);
+SellerSolicitateRoutes.post("/", verifyers_1.verifyers.verifyToken, SellerSolicitateUseCases_1.sellersSolicitateUseCases.Solicitate);
+SellerSolicitateRoutes.post("/confirm/:id", verifyers_1.verifyers.verifyToken, SellerSolicitateUseCases_1.sellersSolicitateUseCases.Confirm);

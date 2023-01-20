@@ -1,18 +1,20 @@
 export declare type Coupon = {
     _id?: string;
+    name: string;
     assined: string[];
     description: string;
     type: "percentage" | "fixed" | "shipping";
     value: string;
-    minimunValue: string;
-    maximunValue?: String;
+    minValue: string;
+    maxValue?: String;
     used: number;
     limitForUse: number;
     isCashBack: boolean;
-    startDate: Date;
+    startDate?: Date;
     endDate?: Date;
-    isActive: boolean;
+    isActive?: boolean;
     isFreeShipping: boolean;
     owner: string;
-    register?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 };

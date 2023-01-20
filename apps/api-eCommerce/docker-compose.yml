@@ -1,0 +1,121 @@
+version: "3.8"
+
+services:
+  # api:
+  #   image: api-ecommersys
+  #   build: .
+  #   volumes:
+  #     - ./:/usr/src/api
+  #   networks:
+  #     - host
+  #   ports:
+  #     - "3010:3010"
+
+  cache:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass 1kg1i34g1o2i34g1lii23g4
+    volumes:
+      - cache:/data
+    networks:
+      - host
+
+  db:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=cliniksDB
+      - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
+      - MONGO_INITDB_ROOT_DATABASE=cliniksdb
+      - MONGO_INITDB_DATABASE=cliniksdb
+    ports:
+      - "27020:27017"
+    volumes:
+      - db:/data
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - host
+
+  gatewayPagDB:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=gatewayPag
+      - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
+      - MONGO_INITDB_ROOT_DATABASE=gatewayPag
+      - MONGO_INITDB_DATABASE=gatewayPag
+    ports:
+      - "27021:27017"
+    volumes:
+      - gatewayPagDB:/data
+      - ./docker-entrypoint-initdb.d/gatewayPag-init.js:/docker-entrypoint-initdb.d/gatewayPag-init.js:ro
+    networks:
+      - host
+
+  logisticsDb:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=logistics
+      - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
+      - MONGO_INITDB_ROOT_DATABASE=logistics
+      - MONGO_INITDB_DATABASE=logistics
+    ports:
+      - "27022:27017"
+    volumes:
+      - logisticsDb:/data
+      - ./docker-entrypoint-initdb.d/logistics-init.js:/docker-entrypoint-initdb.d/logistics-init.js:ro
+    networks:
+      - host
+
+  chatDB:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=chatDB
+      - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
+      - MONGO_INITDB_ROOT_DATABASE=chatDB
+      - MONGO_INITDB_DATABASE=chatDB
+    ports:
+      - "27023:27017"
+    volumes:
+      - chatDB:/data
+      - ./docker-entrypoint-initdb.d/chatDB-init.js:/docker-entrypoint-initdb.d/chatDB-init.js:ro
+    networks:
+      - host
+
+  notifyDB:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=notifyDB
+      - MONGO_INITDB_ROOT_PASSWORD=aSITFA8SFAIULSBFASIGFAS87
+      - MONGO_INITDB_ROOT_DATABASE=notifyDB
+      - MONGO_INITDB_DATABASE=notifyDB
+    ports:
+      - "27024:27017"
+    volumes:
+      - notifyDB:/data
+      - ./docker-entrypoint-initdb.d/notifyDB-init.js:/docker-entrypoint-initdb.d/notifyDB-init.js:ro
+    networks:
+      - host
+
+volumes:
+  cache:
+    driver: local
+  db:
+    driver: local
+  gatewayPagDB:
+    driver: local
+  logisticsDb:
+    driver: local
+  chatDB:
+    driver: local
+  notifyDB:
+    driver: local
+
+networks:
+  host:
+    driver: bridge

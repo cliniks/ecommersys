@@ -7,6 +7,7 @@ exports.updateInterceptor = exports.apiEcommerce = void 0;
 const axios_1 = __importDefault(require("axios"));
 const axiosInterceptors_1 = require("../configs/axiosInterceptors");
 const apiEcommerce = axios_1.default.create({
+    // baseURL: "http://localhost:3010",
     baseURL: "https://api.ikiradev.com",
     headers: axiosInterceptors_1.configInterceptors,
 });

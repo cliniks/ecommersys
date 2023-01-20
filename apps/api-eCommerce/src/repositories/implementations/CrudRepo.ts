@@ -4,6 +4,7 @@ import {
   getOneProps,
   ICrudRepository,
 } from "../interfaces/ICrudRepository";
+import { verifyIsNumber } from "../../utils/numberMethods";
 
 export class CrudRepo implements ICrudRepository {
   constructor(private model: mongoose.Model<any>) {}
@@ -12,44 +13,53 @@ export class CrudRepo implements ICrudRepository {
     return await this.model.findOne({ [key]: value });
   }
 
-  async getAll(pagFilter: getAllProps) {
-    let limit = pagFilter?.size ? pagFilter.size : 10;
-
-    let page = pagFilter?.page ? pagFilter.page - 1 : 0;
-
-    const filter = pagFilter?.filter
-      ? typeof pagFilter.filter === "string"
-        ? JSON.parse(pagFilter.filter)
-        : pagFilter.filter
-      : null;
-
-    console.log("filter", filter);
+  async getAll({ page = 1, size = 10, filter }: getAllProps) {
+    const fields = filter?.fields ? filter?.fields : "";
 
     const filterValue = filter?.value;
-    const regEx = new RegExp(filterValue, "i");
-    const fields = filter?.fields;
 
-    // console.log({ filterValue, fields });
+    const arrayFromKeys = filterValue ? filter.key?.split(" ") : [];
+    const arrayFromKeyValues = filterValue ? filter?.value?.split(" ") : [];
 
-    var query = filter ? { [filter.key]: { $regex: regEx } } : {};
+    // const includesIsActive = arrayFromKeys?.includes("isActive");
+    // if (!includesIsActive) {
+    //   arrayFromKeys?.push("isActive");
+    //   arrayFromKeyValues.push("true");
+    // }
 
-    console.log("query", query);
+    const splitedObjects = arrayFromKeys?.map((item, index) => ({
+      key: item,
+      value: arrayFromKeyValues[index],
+    }));
+
+    let query = {};
+
+    splitedObjects?.map((item) => {
+      if (item) {
+        const prepareValue = prepareFilterQuery({ filter: item });
+        query = { ...query, ...prepareValue };
+      }
+    });
+
+    console.log({ ...query });
 
     let data = await this.model
       .find(query)
       .sort({ register: -1 })
-      .skip(limit * page)
-      .limit(limit)
+      .skip(+size * (+page > 0 ? +page - 1 : 0))
+      .limit(+size)
       .select(fields);
 
     const count = await this.model.countDocuments(data);
 
     let obj = {
       result: data,
-      totalItems: count,
-      pageSize: limit,
-      thisPage: page + 1,
+      totalItems: +count,
+      pageSize: +size,
+      thisPage: +page + 1,
+      totalPage: +count > +size ? Math.ceil(+count / +size) : 1,
     };
+
     return obj;
   }
 
@@ -59,10 +69,42 @@ export class CrudRepo implements ICrudRepository {
 
   async update(id: string, data: any) {
     await this.model.findByIdAndUpdate(id, data);
-    return await this.model.findById(id);
+    return await this.getOne({ key: "_id", value: id });
   }
 
   async delete(id: string) {
     return await this.model.findByIdAndDelete(id);
   }
 }
+
+const prepareFilterQuery = ({ filter }: { filter: getAllProps["filter"] }) => {
+  const verifyFilter = filter
+    ? typeof filter === "string"
+      ? JSON.parse(filter)
+      : filter
+    : {};
+
+  if (!verifyFilter) return {};
+
+  const filterValue = verifyFilter.value;
+
+  if (!filterValue) return {};
+
+  const filterValueIsBool =
+    typeof filterValue === "boolean" || ["true", "false"].includes(filterValue);
+
+  const filterValueIsNumber = verifyIsNumber(filterValue);
+
+  if (
+    (filterValueIsNumber || filterValueIsBool) &&
+    typeof filterValue !== "object"
+  ) {
+    return { [verifyFilter.key]: filterValue };
+  }
+
+  const regEx = new RegExp(filterValue, "i");
+
+  return {
+    [verifyFilter.key]: { $regex: regEx },
+  };
+};

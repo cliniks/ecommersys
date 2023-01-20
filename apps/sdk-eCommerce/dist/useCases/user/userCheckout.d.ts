@@ -1,9 +1,9 @@
 import { Checkout } from "../../Entities";
 import { Response } from "../../Errors";
-import { IUserCheckout } from "../../interfaces";
+import { IUserCheckout, getSingleProps } from "../../interfaces";
 import { checkoutErrors } from "../../services";
 export declare class userCheckout implements IUserCheckout {
-    getSingle(checkoutId: string): Promise<Response<checkoutErrors, Checkout>>;
+    getSingle(props: getSingleProps): Promise<Response<checkoutErrors, Checkout>>;
     generate(orderId: string): Promise<Response<checkoutErrors, Checkout>>;
     createPayment(data: {
         type: string;

@@ -11,7 +11,13 @@ export declare const userMutations: {
         code: number;
     }) => Promise<Either<userErrors, string>>;
     getMyUser: () => Promise<Either<userErrors, User>>;
-    updateUserInfo: (id: string, data: Partial<UserInfo>) => Promise<Either<userErrors, User>>;
-    updateUserImage: (id: string, img: any) => Promise<Either<userErrors, User>>;
+    updateUserInfo: ({ id, data, }: {
+        id: string;
+        data: Partial<UserInfo>;
+    }) => Promise<Either<userErrors, User>>;
+    updateUserImage: ({ id, img, }: {
+        id: string;
+        img: any;
+    }) => Promise<Either<userErrors, User>>;
 };
 export declare type userErrors = "Não foi possível encontrar este Usuário" | "Não foi possível atualizar este Usuário" | "Não foi possível atualizar usuário" | "Não foi possível enviar o e-mail" | "não foi possível validar o código" | "Não foi possível criar o usuário";

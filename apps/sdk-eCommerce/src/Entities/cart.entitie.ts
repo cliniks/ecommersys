@@ -1,8 +1,10 @@
 export type Cart = {
   _id?: string;
   buyer: string;
+  isActive?: boolean;
   productsInfo: ProductInfo[];
-  register?: Date;
+  createdAt?: Date;
+  uodatedAt?: Date;
 };
 
 export type ProductInfo = {

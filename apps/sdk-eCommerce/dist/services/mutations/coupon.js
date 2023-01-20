@@ -5,7 +5,7 @@ const Errors_1 = require("../../Errors");
 const axiosInstances_1 = require("../axiosInstances");
 /* A object with all the mutations that the checkout can do. */
 exports.couponMutation = {
-    getSingle: async (key, value) => {
+    getSingle: async ({ key, value, }) => {
         const response = await axiosInstances_1.apiEcommerce.get(`/coupons/`, {
             params: { key, value },
         });
@@ -27,20 +27,22 @@ exports.couponMutation = {
             return (0, Errors_1.throwError)("Não foi possível criar cupom");
         return (0, Errors_1.throwSuccess)(response.data);
     },
-    updateCoupon: async (couponId, data) => {
+    updateCoupon: async ({ couponId, data, }) => {
         const response = await axiosInstances_1.apiEcommerce.patch(`/coupons/${couponId}`, data);
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível atualizar cupom");
         return (0, Errors_1.throwSuccess)(response.data);
     },
-    utilizeCoupon: async (couponId) => {
+    utilizeCoupon: async ({ couponId, }) => {
         const request = await axiosInstances_1.apiEcommerce.patch(`/coupons/utilize/${couponId}`);
         if (!request.data)
             return (0, Errors_1.throwError)("Não foi possível utilizar cupom");
         return (0, Errors_1.throwSuccess)(request.data);
     },
     cancelCoupon: async (couponId) => {
-        const response = await axiosInstances_1.apiEcommerce.patch(`/coupons/cancel/${couponId}`);
+        const response = await axiosInstances_1.apiEcommerce.patch(`/coupons/${couponId}`, {
+            isActive: false,
+        });
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível cancelar cupom");
         return (0, Errors_1.throwSuccess)(response.data);

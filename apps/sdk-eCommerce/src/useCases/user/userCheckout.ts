@@ -1,15 +1,15 @@
 import { Checkout } from "../../Entities";
 import { Response } from "../../Errors";
-import { IUserCheckout } from "../../interfaces";
+import { IUserCheckout, getSingleProps } from "../../interfaces";
 import { checkoutErrors, checkoutMutations } from "../../services";
 
 import { Try } from "../../utils";
 
 export class userCheckout implements IUserCheckout {
   async getSingle(
-    checkoutId: string
+    props: getSingleProps
   ): Promise<Response<checkoutErrors, Checkout>> {
-    return await Try(checkoutMutations.getSingle, checkoutId);
+    return await Try(checkoutMutations.getSingle, props);
   }
 
   async generate(orderId: string): Promise<Response<checkoutErrors, Checkout>> {

@@ -22,14 +22,9 @@ export const unwrapEither: UnwrapEither = <T, U>({
         isError
       )}\nisSuccess: ${JSON.stringify(isSuccess)}`
     );
-    /*
-     We're throwing in this function because this can only occur at runtime if something 
-     happens that the TypeScript compiler couldn't anticipate. That means the application
-     is in an unexpected state and we should terminate immediately.
-    */
   }
   if (isError !== undefined) {
-    return isError as NonNullable<T>; // Typescript is getting confused and returning this type as `T | undefined` unless we add the type assertion
+    return isError as NonNullable<T>;
   }
   if (isSuccess !== undefined) {
     return isSuccess as NonNullable<U>;

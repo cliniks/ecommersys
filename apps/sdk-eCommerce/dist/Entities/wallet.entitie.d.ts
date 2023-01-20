@@ -2,5 +2,7 @@ export declare type Wallet = {
     _id?: string;
     owner: string;
     amount: string;
-    register?: Date;
+    isActive?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
 };

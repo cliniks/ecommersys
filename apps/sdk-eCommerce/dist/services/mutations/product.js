@@ -4,7 +4,7 @@ exports.productMutations = void 0;
 const Either_1 = require("../../Errors/Either");
 const axiosInstances_1 = require("../axiosInstances");
 exports.productMutations = {
-    getProductSingle: async (key, value) => {
+    getProductSingle: async ({ key, value, }) => {
         const product = await axiosInstances_1.apiEcommerce.get(`/products`, {
             params: { key, value },
         });
@@ -24,8 +24,8 @@ exports.productMutations = {
             return (0, Either_1.throwError)("Não foi possível adicionar o produto");
         return (0, Either_1.throwSuccess)(products.data);
     },
-    update: async (data) => {
-        const products = await axiosInstances_1.apiEcommerce.patch(`/products`, data);
+    update: async ({ productId, data, }) => {
+        const products = await axiosInstances_1.apiEcommerce.patch(`/products/${productId}`, data);
         if (!products)
             return (0, Either_1.throwError)("Não foi possível adicionar o produto");
         return (0, Either_1.throwSuccess)(products.data);

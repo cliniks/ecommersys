@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Response, Router } from "express";
 import { verifyers } from "../middlewares/verifyers";
 import { usersUseCases } from "../useCases/UsersUseCases";
 
@@ -6,9 +6,9 @@ import multer from "multer";
 
 const upload = multer({ dest: "uploads/" });
 
-const UsersRoutes = Router();
+const UsersRoutes: Router = Router();
 
-UsersRoutes.get("/", usersUseCases.FindOne);
+UsersRoutes.get("/", verifyers.verifyToken, usersUseCases.FindOne);
 
 UsersRoutes.get("/verifyUser", verifyers.verifyToken, (_, res: Response) => {
   try {
@@ -20,14 +20,9 @@ UsersRoutes.get("/verifyUser", verifyers.verifyToken, (_, res: Response) => {
 
 UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.getMyUser);
 
-UsersRoutes.get("/all", verifyers.verifyAppToken, usersUseCases.FindAll);
+UsersRoutes.get("/all", verifyers.verifyToken, usersUseCases.FindAll);
 
-UsersRoutes.post(
-  "/",
-  upload.single("img"),
-  verifyers.verifyAppToken,
-  usersUseCases.newUser
-);
+UsersRoutes.post("/", upload.single("img"), usersUseCases.newUser);
 
 UsersRoutes.patch(
   "/image/:id",

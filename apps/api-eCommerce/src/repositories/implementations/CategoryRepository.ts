@@ -8,7 +8,7 @@ export class CategoryRepository
   extends ConnectRepo
   implements ICategoryRepository
 {
-  private model = this.categoriesRepository.model("categories", CategorySchema);
+  private model = this.categories.model("categories", CategorySchema);
   private crud = new CrudRepo(this.model);
 
   constructor() {

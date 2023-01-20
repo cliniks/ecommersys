@@ -2,10 +2,13 @@ import { Either, throwError, throwSuccess } from "../../Errors/Either";
 import { apiEcommerce, updateInterceptor } from "../axiosInstances";
 
 export const authMutations = {
-  auth: async (
-    username: string,
-    password: string
-  ): Promise<Either<AuthErrors, authRes>> => {
+  auth: async ({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }): Promise<Either<AuthErrors, authRes>> => {
     if (!username) return throwError("Campo username não pode estar vazio");
 
     if (!password) return throwError("Campo senha não pode estar vazio");

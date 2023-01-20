@@ -22,9 +22,10 @@ export class sellerProduct implements ISellerDashboardProduct {
   async create(formData: FormData): Promise<Response<sellerErrors, Product>> {
     return await Try(productMutations.add, formData);
   }
-  async update(
-    data: Partial<Product>
-  ): Promise<Response<sellerErrors, Product>> {
+  async update(data: {
+    productId: string;
+    data: Partial<Product>;
+  }): Promise<Response<sellerErrors, Product>> {
     return await Try(productMutations.update, data);
   }
 }

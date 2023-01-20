@@ -4,6 +4,7 @@ import {
   ISellerDashboardCategory,
   getAllProps,
   getAllReturn,
+  getSingleProps,
 } from "../../interfaces";
 import { sellerMutations } from "../../services";
 import {
@@ -14,29 +15,29 @@ import { Try } from "../../utils";
 
 export class sellerCategory implements ISellerDashboardCategory {
   async getSingle(
-    key: string,
-    value: string
+    props: getSingleProps
   ): Promise<Response<categoryErrors, Category>> {
-    return await Try(categoryMutation.getSingle, key, value);
+    return await Try(categoryMutation.getSingle, props);
   }
   async getMyCategories(
     props: getAllProps
   ): Promise<Response<categoryErrors, getAllReturn<Category>>> {
     return await Try(sellerMutations.getMyCategories, props);
   }
-
   async create(data: Category): Promise<Response<categoryErrors, Category>> {
     return await Try(categoryMutation.create, data);
   }
-  async update(
-    categoryId: string,
-    data: Partial<Category>
-  ): Promise<Response<categoryErrors, Category>> {
-    return await Try(categoryMutation.update, categoryId, data);
+  async update(props: {
+    categoryId: string;
+    data: Partial<Category>;
+  }): Promise<Response<categoryErrors, Category>> {
+    return await Try(categoryMutation.update, props);
   }
-  async cancel(
-    categoryId: string
-  ): Promise<Response<categoryErrors, Category>> {
+  async cancel({
+    categoryId,
+  }: {
+    categoryId: string;
+  }): Promise<Response<categoryErrors, Category>> {
     return await Try(categoryMutation.cancel, categoryId);
   }
 }

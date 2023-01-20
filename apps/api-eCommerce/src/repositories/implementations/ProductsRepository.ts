@@ -8,7 +8,7 @@ export class ProductsRepository
   extends ConnectRepo
   implements IProductsRepository
 {
-  private model = this.productsRepository.model("products", ProductSchema);
+  private model = this.products.model("products", ProductSchema);
 
   private crud = new CrudRepo(this.model);
 

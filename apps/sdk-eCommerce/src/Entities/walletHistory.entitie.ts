@@ -6,6 +6,8 @@ export type HistoryData = {
   out?: number;
   orderId?: string;
   transactionId?: string;
-  // Usuário responsável pela movimentação
+  isActive?: boolean;
   operator: string;
+  createdAt?: string;
+  updateAt?: string;
 };

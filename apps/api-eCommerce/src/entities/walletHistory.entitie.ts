@@ -1,22 +1,24 @@
 import { ObjectId, Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-export const WalletHistorySchema = new Schema({
-  owner: {
-    type: String,
-    require: true,
+export const WalletHistorySchema = new Schema(
+  {
+    owner: {
+      type: String,
+      require: true,
+    },
+    isActive: { type: Boolean, default: true },
+    description: String,
+    in: Number,
+    out: Number,
+    orderId: String,
+    transactionId: String,
+    operator: String,
   },
-  description: String,
-  in: Number,
-  out: Number,
-  orderId: String,
-  transactionId: String,
-  operator: String,
-  register: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 WalletHistorySchema.plugin(mongoosePaginate);
 
 export type HistoryData = {
@@ -27,6 +29,8 @@ export type HistoryData = {
   out?: number;
   orderId?: string;
   transactionId?: string;
-  // Usuário responsável pela movimentação
+  isActive: boolean;
   operator: string;
+  createdAt?: string;
+  updateAt?: string;
 };

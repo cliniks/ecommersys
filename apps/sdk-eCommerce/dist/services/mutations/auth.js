@@ -4,7 +4,7 @@ exports.authMutations = void 0;
 const Either_1 = require("../../Errors/Either");
 const axiosInstances_1 = require("../axiosInstances");
 exports.authMutations = {
-    auth: async (username, password) => {
+    auth: async ({ username, password, }) => {
         if (!username)
             return (0, Either_1.throwError)("Campo username não pode estar vazio");
         if (!password)

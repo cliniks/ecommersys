@@ -5,10 +5,13 @@ import { apiEcommerce } from "../axiosInstances";
 
 /* A object with all the mutations that the checkout can do. */
 export const couponMutation = {
-  getSingle: async (
-    key: string,
-    value: string
-  ): Promise<Either<couponErrors, Checkout>> => {
+  getSingle: async ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+  }): Promise<Either<couponErrors, Checkout>> => {
     const response = await apiEcommerce.get(`/coupons/`, {
       params: { key, value },
     });
@@ -39,10 +42,13 @@ export const couponMutation = {
     return throwSuccess(response.data);
   },
 
-  updateCoupon: async (
-    couponId: string,
-    data: Partial<Coupon>
-  ): Promise<Either<couponErrors, Cart>> => {
+  updateCoupon: async ({
+    couponId,
+    data,
+  }: {
+    couponId: string;
+    data: Partial<Coupon>;
+  }): Promise<Either<couponErrors, Cart>> => {
     const response = await apiEcommerce.patch(`/coupons/${couponId}`, data);
 
     if (!response.data) return throwError("Não foi possível atualizar cupom");
@@ -50,9 +56,11 @@ export const couponMutation = {
     return throwSuccess(response.data);
   },
 
-  utilizeCoupon: async (
-    couponId: String
-  ): Promise<Either<couponErrors, Cart>> => {
+  utilizeCoupon: async ({
+    couponId,
+  }: {
+    couponId: String;
+  }): Promise<Either<couponErrors, Cart>> => {
     const request = await apiEcommerce.patch(`/coupons/utilize/${couponId}`);
 
     if (!request.data) return throwError("Não foi possível utilizar cupom");
@@ -63,7 +71,9 @@ export const couponMutation = {
   cancelCoupon: async (
     couponId: String
   ): Promise<Either<couponErrors, Cart>> => {
-    const response = await apiEcommerce.patch(`/coupons/cancel/${couponId}`);
+    const response = await apiEcommerce.patch(`/coupons/${couponId}`, {
+      isActive: false,
+    });
 
     if (!response.data) return throwError("Não foi possível cancelar cupom");
 

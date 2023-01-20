@@ -1,9 +1,5 @@
 export const dbconfig = {
-  url: `${process.env.DB_HOST}`,
-  authMongo: {
-    user: process.env.DB_USERNAME,
-    pass: process.env.DB_PASSWORD,
-  },
+  url: `${process.env.MONGO_DB_CONNECTION}`,
   user: {
     authSource: `${process.env.DB_HOST_USER}`,
     authMongo: {

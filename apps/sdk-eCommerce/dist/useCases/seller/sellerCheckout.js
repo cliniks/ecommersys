@@ -4,8 +4,8 @@ exports.sellerCheckout = void 0;
 const services_1 = require("../../services");
 const utils_1 = require("../../utils");
 class sellerCheckout {
-    async getSingle(checkoutId) {
-        return await (0, utils_1.Try)(services_1.sellerMutations, checkoutId);
+    async getSingle(props) {
+        return await (0, utils_1.Try)(services_1.sellerMutations, props);
     }
     async generate(orderId) {
         return await (0, utils_1.Try)(services_1.sellerMutations, orderId);

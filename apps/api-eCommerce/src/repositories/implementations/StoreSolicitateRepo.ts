@@ -11,8 +11,8 @@ export class StoreSolicitateRepository
   extends ConnectRepo
   implements IStoreSolicitate
 {
-  private model = this.sellersRepository.model(
-    "storeSolicitate",
+  private model = this.sellerSolicitations.model(
+    "sellerSolicitations",
     StoreSolicitateSchema
   );
 

@@ -5,21 +5,19 @@ export type User = {
   wallet: string;
   img: string;
   userInfo: UserInfo;
-  myOrders: string[];
-  buysUnderProcess: string[];
-  myBuys: string[];
   melhorEnvioID: string;
   gatewayPagId: string;
+  gatewayPagApiKey: string;
   wishList: string[];
   favorites: string[];
   likes: string[];
-  messages: string[];
-  cart: string[];
   storeId: string;
-  storeData: {};
-  access: number;
+  statistics: userStatistics;
+  isActive: boolean;
+  access: 0 | 1 | 2 | 99;
   orders: number;
-  register?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type UserInfo = {
@@ -34,4 +32,9 @@ export type UserInfo = {
   state: string;
   cep: string;
   email: string;
+  otherAddress: string[];
+};
+
+export type userStatistics = {
+  productsViews: string[];
 };

@@ -11,17 +11,19 @@ export const confirm = async (
 ) => {
   try {
     const { id } = req.params;
+    if (!id) res.status(400).send("não foi encaminhado um id.");
     const getStoreInfo = await repo.getOne({ key: "_id", value: id });
     const Store: Store = {
       name: getStoreInfo.name,
       owner: getStoreInfo.owner,
+      isActive: true,
       storeInfo: getStoreInfo.storeInfo,
     };
     const sellerRepo = new SellersRepository();
     const userRepo = new UsersRepository();
     const addSeller = await sellerRepo.addOne(Store);
     await userRepo.update(Store.owner, { storeId: addSeller._id, access: 2 });
-    await repo.delete(id);
+    await repo.delete(id as string);
     res.json(addSeller);
   } catch (err) {
     console.log(err);

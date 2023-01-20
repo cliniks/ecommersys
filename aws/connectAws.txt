@@ -1,3 +1,11 @@
+// Api-Public-Cliniks
 ssh -i "cliniks.pem" ubuntu@ec2-18-231-77-246.sa-east-1.compute.amazonaws.com
 
-pm2 start pnpm --name "api" -- dev
+
+// Api-Private-Cliniks
+ssh -i "cliniks.pem" ubuntu@54.94.31.107
+
+
+pm2 start pnpm --name api -- dev
+
+sudo systemctl restart mongod

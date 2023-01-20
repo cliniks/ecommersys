@@ -1,5 +1,5 @@
 export interface ICrudRepository {
-  getOne({ key, value }: getOneProps): Promise<any>;
+  getOne(props: getOneProps): Promise<any>;
   getAll(props: getAllProps): Promise<any>;
   addOne(data: any): Promise<any>;
   update(id: string, data: any): Promise<any>;
@@ -18,7 +18,7 @@ export type getAllProps = {
 };
 
 export type filterProps = {
-  key: string;
-  value: any;
-  fields: string;
+  key?: string;
+  value?: any;
+  fields?: string;
 };

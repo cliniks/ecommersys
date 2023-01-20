@@ -24,7 +24,7 @@ export class SellerUseCases {
     }
   }
   // Geração de etiquetas
-  async getAccount(req: Request, res: Response) {
+  async getAccount(_: Request, res: Response) {
     try {
       const generateTag = await this.SellerProvider.getAccount();
       res.json(generateTag);

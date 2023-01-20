@@ -4,7 +4,7 @@ import { sellersUseCases } from "../useCases/SellersUseCases";
 import multer from "multer";
 const upload = multer({ dest: "uploads/" });
 
-const SellersRoutes = Router();
+const SellersRoutes: Router = Router();
 
 SellersRoutes.get("/", sellersUseCases.FineOne);
 

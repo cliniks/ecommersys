@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
+// import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
 
 export const dashboardStats = async (
-  req: Request,
-  res: Response,
-  repo: ISellersRepository
+  _: Request,
+  res: Response
+  // repo: ISellersRepository
 ) => {
   try {
     // retornar vendas totais

@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SellersRoutes = void 0;
+const express_1 = require("express");
+// import { verifyers } from "../middlewares/verifyers";
+const SellersUseCases_1 = require("../useCases/SellersUseCases");
+const multer_1 = __importDefault(require("multer"));
+const upload = (0, multer_1.default)({ dest: "uploads/" });
+const SellersRoutes = (0, express_1.Router)();
+exports.SellersRoutes = SellersRoutes;
+SellersRoutes.get("/", SellersUseCases_1.sellersUseCases.FineOne);
+SellersRoutes.get("/all", SellersUseCases_1.sellersUseCases.FindAll);
+SellersRoutes.get("/getMyStore", SellersUseCases_1.sellersUseCases.getMyStore);
+SellersRoutes.get("/getMyProducts", SellersUseCases_1.sellersUseCases.getMyProducts);
+SellersRoutes.get("/getMyCategories", SellersUseCases_1.sellersUseCases.getMyCategories);
+SellersRoutes.get("/getMyCoupons", SellersUseCases_1.sellersUseCases.getMyCoupons);
+SellersRoutes.post("/", SellersUseCases_1.sellersUseCases.Add);
+SellersRoutes.patch("/updateStoreImage", upload.single("img"), SellersUseCases_1.sellersUseCases.updateStoreImage);
+SellersRoutes.patch("/updateStoreBanner", upload.single("banner"), SellersUseCases_1.sellersUseCases.updateStoreBanner);
+SellersRoutes.patch("/:id", SellersUseCases_1.sellersUseCases.Update);
+SellersRoutes.delete("/:id", SellersUseCases_1.sellersUseCases.Delete);
+SellersRoutes.get("/dashboard", SellersUseCases_1.sellersUseCases.DashboardStats);

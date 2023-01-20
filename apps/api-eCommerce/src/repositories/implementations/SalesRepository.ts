@@ -5,7 +5,7 @@ import { ConnectRepo } from "./ConnectRepo";
 import { CrudRepo } from "./CrudRepo";
 
 export class SalesRepository extends ConnectRepo implements ISalesRepository {
-  private model = this.salesRepository.model("sales", SalesSchema);
+  private model = this.orders.model("orders", SalesSchema);
 
   private crud = new CrudRepo(this.model);
 
