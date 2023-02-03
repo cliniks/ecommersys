@@ -1,11 +1,10 @@
-import { Store, User, UserInfo } from "../../Entities";
+import { StoreSolicitate, User, UserInfo } from "../../Entities";
+import { Address } from "../../Entities/address.entitie";
 import { Response } from "../../Errors";
-import { IUserAccount } from "../../interfaces";
+import { IUserAccount, getAllProps, getAllReturn } from "../../interfaces";
 import {
   authMutations,
   authRes,
-  sellerErrors,
-  sellerMutations,
   userErrors,
   userMutations,
 } from "../../services";
@@ -34,6 +33,29 @@ export class userAccount implements IUserAccount {
     return await Try(userMutations.updateUserInfo, props);
   }
 
+  async getMyAddress(
+    props: getAllProps
+  ): Promise<Response<userErrors, getAllReturn<Address>>> {
+    return await Try(userMutations.getMyAddress, props);
+  }
+
+  async addAddress(address: Address): Promise<Response<userErrors, Address>> {
+    return await Try(userMutations.addAddress, address);
+  }
+
+  async updateAddress(props: {
+    addressId: string;
+    data: Partial<Address>;
+  }): Promise<Response<userErrors, Address>> {
+    return await Try(userMutations.updateAddress, props);
+  }
+
+  async deleteAddress(props: {
+    addressId: string;
+  }): Promise<Response<userErrors, string>> {
+    return await Try(userMutations.deleteAddress, props);
+  }
+
   async updateUserImage(props: {
     id: string;
     img: any;
@@ -41,7 +63,9 @@ export class userAccount implements IUserAccount {
     return await Try(userMutations.updateUserImage, props);
   }
 
-  async solicitSeller(): Promise<Response<sellerErrors, Store>> {
-    return await Try(sellerMutations.solicitation);
+  async solicitSeller(
+    data: StoreSolicitate
+  ): Promise<Response<userErrors, StoreSolicitate>> {
+    return await Try(userMutations.sellerSolicitation, data);
   }
 }

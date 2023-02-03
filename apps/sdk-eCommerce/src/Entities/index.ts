@@ -10,3 +10,8 @@ export * from "./storeSolicitate.entitie";
 export * from "./user.entitie";
 export * from "./wallet.entitie";
 export * from "./walletHistory.entitie";
+export * from "./store.policies.entitie";
+export * from "./evaluation.entitie";
+export * from "./chat.entitie";
+export * from "./address.entitie";
+export * from "./documents.entitie";

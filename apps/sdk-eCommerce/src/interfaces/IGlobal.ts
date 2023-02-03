@@ -28,6 +28,9 @@ export interface IGlobalCategories {
   getAll(
     props: getAllProps
   ): Promise<Response<categoryErrors, getAllReturn<Category>>>;
+  getAllGlobals(
+    props: getAllProps
+  ): Promise<Response<categoryErrors, getAllReturn<Category>>>;
 }
 
 export interface IGlobalEmailSender {

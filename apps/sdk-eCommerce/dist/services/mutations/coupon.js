@@ -18,11 +18,11 @@ exports.couponMutation = {
             params: props,
         });
         if (!response.data)
-            return (0, Errors_1.throwError)("Não foi possível achar as categorias");
+            return (0, Errors_1.throwError)("Não foi possível achar os cupons");
         return (0, Errors_1.throwSuccess)(response.data);
     },
     createCoupon: async (data) => {
-        const response = await axiosInstances_1.apiEcommerce.post(`/coupons/}`, data);
+        const response = await axiosInstances_1.apiEcommerce.post(`/coupons`, data);
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível criar cupom");
         return (0, Errors_1.throwSuccess)(response.data);

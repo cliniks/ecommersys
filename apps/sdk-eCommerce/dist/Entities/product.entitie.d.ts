@@ -3,10 +3,11 @@ export declare type Product = {
     name: string;
     description: string;
     price: string;
+    regularPrice: string;
     imgs: string[];
     partners: string[];
     virtualProduct: boolean;
-    isActive?: boolean;
+    isActive: boolean;
     shippingInfo: {
         height: String;
         width: String;
@@ -15,7 +16,7 @@ export declare type Product = {
     owner: string;
     discount: discountType[];
     status: boolean;
-    categories: [];
+    categories: string[];
     statistics: {
         likes: number;
         likers: string[];

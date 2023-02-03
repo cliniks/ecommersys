@@ -12,11 +12,24 @@ export const cartMutations = {
     return throwSuccess(update.data);
   },
 
-  insertProduct: async (data: {
+  incrementProduct: async (data: {
+    cartId: string;
     productId: string;
-    amount: string;
+    amount: number;
   }): Promise<Either<cartErrors, Cart>> => {
-    const update = await apiEcommerce.patch(`/carts/insertProduct`, data);
+    const update = await apiEcommerce.patch(`/carts/incrementProduct`, data);
+
+    if (!update.data)
+      return throwError("Não foi possível adicionar o item ao carrinho");
+
+    return throwSuccess(update.data);
+  },
+  decrementProduct: async (data: {
+    cartId: string;
+    productId: string;
+    amount: number;
+  }): Promise<Either<cartErrors, Cart>> => {
+    const update = await apiEcommerce.patch(`/carts/decrementProduct`, data);
 
     if (!update.data)
       return throwError("Não foi possível adicionar o item ao carrinho");
@@ -25,10 +38,11 @@ export const cartMutations = {
   },
 
   removeProduct: async (data: {
+    cartId: string;
     productId: string;
     amount: number;
   }): Promise<Either<cartErrors, Cart>> => {
-    const update = await apiEcommerce.patch(`/carts/removeProduct`, data);
+    const update = await apiEcommerce.patch(`/carts/decrementProduct`, data);
 
     if (!update.data)
       return throwError("não foi possível remover item do carrinho");

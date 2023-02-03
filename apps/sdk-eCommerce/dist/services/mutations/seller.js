@@ -5,13 +5,6 @@ const Either_1 = require("../../Errors/Either");
 const axiosInstances_1 = require("../axiosInstances");
 /* A object with all the mutations that the user can do. */
 exports.sellerMutations = {
-    /* Creating a new user. */
-    solicitation: async (data) => {
-        const update = await axiosInstances_1.apiEcommerce.post(`/sellers`, data);
-        if (!update.data)
-            return (0, Either_1.throwError)("Não foi possível criar o usuário");
-        return (0, Either_1.throwSuccess)(update.data);
-    },
     /* Sending an email to the user with a token. */
     sendEmailToken: async (data) => {
         const update = await axiosInstances_1.apiEcommerce.post(`/sellers/createEmailToken`, data);
@@ -44,7 +37,7 @@ exports.sellerMutations = {
     },
     /* Getting the user from the database. */
     getAllStore: async (props) => {
-        const request = await axiosInstances_1.apiEcommerce.get(`/sellers`, { params: props });
+        const request = await axiosInstances_1.apiEcommerce.get(`/sellers/all`, { params: props });
         if (!request.data)
             return (0, Either_1.throwError)("Não foi possível encontrar este Usuário");
         return (0, Either_1.throwSuccess)(request.data);
@@ -92,6 +85,74 @@ exports.sellerMutations = {
         });
         if (!request.data)
             return (0, Either_1.throwError)("Não foi possível encontrar produtos desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getOneAddress: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/address/", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getMyAddress: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/address/myStoreAddress", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar produtos desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    addAddress: async (data) => {
+        const request = await axiosInstances_1.apiEcommerce.post("/address/seller", data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    updateAddress: async ({ addressId, data, }) => {
+        const request = await axiosInstances_1.apiEcommerce.post(`/address/${addressId}`, data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    deleteAddress: async ({ addressId }) => {
+        const request = await axiosInstances_1.apiEcommerce.delete(`/address/${addressId}`);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível deletar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getOnePolicy: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/sellers/policies", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getMyPolicies: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/sellers/policies/myPolicies", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    addPolicy: async (data) => {
+        const request = await axiosInstances_1.apiEcommerce.post("/sellers/policies", data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    updatePolicy: async ({ policyId, data, }) => {
+        const request = await axiosInstances_1.apiEcommerce.patch(`/sellers/policies/${policyId}`, data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    deletePolicy: async ({ policyId, }) => {
+        const request = await axiosInstances_1.apiEcommerce.delete(`/sellers/policies/${policyId}`);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível deletar policy desse Seller");
         return (0, Either_1.throwSuccess)(request.data);
     },
 };

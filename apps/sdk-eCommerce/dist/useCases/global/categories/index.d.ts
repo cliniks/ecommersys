@@ -8,4 +8,5 @@ export declare class GlobalCategories implements IGlobalCategories {
         value: string;
     }): Promise<Response<categoryErrors, Category>>;
     getAll(props: getAllProps): Promise<Response<categoryErrors, getAllReturn<Category>>>;
+    getAllGlobals(props: getAllProps): Promise<Response<categoryErrors, getAllReturn<Category>>>;
 }

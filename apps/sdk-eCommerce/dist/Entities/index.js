@@ -26,3 +26,8 @@ __exportStar(require("./storeSolicitate.entitie"), exports);
 __exportStar(require("./user.entitie"), exports);
 __exportStar(require("./wallet.entitie"), exports);
 __exportStar(require("./walletHistory.entitie"), exports);
+__exportStar(require("./store.policies.entitie"), exports);
+__exportStar(require("./evaluation.entitie"), exports);
+__exportStar(require("./chat.entitie"), exports);
+__exportStar(require("./address.entitie"), exports);
+__exportStar(require("./documents.entitie"), exports);

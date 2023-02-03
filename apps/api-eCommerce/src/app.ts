@@ -16,6 +16,8 @@ import { verifyers } from "./middlewares/verifyers";
 import { CategoryRouter } from "./router/categoryRouter";
 import { WebsocketImplementation } from "./providers/websobket/WebSocketImplementation";
 import { globalRouter } from "./router/globalRouter";
+import { AddressRouter } from "./router/addressRoutes";
+import { SellerPoliciesRoutes } from "./router/sellerPoliciesRoutes";
 
 class App {
   public server: any;
@@ -41,6 +43,12 @@ class App {
     this.server.use("/auth", verifyers.verifyAppToken, AuthRoutes);
     this.server.use("/carts", verifyers.verifyAppToken, CartRouter);
     this.server.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
+    this.server.use(
+      "/sellers/policies",
+      verifyers.verifyAppToken,
+      SellerPoliciesRoutes
+    );
+    this.server.use("/address", verifyers.verifyAppToken, AddressRouter);
     this.server.use(
       "/sellerSolicitate",
       verifyers.verifyAppToken,

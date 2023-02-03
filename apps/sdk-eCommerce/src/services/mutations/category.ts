@@ -1,6 +1,6 @@
 import { Category, Checkout } from "../../Entities";
 import { Either, throwError, throwSuccess } from "../../Errors";
-import { getAllProps } from "../../interfaces";
+import { getAllProps, getAllReturn } from "../../interfaces";
 import { apiEcommerce } from "../axiosInstances";
 
 /* A object with all the mutations that the checkout can do. */
@@ -33,11 +33,26 @@ export const categoryMutation = {
     return throwSuccess(response.data);
   },
 
+  getAllCategories: async (
+    props: getAllProps
+  ): Promise<Either<categoryErrors, getAllReturn<Checkout>>> => {
+    const response = await apiEcommerce.get(`/categories/all`, {
+      params: props,
+    });
+
+    if (!response.data) return throwError("Não foi possível achar o category");
+
+    return throwSuccess(response.data);
+  },
+
   getAllGlobalCategories: async (
     props: getAllProps
-  ): Promise<Either<categoryErrors, Checkout>> => {
-    const response = await apiEcommerce.get(`/categories`, {
-      params: { ...props, filter: { key: "isGlobal", value: true } },
+  ): Promise<Either<categoryErrors, getAllReturn<Checkout>>> => {
+    const response = await apiEcommerce.get(`/categories/all`, {
+      params: {
+        ...props,
+        filter: { ...props.filter, key: "isGlobal", value: "true" },
+      },
     });
 
     if (!response.data) return throwError("Não foi possível achar o category");

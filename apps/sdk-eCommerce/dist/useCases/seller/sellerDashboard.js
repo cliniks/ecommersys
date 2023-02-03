@@ -6,6 +6,7 @@ const sellerChat_1 = require("./sellerChat");
 const sellerCheckout_1 = require("./sellerCheckout");
 const sellerCoupon_1 = require("./sellerCoupon");
 const sellerOrder_1 = require("./sellerOrder");
+const sellerPolicies_1 = require("./sellerPolicies");
 const sellerProducts_1 = require("./sellerProducts");
 class sellerDashboard {
     constructor() {
@@ -14,6 +15,7 @@ class sellerDashboard {
         this.checkout = new sellerCheckout_1.sellerCheckout();
         this.coupon = new sellerCoupon_1.sellerCoupon();
         this.category = new sellerCategory_1.sellerCategory();
+        this.policy = new sellerPolicies_1.sellerPolicy();
         this.chat = new sellerChat_1.sellerChat();
     }
 }

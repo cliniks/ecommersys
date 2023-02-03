@@ -1,7 +1,10 @@
 export declare type Coupon = {
     _id?: string;
     name: string;
-    assined: string[];
+    productsAssigned: string[];
+    clientsAssigned: string[];
+    storesAssigned: string[];
+    categoriesAssigned: string[];
     description: string;
     type: "percentage" | "fixed" | "shipping";
     value: string;

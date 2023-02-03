@@ -6,11 +6,21 @@ const AddressRouter: Router = Router();
 
 AddressRouter.get("/", addressUseCases.FineOne);
 
-AddressRouter.get("/all", addressUseCases.FindAll);
+AddressRouter.get(
+  "/myUserAddress",
+  verifyers.verifyToken,
+  addressUseCases.FindAllUser
+);
 
-AddressRouter.get("/myCart", verifyers.verifyToken, addressUseCases.FindAll);
+AddressRouter.get(
+  "/myStoreAddress",
+  verifyers.verifyToken,
+  addressUseCases.FindAllStore
+);
 
-AddressRouter.post("/", addressUseCases.Add);
+AddressRouter.post("/user", addressUseCases.AddUser);
+
+AddressRouter.post("/seller", addressUseCases.AddSeller);
 
 AddressRouter.patch("/:id", addressUseCases.Update);
 

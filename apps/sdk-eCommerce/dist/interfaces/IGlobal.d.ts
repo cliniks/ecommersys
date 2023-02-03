@@ -22,6 +22,7 @@ export interface IGlobalUploads {
 export interface IGlobalCategories {
     getSingle(props: getSingleProps): Promise<Response<categoryErrors, Category>>;
     getAll(props: getAllProps): Promise<Response<categoryErrors, getAllReturn<Category>>>;
+    getAllGlobals(props: getAllProps): Promise<Response<categoryErrors, getAllReturn<Category>>>;
 }
 export interface IGlobalEmailSender {
     sendEmailToken: (data: {

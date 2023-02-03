@@ -8,6 +8,9 @@ class GlobalCategories {
         return await (0, utils_1.Try)(category_1.categoryMutation.getSingle, props);
     }
     async getAll(props) {
+        return await (0, utils_1.Try)(category_1.categoryMutation.getAllCategories, props);
+    }
+    async getAllGlobals(props) {
         return await (0, utils_1.Try)(category_1.categoryMutation.getAllGlobalCategories, props);
     }
 }

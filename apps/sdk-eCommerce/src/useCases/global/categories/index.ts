@@ -21,6 +21,11 @@ export class GlobalCategories implements IGlobalCategories {
   async getAll(
     props: getAllProps
   ): Promise<Response<categoryErrors, getAllReturn<Category>>> {
+    return await Try(categoryMutation.getAllCategories, props);
+  }
+  async getAllGlobals(
+    props: getAllProps
+  ): Promise<Response<categoryErrors, getAllReturn<Category>>> {
     return await Try(categoryMutation.getAllGlobalCategories, props);
   }
 }

@@ -9,9 +9,9 @@
     "dev": "nodemon --quiet .",
     "docker:build": "docker-compose build",
     "build": "rm -rf ./dist && npx tsc --declaration -p ./tsconfig.json",
+    "start": "node ./dist/server.js",
     "docker": "pnpm build && pnpm docker:build && docker-compose up -d",
     "start:docker": "pnpm docker && node ./dist/server.js",
-    "start": "node ./dist/server.js",
     "init:api": "pm2 start pnpm --name api -- dev"
   },
   "keywords": [],

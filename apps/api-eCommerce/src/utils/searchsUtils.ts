@@ -15,3 +15,18 @@ export const addMyOwnStoreInMySearch = (
   };
   return adjustedFilter;
 };
+
+export const addMyOwnUserInMySearch = (
+  filter: getAllProps["filter"],
+  user: User
+) => {
+  const filterStringAdjust =
+    typeof filter === "string" ? JSON.parse(filter) : filter;
+
+  let adjustedFilter = {
+    key: "owner" + " " + filterStringAdjust.key,
+    value: user._id + " " + filterStringAdjust.value,
+    fields: filterStringAdjust.fields,
+  };
+  return adjustedFilter;
+};

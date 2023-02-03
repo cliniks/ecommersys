@@ -21,9 +21,17 @@ exports.categoryMutation = {
             return (0, Errors_1.throwError)("Não foi possível achar o category");
         return (0, Errors_1.throwSuccess)(response.data);
     },
+    getAllCategories: async (props) => {
+        const response = await axiosInstances_1.apiEcommerce.get(`/categories/all`, {
+            params: props,
+        });
+        if (!response.data)
+            return (0, Errors_1.throwError)("Não foi possível achar o category");
+        return (0, Errors_1.throwSuccess)(response.data);
+    },
     getAllGlobalCategories: async (props) => {
-        const response = await axiosInstances_1.apiEcommerce.get(`/categories`, {
-            params: Object.assign(Object.assign({}, props), { filter: { key: "isGlobal", value: true } }),
+        const response = await axiosInstances_1.apiEcommerce.get(`/categories/all`, {
+            params: Object.assign(Object.assign({}, props), { filter: Object.assign(Object.assign({}, props.filter), { key: "isGlobal", value: "true" }) }),
         });
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível achar o category");

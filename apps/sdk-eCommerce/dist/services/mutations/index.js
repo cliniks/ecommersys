@@ -21,3 +21,4 @@ __exportStar(require("./validation"), exports);
 __exportStar(require("./cart"), exports);
 __exportStar(require("./checkout"), exports);
 __exportStar(require("./product"), exports);
+__exportStar(require("./admin"), exports);

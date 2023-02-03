@@ -1,6 +1,6 @@
-import { Cart, Checkout, Coupon } from "../../Entities";
+import { Coupon } from "../../Entities";
 import { Either, throwError, throwSuccess } from "../../Errors";
-import { getAllProps } from "../../interfaces";
+import { getAllProps, getAllReturn } from "../../interfaces";
 import { apiEcommerce } from "../axiosInstances";
 
 /* A object with all the mutations that the checkout can do. */
@@ -11,7 +11,7 @@ export const couponMutation = {
   }: {
     key: string;
     value: string;
-  }): Promise<Either<couponErrors, Checkout>> => {
+  }): Promise<Either<couponErrors, Coupon>> => {
     const response = await apiEcommerce.get(`/coupons/`, {
       params: { key, value },
     });
@@ -23,19 +23,18 @@ export const couponMutation = {
 
   getMyCoupons: async (
     props: getAllProps
-  ): Promise<Either<couponErrors, Coupon[]>> => {
+  ): Promise<Either<couponErrors, getAllReturn<Coupon>>> => {
     const response = await apiEcommerce.get(`/sellers/getMyCoupons`, {
       params: props,
     });
 
-    if (!response.data)
-      return throwError("Não foi possível achar as categorias");
+    if (!response.data) return throwError("Não foi possível achar os cupons");
 
     return throwSuccess(response.data);
   },
 
-  createCoupon: async (data: Coupon): Promise<Either<couponErrors, Cart>> => {
-    const response = await apiEcommerce.post(`/coupons/}`, data);
+  createCoupon: async (data: Coupon): Promise<Either<couponErrors, Coupon>> => {
+    const response = await apiEcommerce.post(`/coupons`, data);
 
     if (!response.data) return throwError("Não foi possível criar cupom");
 
@@ -48,7 +47,7 @@ export const couponMutation = {
   }: {
     couponId: string;
     data: Partial<Coupon>;
-  }): Promise<Either<couponErrors, Cart>> => {
+  }): Promise<Either<couponErrors, Coupon>> => {
     const response = await apiEcommerce.patch(`/coupons/${couponId}`, data);
 
     if (!response.data) return throwError("Não foi possível atualizar cupom");
@@ -60,7 +59,7 @@ export const couponMutation = {
     couponId,
   }: {
     couponId: String;
-  }): Promise<Either<couponErrors, Cart>> => {
+  }): Promise<Either<couponErrors, Coupon>> => {
     const request = await apiEcommerce.patch(`/coupons/utilize/${couponId}`);
 
     if (!request.data) return throwError("Não foi possível utilizar cupom");
@@ -70,7 +69,7 @@ export const couponMutation = {
 
   cancelCoupon: async (
     couponId: String
-  ): Promise<Either<couponErrors, Cart>> => {
+  ): Promise<Either<couponErrors, Coupon>> => {
     const response = await apiEcommerce.patch(`/coupons/${couponId}`, {
       isActive: false,
     });
@@ -87,5 +86,5 @@ export type couponErrors =
   | "Não foi possível criar cupom"
   | "Não foi possível atualizar cupom"
   | "Não foi possível utilizar cupom"
-  | "Não foi possível achar as categorias"
+  | "Não foi possível achar os cupons"
   | "Não foi possível cancelar cupom";

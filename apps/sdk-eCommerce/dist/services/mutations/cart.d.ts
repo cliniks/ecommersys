@@ -2,11 +2,18 @@ import { Cart } from "../../Entities";
 import { Either } from "../../Errors";
 export declare const cartMutations: {
     getMyCart: () => Promise<Either<cartErrors, Cart>>;
-    insertProduct: (data: {
+    incrementProduct: (data: {
+        cartId: string;
         productId: string;
-        amount: string;
+        amount: number;
+    }) => Promise<Either<cartErrors, Cart>>;
+    decrementProduct: (data: {
+        cartId: string;
+        productId: string;
+        amount: number;
     }) => Promise<Either<cartErrors, Cart>>;
     removeProduct: (data: {
+        cartId: string;
         productId: string;
         amount: number;
     }) => Promise<Either<cartErrors, Cart>>;

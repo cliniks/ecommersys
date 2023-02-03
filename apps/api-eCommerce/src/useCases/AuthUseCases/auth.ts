@@ -38,3 +38,14 @@ export const auth = async (req: Request, res: Response) => {
     ErrorHandling({ code: EnumErrorHandling.noUserWithThisEmail, res });
   }
 };
+
+export const verifyAccountExistence = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.body;
+    const verify = await User.getOne({ key: "username", value: username });
+    if (verify) return res.json(true);
+    res.json(false);
+  } catch (err) {
+    res.json(false);
+  }
+};

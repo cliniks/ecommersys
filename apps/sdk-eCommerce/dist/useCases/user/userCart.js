@@ -7,8 +7,11 @@ class userCart {
     async getMyCart() {
         return await (0, utils_1.Try)(services_1.cartMutations.getMyCart);
     }
-    async insertProduct(props) {
-        return await (0, utils_1.Try)(services_1.cartMutations.insertProduct, props);
+    async incrementProduct(props) {
+        return await (0, utils_1.Try)(services_1.cartMutations.incrementProduct, props);
+    }
+    async decrementProduct(props) {
+        return await (0, utils_1.Try)(services_1.cartMutations.decrementProduct, props);
     }
     async removeProduct(props) {
         return await (0, utils_1.Try)(services_1.cartMutations.removeProduct, props);

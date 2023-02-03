@@ -22,6 +22,7 @@ export class ConnectRepo {
   public address = createConnection("address_db");
   public evaluations = createConnection("evaluations_db");
   public sellers = createConnection("sellers_db");
+  public sellersPolicies = createConnection("sellerPolicies_db");
   public sellerSolicitations = createConnection("sellerSolicitations_db");
   public orders = createConnection("orders_db");
   public carts = createConnection("carts_db");

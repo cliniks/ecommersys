@@ -1,4 +1,5 @@
 import { Category, Checkout, Coupon, Product, Store } from "../Entities";
+import { StorePolicy } from "../Entities/store.policies.entitie";
 import { Response } from "../Errors";
 import { checkoutErrors, sellerErrors } from "../services";
 import { categoryErrors } from "../services/mutations/category";
@@ -17,6 +18,7 @@ export interface ISellerDashboard {
   checkout: ISellerDashboardCheckout;
   coupon: ISellerDashboardCoupon;
   category: ISellerDashboardCategory;
+  policy: ISellerDashboardPolicy;
   chat: ISellerDashboardChat;
 }
 
@@ -88,6 +90,27 @@ export interface ISellerDashboardCategory {
   cancel: (category: {
     categoryId: string;
   }) => Promise<Response<categoryErrors, Category>>;
+}
+
+export interface ISellerDashboardPolicy {
+  getSingle: (
+    props: getSingleProps
+  ) => Promise<Response<categoryErrors, StorePolicy>>;
+
+  getMyPolicies: (
+    props: getAllProps
+  ) => Promise<Response<categoryErrors, getAllReturn<StorePolicy>>>;
+
+  create: (data: StorePolicy) => Promise<Response<categoryErrors, StorePolicy>>;
+
+  update: (props: {
+    policyId: string;
+    data: Partial<StorePolicy>;
+  }) => Promise<Response<categoryErrors, StorePolicy>>;
+
+  delete: (policy: {
+    policyId: string;
+  }) => Promise<Response<categoryErrors, string>>;
 }
 
 export interface ISellerDashboardChat {

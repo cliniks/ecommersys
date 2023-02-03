@@ -1,13 +1,23 @@
+import { Product } from "./product.entitie";
 export declare type Cart = {
     _id?: string;
-    buyer: string;
-    isActive?: boolean;
-    productsInfo: ProductInfo[];
+    owner: string;
+    isActive: boolean;
+    products: ProductInfo[];
     createdAt?: Date;
-    uodatedAt?: Date;
+    updatedAt?: Date;
 };
 export declare type ProductInfo = {
     productId: string;
     amount: number;
-    size: string;
 };
+export declare type CartResponse = {
+    _id?: string;
+    owner: string;
+    isActive: boolean;
+    products: ProductsReturn[];
+    totalPrice: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+};
+export declare type ProductsReturn = ProductInfo & Product;

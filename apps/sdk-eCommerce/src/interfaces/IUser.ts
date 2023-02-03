@@ -1,4 +1,12 @@
-import { Cart, Product, UserInfo, User, Checkout, Store } from "../Entities";
+import {
+  Cart,
+  Product,
+  UserInfo,
+  User,
+  Checkout,
+  StoreSolicitate,
+  CartResponse,
+} from "../Entities";
 
 import {
   cartErrors,
@@ -6,28 +14,22 @@ import {
   authRes,
   productErrors,
   checkoutErrors,
-  sellerErrors,
 } from "../services";
 
 import { Response } from "../Errors";
 
-import {
-  userAccount,
-  userCart,
-  userCheckout,
-  userDashboard,
-  userOrder,
-  userProduct,
-} from "../useCases";
-import { getSingleProps } from "./IGlobal";
+import { getAllProps, getAllReturn, getSingleProps } from "./IGlobal";
+import { Address } from "../Entities/address.entitie";
+import { DocumentsType } from "../Entities/documents.entitie";
 
 export interface IUser {
-  account: userAccount;
-  product: userProduct;
-  cart: userCart;
-  order: userOrder;
-  checkout: userCheckout;
-  dashboard: userDashboard;
+  account: IUserAccount;
+  product: IUserProduct;
+  document: IUserDocument;
+  cart: IUserCart;
+  order: IUserOrder;
+  checkout: IUserCheckout;
+  dashboard: IUserDashboard;
 }
 
 export interface IUserAccount {
@@ -36,6 +38,17 @@ export interface IUserAccount {
     password: string;
   }) => Promise<Response<any, authRes>>;
   createNewUser: (data: FormData) => Promise<Response<userErrors, User>>;
+  getMyAddress: (
+    props: getAllProps
+  ) => Promise<Response<userErrors, getAllReturn<Address>>>;
+  addAddress: (address: Address) => Promise<Response<userErrors, Address>>;
+  updateAddress: (props: {
+    addressId: string;
+    data: Partial<Address>;
+  }) => Promise<Response<userErrors, Address>>;
+  deleteAddress: (props: {
+    addressId: string;
+  }) => Promise<Response<userErrors, string>>;
   getMyUser: () => Promise<Response<userErrors, User>>;
   updateUserInfo: (props: {
     id: string;
@@ -45,7 +58,9 @@ export interface IUserAccount {
     id: string;
     img: any;
   }) => Promise<Response<userErrors, User>>;
-  solicitSeller: () => Promise<Response<sellerErrors, Store>>;
+  solicitSeller: (
+    data: StoreSolicitate
+  ) => Promise<Response<userErrors, StoreSolicitate>>;
 }
 
 export interface IUserProduct {
@@ -62,14 +77,19 @@ export interface IUserProduct {
 }
 
 export interface IUserCart {
-  getMyCart(): Promise<Response<cartErrors, Cart>>;
-  insertProduct: (data: {
+  getMyCart(): Promise<Response<cartErrors, CartResponse>>;
+  incrementProduct: (data: {
     productId: string;
-    amount: string;
+    cartId: string;
+    amount: number;
+  }) => Promise<Response<cartErrors, Cart>>;
+  decrementProduct: (data: {
+    productId: string;
+    cartId: string;
+    amount: number;
   }) => Promise<Response<cartErrors, Cart>>;
   removeProduct: (data: {
     productId: string;
-    amount: string;
   }) => Promise<Response<cartErrors, Cart>>;
   insertCoupon: (CouponId: string) => Promise<Response<cartErrors, Cart>>;
   removeCoupon: (CouponId: string) => Promise<Response<cartErrors, Cart>>;
@@ -101,6 +121,24 @@ export interface IUserCheckout {
   cancelOpen: (
     checkoutId: string
   ) => Promise<Response<checkoutErrors, Checkout>>;
+}
+export interface IUserDocument {
+  getSingle: (
+    props: getSingleProps
+  ) => Promise<Response<userErrors, DocumentsType>>;
+  getMyDocuments: (
+    data: getAllProps
+  ) => Promise<Response<userErrors, getAllReturn<DocumentsType>>>;
+  addDocument: (
+    data: DocumentsType
+  ) => Promise<Response<userErrors, DocumentsType>>;
+  updateDocument: (data: {
+    documentId: string;
+    data: Partial<DocumentsType>;
+  }) => Promise<Response<userErrors, DocumentsType>>;
+  deleteDocument: (
+    documentId: string
+  ) => Promise<Response<userErrors, DocumentsType>>;
 }
 
 export interface IUserDashboard {}

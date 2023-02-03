@@ -21,10 +21,14 @@ export const UserSchema = new Schema(
     userInfo: {
       name: String,
       lastName: String,
-      fone: String,
       cpf: String,
+      cnpj: String,
+      cnae: String,
+      enterpriseSocial: String,
+      enterpriseName: String,
       address: String,
-      number: Number,
+      number: String,
+      phone: String,
       complement: String,
       birthDate: String,
       city: String,
@@ -80,11 +84,16 @@ export type User = {
 export type userInfo = {
   name: string;
   lastName: string;
-  fone: string;
   cpf: string;
+  cnpj: string;
+  cnae: string;
+  enterpriseSocial: string;
+  enterpriseName: string;
   address: string;
-  number: Number;
+  number: string;
+  phone: string;
   complement: string;
+  birthDate: string;
   city: string;
   state: string;
   cep: string;

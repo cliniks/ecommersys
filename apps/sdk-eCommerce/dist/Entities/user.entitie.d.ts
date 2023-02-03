@@ -22,10 +22,21 @@ export declare type User = {
 export declare type UserInfo = {
     name: string;
     lastName: string;
-    fone: string;
     cpf: string;
-    address: string[];
+    cnpj: string;
+    cnae: string;
+    enterpriseSocial: string;
+    enterpriseName: string;
+    address: string;
+    number: string;
+    phone: string;
+    complement: string;
+    birthDate: string;
+    city: string;
+    state: string;
+    cep: string;
     email: string;
+    otherAddress: string[];
 };
 export declare type userStatistics = {
     productsViews: string[];

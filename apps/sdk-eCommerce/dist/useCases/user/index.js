@@ -18,6 +18,7 @@ const userAccount_1 = require("./userAccount");
 const userCart_1 = require("./userCart");
 const userCheckout_1 = require("./userCheckout");
 const userDashboard_1 = require("./userDashboard");
+const userDocuments_1 = require("./userDocuments");
 const userOrder_1 = require("./userOrder");
 const userProducts_1 = require("./userProducts");
 __exportStar(require("./userAccount"), exports);
@@ -34,6 +35,7 @@ class User {
         this.cart = new userCart_1.userCart();
         this.order = new userOrder_1.userOrder();
         this.checkout = new userCheckout_1.userCheckout();
+        this.document = new userDocuments_1.userDocuments();
     }
 }
 exports.default = new User();

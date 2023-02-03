@@ -16,11 +16,23 @@ class userAccount {
     async updateUserInfo(props) {
         return await (0, utils_1.Try)(services_1.userMutations.updateUserInfo, props);
     }
+    async getMyAddress(props) {
+        return await (0, utils_1.Try)(services_1.userMutations.getMyAddress, props);
+    }
+    async addAddress(address) {
+        return await (0, utils_1.Try)(services_1.userMutations.addAddress, address);
+    }
+    async updateAddress(props) {
+        return await (0, utils_1.Try)(services_1.userMutations.updateAddress, props);
+    }
+    async deleteAddress(props) {
+        return await (0, utils_1.Try)(services_1.userMutations.deleteAddress, props);
+    }
     async updateUserImage(props) {
         return await (0, utils_1.Try)(services_1.userMutations.updateUserImage, props);
     }
-    async solicitSeller() {
-        return await (0, utils_1.Try)(services_1.sellerMutations.solicitation);
+    async solicitSeller(data) {
+        return await (0, utils_1.Try)(services_1.userMutations.sellerSolicitation, data);
     }
 }
 exports.userAccount = userAccount;

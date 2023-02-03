@@ -1,7 +1,8 @@
-import { Store, User, UserInfo } from "../../Entities";
+import { StoreSolicitate, User, UserInfo } from "../../Entities";
+import { Address } from "../../Entities/address.entitie";
 import { Response } from "../../Errors";
-import { IUserAccount } from "../../interfaces";
-import { authRes, sellerErrors, userErrors } from "../../services";
+import { IUserAccount, getAllProps, getAllReturn } from "../../interfaces";
+import { authRes, userErrors } from "../../services";
 export declare class userAccount implements IUserAccount {
     auth(props: {
         username: string;
@@ -13,9 +14,18 @@ export declare class userAccount implements IUserAccount {
         id: string;
         data: Partial<UserInfo>;
     }): Promise<Response<userErrors, User>>;
+    getMyAddress(props: getAllProps): Promise<Response<userErrors, getAllReturn<Address>>>;
+    addAddress(address: Address): Promise<Response<userErrors, Address>>;
+    updateAddress(props: {
+        addressId: string;
+        data: Partial<Address>;
+    }): Promise<Response<userErrors, Address>>;
+    deleteAddress(props: {
+        addressId: string;
+    }): Promise<Response<userErrors, string>>;
     updateUserImage(props: {
         id: string;
         img: any;
     }): Promise<Response<userErrors, User>>;
-    solicitSeller(): Promise<Response<sellerErrors, Store>>;
+    solicitSeller(data: StoreSolicitate): Promise<Response<userErrors, StoreSolicitate>>;
 }

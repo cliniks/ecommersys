@@ -1,13 +1,14 @@
 import { Category, Checkout } from "../../Entities";
 import { Either } from "../../Errors";
-import { getAllProps } from "../../interfaces";
+import { getAllProps, getAllReturn } from "../../interfaces";
 export declare const categoryMutation: {
     getSingle: ({ key, value, }: {
         key: string;
         value: string;
     }) => Promise<Either<categoryErrors, Checkout>>;
     getMyCategories: (props: getAllProps) => Promise<Either<categoryErrors, Checkout>>;
-    getAllGlobalCategories: (props: getAllProps) => Promise<Either<categoryErrors, Checkout>>;
+    getAllCategories: (props: getAllProps) => Promise<Either<categoryErrors, getAllReturn<Checkout>>>;
+    getAllGlobalCategories: (props: getAllProps) => Promise<Either<categoryErrors, getAllReturn<Checkout>>>;
     create: (data: Category) => Promise<Either<categoryErrors, Category>>;
     update: ({ categoryId, data, }: {
         categoryId: string;

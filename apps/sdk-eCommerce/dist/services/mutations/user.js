@@ -5,6 +5,13 @@ const Either_1 = require("../../Errors/Either");
 const axiosInstances_1 = require("../axiosInstances");
 /* A object with all the mutations that the user can do. */
 exports.userMutations = {
+    /* soliciteSeller. */
+    sellerSolicitation: async (data) => {
+        const update = await axiosInstances_1.apiEcommerce.post(`/sellerSolicitate`, data);
+        if (!update.data)
+            return (0, Either_1.throwError)("Não foi possível solicitar");
+        return (0, Either_1.throwSuccess)(update.data);
+    },
     /* Creating a new user. */
     createNewUser: async (data) => {
         const update = await axiosInstances_1.apiEcommerce.post(`/users`, data);
@@ -54,5 +61,73 @@ exports.userMutations = {
         if (!update.data)
             return (0, Either_1.throwError)("Não foi possível atualizar usuário");
         return (0, Either_1.throwSuccess)(update.data);
+    },
+    getOneAddress: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/address/", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar policy desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getMyAddress: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/address/myUserAddress", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar produtos desse Seller");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    addAddress: async (data) => {
+        const request = await axiosInstances_1.apiEcommerce.post("/address/user", data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar endereço");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    updateAddress: async ({ addressId, data, }) => {
+        const request = await axiosInstances_1.apiEcommerce.post(`/address/${addressId}`, data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar endereço");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    deleteAddress: async ({ addressId }) => {
+        const request = await axiosInstances_1.apiEcommerce.delete(`/address/${addressId}`);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível deletar endereço");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getMyDocuments: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/documents/myDocuments", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar documento");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getSingleDocument: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/documents", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar documento");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    addDocument: async (data) => {
+        const request = await axiosInstances_1.apiEcommerce.post("/documents", data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar documento");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    updateDocument: async ({ documentId, data, }) => {
+        const request = await axiosInstances_1.apiEcommerce.post(`/documents/${documentId}`, data);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível encontrar documento");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    deleteDocument: async ({ documentId }) => {
+        const request = await axiosInstances_1.apiEcommerce.delete(`/documents/${documentId}`);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível deletar documento");
+        return (0, Either_1.throwSuccess)(request.data);
     },
 };

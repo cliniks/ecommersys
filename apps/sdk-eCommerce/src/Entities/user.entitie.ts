@@ -23,11 +23,16 @@ export type User = {
 export type UserInfo = {
   name: string;
   lastName: string;
-  fone: string;
   cpf: string;
+  cnpj: string;
+  cnae: string;
+  enterpriseSocial: string;
+  enterpriseName: string;
   address: string;
-  number: Number;
+  number: string;
+  phone: string;
   complement: string;
+  birthDate: string;
   city: string;
   state: string;
   cep: string;

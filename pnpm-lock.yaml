@@ -207,7 +207,7 @@ importers:
       country-flag-icons: ^1.5.5
       cz-conventional-changelog: ^3.3.0
       date-fns: ^2.29.3
-      ecommersys: workspace:^1.4.3
+      ecommersys: workspace:^1.4.6
       filesize: ^10.0.5
       formik: ^2.2.9
       formik-mui: 5.0.0-alpha.0

@@ -1,22 +1,29 @@
-import { Cart } from "../../Entities";
+import { Cart, CartResponse } from "../../Entities";
 import { Response } from "../../Errors";
 import { IUserCart } from "../../interfaces";
 import { cartErrors, cartMutations } from "../../services";
 import { Try } from "../../utils";
 
 export class userCart implements IUserCart {
-  async getMyCart(): Promise<Response<cartErrors, Cart>> {
+  async getMyCart(): Promise<Response<cartErrors, CartResponse>> {
     return await Try(cartMutations.getMyCart);
   }
-  async insertProduct(props: {
+  async incrementProduct(props: {
     productId: string;
-    amount: string;
+    cartId: string;
+    amount: number;
   }): Promise<Response<cartErrors, Cart>> {
-    return await Try(cartMutations.insertProduct, props);
+    return await Try(cartMutations.incrementProduct, props);
+  }
+  async decrementProduct(props: {
+    productId: string;
+    cartId: string;
+    amount: number;
+  }): Promise<Response<cartErrors, Cart>> {
+    return await Try(cartMutations.decrementProduct, props);
   }
   async removeProduct(props: {
     productId: string;
-    amount: string;
   }): Promise<Response<cartErrors, Cart>> {
     return await Try(cartMutations.removeProduct, props);
   }

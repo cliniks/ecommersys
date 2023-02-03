@@ -24,6 +24,7 @@ export declare type storeInfo = {
     state: string;
     cep: string;
     email: string;
+    otherAddress: string[];
 };
 export declare type statistics = {
     views: number;

@@ -4,6 +4,7 @@ import {
   IUserCart,
   IUserCheckout,
   IUserDashboard,
+  IUserDocument,
   IUserOrder,
   IUserProduct,
 } from "../../interfaces/IUser";
@@ -12,6 +13,7 @@ import { userAccount } from "./userAccount";
 import { userCart } from "./userCart";
 import { userCheckout } from "./userCheckout";
 import { userDashboard } from "./userDashboard";
+import { userDocuments } from "./userDocuments";
 import { userOrder } from "./userOrder";
 import { userProduct } from "./userProducts";
 
@@ -29,6 +31,7 @@ class User implements IUser {
   public cart: IUserCart = new userCart();
   public order: IUserOrder = new userOrder();
   public checkout: IUserCheckout = new userCheckout();
+  public document: IUserDocument = new userDocuments();
 }
 
 export default new User();

@@ -1,21 +1,12 @@
 import { Store } from "../../Entities";
+import { Address } from "../../Entities/address.entitie";
+import { StorePolicy } from "../../Entities/store.policies.entitie";
 import { Either, throwError, throwSuccess } from "../../Errors/Either";
-import { getAllProps } from "../../interfaces";
+import { getAllProps, getSingleProps } from "../../interfaces";
 import { apiEcommerce } from "../axiosInstances";
 
 /* A object with all the mutations that the user can do. */
 export const sellerMutations = {
-  /* Creating a new user. */
-  solicitation: async (
-    data: FormData
-  ): Promise<Either<sellerErrors, Store>> => {
-    const update = await apiEcommerce.post(`/sellers`, data);
-
-    if (!update.data) return throwError("Não foi possível criar o usuário");
-
-    return throwSuccess(update.data);
-  },
-
   /* Sending an email to the user with a token. */
   sendEmailToken: async (data: {
     email: string;
@@ -71,7 +62,7 @@ export const sellerMutations = {
   getAllStore: async (
     props: getAllProps
   ): Promise<Either<sellerErrors, Store>> => {
-    const request = await apiEcommerce.get(`/sellers`, { params: props });
+    const request = await apiEcommerce.get(`/sellers/all`, { params: props });
 
     if (!request.data)
       return throwError("Não foi possível encontrar este Usuário");
@@ -152,6 +143,122 @@ export const sellerMutations = {
 
     if (!request.data)
       return throwError("Não foi possível encontrar produtos desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  getOneAddress: async (props: getSingleProps) => {
+    const request = await apiEcommerce.get("/address/", {
+      params: props,
+    });
+
+    if (!request.data)
+      return throwError("Não foi possível encontrar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  getMyAddress: async (props: getAllProps) => {
+    const request = await apiEcommerce.get("/address/myStoreAddress", {
+      params: props,
+    });
+
+    if (!request.data)
+      return throwError("Não foi possível encontrar produtos desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  addAddress: async (data: Address) => {
+    const request = await apiEcommerce.post("/address/seller", data);
+
+    if (!request.data)
+      return throwError("Não foi possível adicionar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  updateAddress: async ({
+    addressId,
+    data,
+  }: {
+    addressId: string;
+    data: Partial<Address>;
+  }) => {
+    const request = await apiEcommerce.post(`/address/${addressId}`, data);
+
+    if (!request.data)
+      return throwError("Não foi possível encontrar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+  deleteAddress: async ({ addressId }: { addressId: string }) => {
+    const request = await apiEcommerce.delete(`/address/${addressId}`);
+
+    if (!request.data)
+      return throwError("Não foi possível deletar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  getOnePolicy: async (props: getSingleProps) => {
+    const request = await apiEcommerce.get("/sellers/policies", {
+      params: props,
+    });
+
+    if (!request.data)
+      return throwError("Não foi possível encontrar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  getMyPolicies: async (props: getAllProps) => {
+    const request = await apiEcommerce.get("/sellers/policies/myPolicies", {
+      params: props,
+    });
+
+    if (!request.data)
+      return throwError("Não foi possível encontrar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  addPolicy: async (data: StorePolicy) => {
+    const request = await apiEcommerce.post("/sellers/policies", data);
+
+    if (!request.data)
+      return throwError("Não foi possível adicionar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+
+  updatePolicy: async ({
+    policyId,
+    data,
+  }: {
+    policyId: string;
+    data: Partial<StorePolicy>;
+  }) => {
+    const request = await apiEcommerce.patch(
+      `/sellers/policies/${policyId}`,
+      data
+    );
+
+    if (!request.data)
+      return throwError("Não foi possível encontrar policy desse Seller");
+
+    return throwSuccess(request.data);
+  },
+  deletePolicy: async ({
+    policyId,
+  }: {
+    policyId: string;
+    data: Partial<StorePolicy>;
+  }) => {
+    const request = await apiEcommerce.delete(`/sellers/policies/${policyId}`);
+
+    if (!request.data)
+      return throwError("Não foi possível deletar policy desse Seller");
 
     return throwSuccess(request.data);
   },

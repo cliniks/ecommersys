@@ -11,14 +11,20 @@ exports.cartMutations = {
             return (0, Errors_1.throwError)("Não foi possível achar o carrinho");
         return (0, Errors_1.throwSuccess)(update.data);
     },
-    insertProduct: async (data) => {
-        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/insertProduct`, data);
+    incrementProduct: async (data) => {
+        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/incrementProduct`, data);
+        if (!update.data)
+            return (0, Errors_1.throwError)("Não foi possível adicionar o item ao carrinho");
+        return (0, Errors_1.throwSuccess)(update.data);
+    },
+    decrementProduct: async (data) => {
+        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/decrementProduct`, data);
         if (!update.data)
             return (0, Errors_1.throwError)("Não foi possível adicionar o item ao carrinho");
         return (0, Errors_1.throwSuccess)(update.data);
     },
     removeProduct: async (data) => {
-        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/removeProduct`, data);
+        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/decrementProduct`, data);
         if (!update.data)
             return (0, Errors_1.throwError)("não foi possível remover item do carrinho");
         return (0, Errors_1.throwSuccess)(update.data);
