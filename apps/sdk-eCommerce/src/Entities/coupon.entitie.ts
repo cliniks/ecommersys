@@ -5,6 +5,7 @@ export type Coupon = {
   clientsAssigned: string[];
   storesAssigned: string[];
   categoriesAssigned: string[];
+  usedIds: string[];
   description: string;
   type: "percentage" | "fixed" | "shipping"; //confrimar todos os tipos
   value: string;

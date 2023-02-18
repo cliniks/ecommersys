@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const CategorySchema = new Schema(
@@ -6,7 +6,7 @@ export const CategorySchema = new Schema(
     name: String,
     description: String,
     hierarchy: String,
-    isGlobal: Boolean,
+    isGlobal: { type: Boolean, default: true },
     owner: String,
     isActive: { type: Boolean, default: true },
   },
@@ -17,13 +17,13 @@ export const CategorySchema = new Schema(
 CategorySchema.plugin(mongoosePaginate);
 
 export type Category = {
-  _id?: ObjectId;
-  name: String;
-  description: String;
-  hierarchy?: String;
+  _id?: string;
+  name: string;
+  description: string;
+  hierarchy?: string;
   isGlobal?: Boolean;
   isActive: Boolean;
-  owner?: String;
+  owner?: string;
   createdAt?: Date;
   updatedAt?: Date;
 };

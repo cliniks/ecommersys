@@ -7,8 +7,11 @@ class userProduct {
     async seeProduct({ productId, }) {
         return await (0, utils_1.Try)(services_1.userMutations.seeProduct, productId);
     }
-    async likeProduct({ productId, }) {
-        return await (0, utils_1.Try)(services_1.userMutations.seeProduct, productId);
+    async likeProduct(productId) {
+        return await (0, utils_1.Try)(services_1.productMutations.likeProduct, productId);
+    }
+    async favoriteProduct(productId) {
+        return await (0, utils_1.Try)(services_1.productMutations.favoriteProduct, productId);
     }
 }
 exports.userProduct = userProduct;

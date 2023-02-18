@@ -12,13 +12,13 @@ exports.cartMutations = {
         return (0, Errors_1.throwSuccess)(update.data);
     },
     incrementProduct: async (data) => {
-        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/incrementProduct`, data);
+        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/incrementProduct/${data.cartId}`, data);
         if (!update.data)
             return (0, Errors_1.throwError)("Não foi possível adicionar o item ao carrinho");
         return (0, Errors_1.throwSuccess)(update.data);
     },
     decrementProduct: async (data) => {
-        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/decrementProduct`, data);
+        const update = await axiosInstances_1.apiEcommerce.patch(`/carts/decrementProduct/${data.cartId}`, data);
         if (!update.data)
             return (0, Errors_1.throwError)("Não foi possível adicionar o item ao carrinho");
         return (0, Errors_1.throwSuccess)(update.data);
@@ -30,9 +30,7 @@ exports.cartMutations = {
         return (0, Errors_1.throwSuccess)(update.data);
     },
     insertCoupon: async (couponId) => {
-        const request = await axiosInstances_1.apiEcommerce.patch("/carts/insertCoupon", {
-            couponId,
-        });
+        const request = await axiosInstances_1.apiEcommerce.post("/carts/insertCoupon", couponId);
         if (!request.data)
             return (0, Errors_1.throwError)("Não foi possível adicionar cupom");
         return (0, Errors_1.throwSuccess)(request.data);

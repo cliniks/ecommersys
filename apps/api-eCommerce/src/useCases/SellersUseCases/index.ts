@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 
-import { SellersRepository } from "../../repositories/implementations/SellersRepository";
-
 import { add } from "../CrudUseCases/add";
 import { del } from "../CrudUseCases/delete";
 import { get } from "../CrudUseCases/get";
@@ -22,8 +20,9 @@ import { getMyProducts } from "./getMyProducts";
 import { getMyCategories } from "./getMyCategories";
 import { updateStoreImage } from "./updateStoreImage";
 import { updateStoreBanner } from "./updateStoreBanner";
+import { SellersRepository } from "../../repositories";
 
-const sellersRepo = new SellersRepository();
+const sellersRepo = SellersRepository;
 
 export const sellersUseCases = {
   FineOne: async (req: Request, res: Response) =>

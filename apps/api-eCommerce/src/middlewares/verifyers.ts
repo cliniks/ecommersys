@@ -2,16 +2,29 @@ import { Errback, NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { returnUserFromToken } from "../utils/returnUserFromToken";
 import { bearerTokenFromHeader } from "../utils/getFromHeaders";
+import { converToLocalTime } from "../utils/timeFunctions";
 
 const verifyers = {
   async verifyToken(req: Request, res: Response, next: NextFunction) {
     try {
       const token = `${req?.headers["x-access-token"]}`;
       const tokenSecret = `${process.env.TOKEN_SECRET}`;
+      const decode: any = jwt.decode(token);
+
+      const infos = {
+        date: converToLocalTime(new Date()),
+        path: req.originalUrl,
+        userId: decode?._id,
+      };
+
+      console.log(infos);
+
       jwt.verify(token, tokenSecret);
+
       next();
-    } catch (error: any | Errback) {
-      res.status(400).send(error.toString());
+    } catch (err: any) {
+      console.log("verifyToken:", err);
+      res.status(400).send(err.message);
     }
   },
   async verifyAppToken(req: Request, res: Response, next: NextFunction) {
@@ -22,8 +35,8 @@ const verifyers = {
       if (verify) next();
       else
         throw new Error("Token da aplicação é necessária, contate o supporte");
-    } catch (error: any | Errback) {
-      res.status(400).send(error.toString());
+    } catch (err: any) {
+      res.status(400).send(err.message);
     }
   },
   async verifySeller(req: Request, res: Response, next: NextFunction) {

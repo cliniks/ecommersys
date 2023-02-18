@@ -1,5 +1,5 @@
 import { User } from "../entities/user.entitie";
-import { getAllProps } from "../repositories/interfaces/ICrudRepository";
+import { getAllProps } from "../repositories/Interfaces";
 
 export const addMyOwnStoreInMySearch = (
   filter: getAllProps["filter"],

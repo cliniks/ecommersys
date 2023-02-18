@@ -1,3 +1,4 @@
-import { ICrudRepository } from "./ICrudRepository";
+import { ICrudRepository } from ".";
+import { StorePolicy } from "../../entities";
 
-export interface IStorePolicyRepository extends ICrudRepository {}
+export interface IStorePolicyRepository extends ICrudRepository<StorePolicy> {}

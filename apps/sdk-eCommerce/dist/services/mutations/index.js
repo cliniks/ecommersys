@@ -22,3 +22,7 @@ __exportStar(require("./cart"), exports);
 __exportStar(require("./checkout"), exports);
 __exportStar(require("./product"), exports);
 __exportStar(require("./admin"), exports);
+__exportStar(require("./category"), exports);
+__exportStar(require("./coupon"), exports);
+__exportStar(require("./upload"), exports);
+__exportStar(require("./payments"), exports);

@@ -30,6 +30,18 @@ exports.productMutations = {
             return (0, Either_1.throwError)("Não foi possível adicionar o produto");
         return (0, Either_1.throwSuccess)(products.data);
     },
+    favoriteProduct: async (productId) => {
+        const products = await axiosInstances_1.apiEcommerce.patch(`/products/favoriteProduct/${productId}`);
+        if (!products)
+            return (0, Either_1.throwError)("Não foi possível adicionar o produto");
+        return (0, Either_1.throwSuccess)(products.data);
+    },
+    likeProduct: async (productId) => {
+        const products = await axiosInstances_1.apiEcommerce.patch(`/products/likeProduct/${productId}`);
+        if (!products)
+            return (0, Either_1.throwError)("Não foi possível adicionar o produto");
+        return (0, Either_1.throwSuccess)(products.data);
+    },
     // addProductImg: async (
     //   img: Partial<Product>
     // ): Promise<Either<productErrors, Product>> => {

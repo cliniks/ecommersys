@@ -12,5 +12,7 @@ export declare const productMutations: {
         productId: string;
         data: Partial<Product>;
     }) => Promise<Either<productErrors, Product>>;
+    favoriteProduct: (productId: string) => Promise<Either<productErrors, Product>>;
+    likeProduct: (productId: string) => Promise<Either<productErrors, Product>>;
 };
 export declare type productErrors = "Não foi possível localizar produto" | "Não foi possível autenticar" | "Não foi possível adicionar o produto";

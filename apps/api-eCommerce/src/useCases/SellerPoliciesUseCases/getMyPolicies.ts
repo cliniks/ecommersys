@@ -1,30 +1,34 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
 import { addMyOwnStoreInMySearch } from "../../utils/searchsUtils";
-import { StorePoliciesRepository } from "../../repositories/implementations/StorePoliciesRepo";
+import {
+  IStorePolicyRepository,
+  getAllProps,
+} from "../../repositories/Interfaces";
 
-export const getMyPolicies = async (req: Request, res: Response) => {
+export const getMyPolicies = async (
+  req: Request,
+  res: Response,
+  repo: IStorePolicyRepository
+) => {
   try {
     let {
-      page = 1,
+      page = 0,
       size = 10,
       filter = { key: "", value: "", fields: "" },
     }: getAllProps = req.query;
 
     const user = await returnUserFromToken(req);
 
-    const policies = new StorePoliciesRepository();
-
-    const findMyPolicies = await policies.getAll({
+    const findMyPolicies = await repo.getAll({
       page,
       size,
       filter: addMyOwnStoreInMySearch(filter, user),
     });
 
-    res.json(findMyPolicies);
+    return res.json(findMyPolicies);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

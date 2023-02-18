@@ -2,7 +2,6 @@ import express, { NextFunction, Request } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { router } from "./router/mainRouter";
-import { GatewayPagRepository } from "./repositories/implementations/GatewayPagImplements";
 import { SellersRoutes } from "./router/sellersRoutes";
 import { CartRouter } from "./router/cartsRouter";
 import { SalesRoutes } from "./router/salesRoutes";
@@ -18,6 +17,11 @@ import { WebsocketImplementation } from "./providers/websobket/WebSocketImplemen
 import { globalRouter } from "./router/globalRouter";
 import { AddressRouter } from "./router/addressRoutes";
 import { SellerPoliciesRoutes } from "./router/sellerPoliciesRoutes";
+import { CouponsRouter } from "./router/couponsRouter";
+import { documentRouter } from "./router/documentRouter";
+import { GatewayPagImplementation } from "./repositories";
+import { paymentMethodsRouter } from "./router/paymentMethodsRouter";
+import { adminRoutes } from "./router/adminRoutes";
 
 class App {
   public server: any;
@@ -27,7 +31,7 @@ class App {
     this.middlewares();
     this.routes();
     this.exceptionHandler();
-    new GatewayPagRepository();
+    new GatewayPagImplementation();
   }
 
   async middlewares() {
@@ -50,6 +54,11 @@ class App {
     );
     this.server.use("/address", verifyers.verifyAppToken, AddressRouter);
     this.server.use(
+      "/payments",
+      verifyers.verifyAppToken,
+      paymentMethodsRouter
+    );
+    this.server.use(
       "/sellerSolicitate",
       verifyers.verifyAppToken,
       SellerSolicitateRoutes
@@ -58,22 +67,29 @@ class App {
     this.server.use("/products", verifyers.verifyAppToken, ProductsRoutes);
     this.server.use("/users", verifyers.verifyAppToken, UsersRoutes);
     this.server.use("/categories", verifyers.verifyAppToken, CategoryRouter);
-    this.server.use("/coupons", verifyers.verifyAppToken, CategoryRouter);
+    this.server.use("/coupons", verifyers.verifyAppToken, CouponsRouter);
     this.server.use("/globals", verifyers.verifyAppToken, globalRouter);
+    this.server.use("/documents", verifyers.verifyAppToken, documentRouter);
+    this.server.use(
+      "/admin",
+      verifyers.verifyAppToken,
+      verifyers.verifyAdmin,
+      adminRoutes
+    );
   }
 
   exceptionHandler() {
     this.server.use(
       async (err: any, _: Request, res: any, _next: NextFunction) => {
         if (process.env.NODE_ENV === "development") {
-          return ErrorHandling({
+          ErrorHandling({
             code: EnumErrorHandling.exception,
             message: err.toString(),
             res,
           });
         }
         // return res.status(500).json({ error: "Internal server error" });
-        return ErrorHandling({
+        ErrorHandling({
           code: EnumErrorHandling.exception,
           message: err.toString(),
           res,

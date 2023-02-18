@@ -1,11 +1,11 @@
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../entities/user.entitie";
-import { UsersRepository } from "../repositories/implementations/UsersRepository";
+import { UsersRepository } from "../repositories";
 
 const returnUserFromToken = async (req: Request): Promise<User> => {
   try {
-    const repo = new UsersRepository();
+    const repo = UsersRepository;
 
     const token = req.headers["x-access-token"];
 
@@ -20,21 +20,21 @@ const returnUserFromToken = async (req: Request): Promise<User> => {
 
     return user;
   } catch (error) {
-    throw new Error("Não foi possível achar um usuário a partir desse token!");
+    return null;
   }
 };
 
 const getUserFromToken = async (token: string): Promise<User> => {
   try {
-    const repo = new UsersRepository();
+    const repo = UsersRepository;
     const decoded: User | any = jwt.decode(`${token}`);
-    const userID = decoded._id;
+    const { userID } = decoded;
     return (await repo.getOne({
       key: "_id",
       value: userID,
     })) as User;
   } catch (error) {
-    throw new Error("Não foi possível achar um usuário a partir desse token!");
+    return null;
   }
 };
 

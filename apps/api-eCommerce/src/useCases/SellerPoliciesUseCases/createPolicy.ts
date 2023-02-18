@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
+import { IStorePolicyRepository } from "../../repositories/Interfaces";
 
 export const createPolicy = async (
   req: Request,
   res: Response,
-  repository: any
+  repository: IStorePolicyRepository
 ) => {
   try {
     const user = await returnUserFromToken(req);

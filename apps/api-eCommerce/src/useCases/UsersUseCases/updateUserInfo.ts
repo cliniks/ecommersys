@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
+import { IUsersRepository } from "../../repositories/Interfaces";
 
 export const updateUserInfo = async (
   req: Request,
@@ -9,9 +9,11 @@ export const updateUserInfo = async (
 ) => {
   try {
     const user = await returnUserFromToken(req);
-    res.json(await repository.updateUserInfo(user, req.body));
+
+    return res.json(await repository.updateUserInfo(user, req.body));
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível atualziar");
+
+    return res.status(400).send("não foi possível atualziar");
   }
 };

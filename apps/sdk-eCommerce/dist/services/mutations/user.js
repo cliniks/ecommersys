@@ -12,6 +12,17 @@ exports.userMutations = {
             return (0, Either_1.throwError)("Não foi possível solicitar");
         return (0, Either_1.throwSuccess)(update.data);
     },
+    verifySolicitation: async (id) => {
+        const update = await axiosInstances_1.apiEcommerce.get(`/sellerSolicitate`, {
+            params: {
+                key: "owner",
+                value: id,
+            },
+        });
+        if (!update.data)
+            return (0, Either_1.throwError)("Não foi possível solicitar");
+        return (0, Either_1.throwSuccess)(update.data);
+    },
     /* Creating a new user. */
     createNewUser: async (data) => {
         const update = await axiosInstances_1.apiEcommerce.post(`/users`, data);
@@ -84,6 +95,12 @@ exports.userMutations = {
             return (0, Either_1.throwError)("Não foi possível adicionar endereço");
         return (0, Either_1.throwSuccess)(request.data);
     },
+    setDefaultAddress: async (addressId) => {
+        const request = await axiosInstances_1.apiEcommerce.post(`/address/setDefault/${addressId}`);
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar endereço");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
     updateAddress: async ({ addressId, data, }) => {
         const request = await axiosInstances_1.apiEcommerce.post(`/address/${addressId}`, data);
         if (!request.data)
@@ -98,6 +115,14 @@ exports.userMutations = {
     },
     getMyDocuments: async (props) => {
         const request = await axiosInstances_1.apiEcommerce.get("/documents/myDocuments", {
+            params: props,
+        });
+        if (!request.data)
+            return (0, Either_1.throwError)("Não foi possível adicionar documento");
+        return (0, Either_1.throwSuccess)(request.data);
+    },
+    getAllDocuments: async (props) => {
+        const request = await axiosInstances_1.apiEcommerce.get("/documents/all", {
             params: props,
         });
         if (!request.data)
@@ -119,7 +144,7 @@ exports.userMutations = {
         return (0, Either_1.throwSuccess)(request.data);
     },
     updateDocument: async ({ documentId, data, }) => {
-        const request = await axiosInstances_1.apiEcommerce.post(`/documents/${documentId}`, data);
+        const request = await axiosInstances_1.apiEcommerce.patch(`/documents/${documentId}`, data);
         if (!request.data)
             return (0, Either_1.throwError)("Não foi possível encontrar documento");
         return (0, Either_1.throwSuccess)(request.data);

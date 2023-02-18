@@ -20,6 +20,11 @@ export class userDocuments implements IUserDocument {
   ): Promise<Response<userErrors, getAllReturn<DocumentsType>>> {
     return Try(userMutations.getMyDocuments, data);
   }
+  async getAllDocuments(
+    data: getAllProps
+  ): Promise<Response<userErrors, getAllReturn<DocumentsType>>> {
+    return Try(userMutations.getAllDocuments, data);
+  }
   async addDocument(
     data: DocumentsType
   ): Promise<Response<userErrors, DocumentsType>> {
@@ -31,9 +36,9 @@ export class userDocuments implements IUserDocument {
   }): Promise<Response<userErrors, DocumentsType>> {
     return Try(userMutations.updateDocument, data);
   }
-  async deleteDocument(
-    documentId: string
-  ): Promise<Response<userErrors, DocumentsType>> {
+  async deleteDocument(documentId: {
+    documentId: string;
+  }): Promise<Response<userErrors, DocumentsType>> {
     return Try(userMutations.deleteDocument, documentId);
   }
 }

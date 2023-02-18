@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { ProductsRepository } from "../../repositories/implementations/ProductsRepository";
-import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
 import { addMyOwnStoreInMySearch } from "../../utils/searchsUtils";
+import { getAllProps } from "../../repositories/Interfaces";
+import { ProductsRepository } from "../../repositories";
 
 export const getMyProducts = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const getMyProducts = async (req: Request, res: Response) => {
     }: getAllProps = req.query;
     const user = await returnUserFromToken(req);
 
-    const products = new ProductsRepository();
+    const products = ProductsRepository;
 
     const findMyProducts = await products.getAll({
       page,
@@ -21,9 +21,9 @@ export const getMyProducts = async (req: Request, res: Response) => {
       filter: addMyOwnStoreInMySearch(filter, user),
     });
 
-    res.json(findMyProducts);
+    return res.json(findMyProducts);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

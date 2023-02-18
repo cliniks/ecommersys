@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
-import { CouponRepository } from "../../repositories/implementations/CouponRepository";
 import { addMyOwnStoreInMySearch } from "../../utils/searchsUtils";
+import { CouponsRepository } from "../../repositories";
+import { getAllProps } from "../../repositories/Interfaces";
 
-export const getMyCoupons = async (req: Request, res: Response) => {
+export const getMyCouponsFunc = async (req: Request, res: Response) => {
   try {
     let {
       page = 1,
@@ -12,9 +12,11 @@ export const getMyCoupons = async (req: Request, res: Response) => {
       filter = { key: "", value: "", fields: "" },
     }: getAllProps = req.query;
 
+    console.log(req.query);
+
     const user = await returnUserFromToken(req);
 
-    const coupons = new CouponRepository();
+    const coupons = CouponsRepository;
 
     const findMyCoupons = await coupons.getAll({
       page,
@@ -22,9 +24,9 @@ export const getMyCoupons = async (req: Request, res: Response) => {
       filter: addMyOwnStoreInMySearch(filter, user),
     });
 
-    res.json(findMyCoupons);
+    return res.json(findMyCoupons);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

@@ -9,4 +9,4 @@ export type StorePolicy = {
   updatedAt?: Date;
 };
 
-export type PolicyType = "devolution" | "payment" | "repayment | exchange";
+export type PolicyType = "devolution" | "payment" | "repayment" | "exchange";

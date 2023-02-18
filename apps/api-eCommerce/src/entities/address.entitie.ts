@@ -4,8 +4,9 @@ export const AddressSchema = new Schema(
   {
     owner: String,
     address: String,
-    number: Number,
+    number: String,
     complement: String,
+    district: String,
     city: String,
     state: String,
     country: String,
@@ -19,14 +20,15 @@ export const AddressSchema = new Schema(
 
 export type Address = {
   _id?: string;
-  owner: String;
-  address: String;
-  number: Number;
-  complement: String;
-  city: String;
-  state: String;
-  country: String;
-  zipCode: String;
-  createdAt: String;
-  updatedAt: string;
+  owner: string;
+  address: string;
+  number: string;
+  complement: string;
+  district: string;
+  city: string;
+  state: string;
+  country: string;
+  zipCode: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

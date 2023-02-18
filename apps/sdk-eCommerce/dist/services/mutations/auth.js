@@ -15,4 +15,10 @@ exports.authMutations = {
         (0, axiosInstances_1.updateInterceptor)({ ["x-access-token"]: verify.data.accessToken });
         return (0, Either_1.throwSuccess)(verify.data);
     },
+    verifyToken: async (token) => {
+        const verify = await axiosInstances_1.apiEcommerce.post("auth/verifyToken", { token });
+        if (!verify)
+            return (0, Either_1.throwError)("Não foi possível autenticar");
+        return (0, Either_1.throwSuccess)(verify.data);
+    },
 };

@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const WalletHistorySchema = new Schema(
@@ -22,7 +22,7 @@ export const WalletHistorySchema = new Schema(
 WalletHistorySchema.plugin(mongoosePaginate);
 
 export type HistoryData = {
-  _id?: ObjectId;
+  _id?: string;
   owner: string;
   description: string;
   in?: number;

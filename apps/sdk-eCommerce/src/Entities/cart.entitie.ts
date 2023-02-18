@@ -20,8 +20,10 @@ export type CartResponse = {
   isActive: boolean;
   products: ProductsReturn[];
   totalPrice: number;
+  totalDiscount: number;
+  coupons: string[];
   createdAt?: Date;
   updatedAt?: Date;
 };
 
-export type ProductsReturn = ProductInfo & Product;
+export type ProductsReturn = ProductInfo & Product & { discountValue: number };

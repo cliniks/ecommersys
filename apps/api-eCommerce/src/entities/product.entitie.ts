@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const ProductSchema = new Schema(
@@ -9,6 +9,7 @@ export const ProductSchema = new Schema(
     },
     description: String,
     price: String,
+    regularPrice: String,
     virtualProduct: Boolean,
     imgs: [String],
     partners: [String],
@@ -16,6 +17,7 @@ export const ProductSchema = new Schema(
     shippingInfo: {
       height: String,
       width: String,
+      length: String,
       weight: String,
     },
     owner: String,
@@ -52,18 +54,20 @@ export const ProductSchema = new Schema(
 ProductSchema.plugin(mongoosePaginate);
 
 export type Product = {
-  _id?: ObjectId;
+  _id?: string;
   name: string;
   description: string;
   price: string;
+  regularPrice: string;
   imgs: string[];
   partners: string[];
   virtualProduct: boolean;
   isActive: boolean;
   shippingInfo: {
-    height: String;
-    width: String;
-    weight: String;
+    height: string;
+    width: string;
+    weight: string;
+    length: string;
   };
   owner: string;
   discount: discountType[];

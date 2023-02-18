@@ -1,13 +1,22 @@
 import { Request, Response } from "express";
-import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
 import bcrypt from "bcrypt";
-import { ApiGP } from "../../services/ApiGatewayPag";
-import { fileType } from "../../repositories/Interfaces/IS3Repository";
-import { S3Repository } from "../../repositories/implementations/S3Repository";
 import util from "util";
 import fs from "fs";
+import {
+  AddressesRepository,
+  CartsRepository,
+  S3Repository,
+} from "../../repositories";
+import { IUsersRepository, fileType } from "../../repositories/Interfaces";
+import { clientAssasProvider } from "../../providers";
+import { Address, Cart } from "../../entities";
 const s3 = new S3Repository();
 const unlinkFile = util.promisify(fs.unlink);
+
+const asaasClients = clientAssasProvider;
+
+const AddressRepo = AddressesRepository;
+const cartRepo = CartsRepository;
 
 export const newUser = async (
   req: Request,
@@ -47,15 +56,25 @@ export const newUser = async (
 
     const user = await repository.addOne(userData);
 
-    const createAsaasIntegration = await ApiGP.addClient(user, repository);
+    const addAddress = await AddressRepo.addOne({
+      ...user.userInfo,
+      owner: `${user._id}`,
+    } as Address);
 
-    const updateUser = await repository.update(user._id, {
-      gatewayPagId: createAsaasIntegration.id,
+    await repository.update(`${user._id}`, {
+      userInfo: { ...user.userInfo, defaultAddress: `${addAddress._id}` },
     });
 
-    res.json(updateUser);
+    await cartRepo.addOne({ owner: `${user._id}` } as Cart);
+
+    const createAsaasIntegration = await asaasClients.newClient({ data: user });
+
+    return res.json(createAsaasIntegration);
   } catch (err: any) {
     const { code, keyValue } = err;
-    res.json(`Código ${code}: Erro ao adicionar usuário: ${err.toString()}`);
+    console.log(code, keyValue);
+    return res.json(
+      `Código ${code}: Erro ao adicionar usuário: ${err.toString()}`
+    );
   }
 };

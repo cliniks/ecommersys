@@ -1,41 +1,87 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const Checkout = new Schema(
   {
     owner: String,
-    products: [
+    coupons: [String],
+    address: {
+      district: String,
+      address: String,
+      number: String,
+      complement: String,
+      city: String,
+      state: String,
+      country: String,
+      zipCode: String,
+    },
+    store: [
       {
         storeId: String,
-        store: {},
-        items: [],
+        products: [
+          {
+            productId: String,
+            qnt: Number,
+            value: String,
+            discount: String,
+          },
+        ],
         meValuePreview: String,
+        value: String,
+        discount: String,
       },
     ],
+    totalValue: String,
+    totalDiscount: String,
+    paymentMethods: [
+      { paymentType: String, paymentMethodId: String, value: String },
+    ],
     isActive: { type: Boolean, default: true },
-    meId: String,
-    asaasId: String,
   },
   {
     timestamps: true,
   }
 );
+
 Checkout.plugin(mongoosePaginate);
 
 export type Checkout = {
-  _id?: ObjectId;
-  owner: String;
-  products: Products[];
+  _id?: string;
+  owner: string;
+  products: CheckoutProducts[];
   isActive: boolean;
-  meId: String;
-  asaasId: String;
+  address: {
+    district: string;
+    address: string;
+    number: string;
+    complement: string;
+    city: string;
+    state: string;
+    country: string;
+    zipCode: string;
+  };
+  paymentMethods: CheckoutPaymentMethods[];
   createdAt?: Date;
   updatedAt?: Date;
 };
 
-export type Products = {
-  storeId: String;
-  store: {};
-  items: [];
-  meValuePreview: String;
+export type CheckoutPaymentMethods = {
+  paymentType: string;
+  value: string;
+  paymentMethodId: string;
+};
+
+export type CheckoutStore = {
+  storeId: string;
+  products: CheckoutProducts[];
+  meValuePreview?: string;
+  value?: String;
+  discount?: String;
+};
+
+export type CheckoutProducts = {
+  productId: string;
+  qnt: number;
+  value?: String;
+  discount?: String;
 };

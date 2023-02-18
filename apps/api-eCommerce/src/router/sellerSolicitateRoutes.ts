@@ -14,10 +14,22 @@ SellerSolicitateRoutes.post(
   sellersSolicitateUseCases.Solicitate
 );
 
+SellerSolicitateRoutes.delete(
+  "/:id",
+  verifyers.verifyToken,
+  sellersSolicitateUseCases.delete
+);
+
 SellerSolicitateRoutes.post(
   "/confirm/:id",
   verifyers.verifyToken,
   sellersSolicitateUseCases.Confirm
+);
+
+SellerSolicitateRoutes.post(
+  "/reject/:id",
+  verifyers.verifyToken,
+  sellersSolicitateUseCases.Reject
 );
 
 export { SellerSolicitateRoutes };

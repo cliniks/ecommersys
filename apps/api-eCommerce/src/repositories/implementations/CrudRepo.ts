@@ -1,16 +1,18 @@
-import mongoose from "mongoose";
+import { Model } from "mongoose";
 import {
-  getAllProps,
-  getOneProps,
   ICrudRepository,
-} from "../interfaces/ICrudRepository";
-import { verifyIsNumber } from "../../utils/numberMethods";
+  getAllProps,
+  getAllReturn,
+  getOneProps,
+} from "../Interfaces";
 
-export class CrudRepo implements ICrudRepository {
-  constructor(private model: mongoose.Model<any>) {}
+// import { verifyIsNumber } from "../../utils/numberMethods";
+
+export class CrudRepo<E> implements ICrudRepository<E> {
+  constructor(private model: Model<E>) {}
 
   async getOne({ key, value }: getOneProps) {
-    return await this.model.findOne({ [key]: value });
+    return await this.model.findOne({ [key as any]: value });
   }
 
   async getAll({ page = 1, size = 10, filter }: getAllProps) {
@@ -32,19 +34,19 @@ export class CrudRepo implements ICrudRepository {
       value: arrayFromKeyValues[index],
     }));
 
-    let query = {};
+    let query: any = [];
 
-    splitedObjects?.map((item) => {
+    splitedObjects?.forEach((item) => {
       if (item) {
         const prepareValue = prepareFilterQuery({ filter: item });
-        query = { ...query, ...prepareValue };
+        query.push(prepareValue);
       }
     });
 
-    console.log({ ...query });
+    console.log("query", query);
 
     let data = await this.model
-      .find(query)
+      .find(query.length > 0 ? { $and: query } : {})
       .sort({ register: -1 })
       .skip(+size * (+page > 0 ? +page - 1 : 0))
       .limit(+size)
@@ -52,7 +54,7 @@ export class CrudRepo implements ICrudRepository {
 
     const count = await this.model.countDocuments(data);
 
-    let obj = {
+    let obj: getAllReturn<E> = {
       result: data,
       totalItems: +count,
       pageSize: +size,
@@ -63,13 +65,15 @@ export class CrudRepo implements ICrudRepository {
     return obj;
   }
 
-  async addOne(data: any) {
-    return (await this.model.create(data)).save();
+  async addOne(data: E) {
+    const add = await this.model.create(data);
+    const newDoc = add.save();
+    return newDoc as E;
   }
 
   async update(id: string, data: any) {
     await this.model.findByIdAndUpdate(id, data);
-    return await this.getOne({ key: "_id", value: id });
+    return await this.model.findById(id);
   }
 
   async delete(id: string) {
@@ -88,12 +92,14 @@ const prepareFilterQuery = ({ filter }: { filter: getAllProps["filter"] }) => {
 
   const filterValue = verifyFilter.value;
 
-  if (!filterValue) return {};
+  if (!filterValue || filterValue === undefined || filterValue === "undefined")
+    return {};
 
   const filterValueIsBool =
     typeof filterValue === "boolean" || ["true", "false"].includes(filterValue);
 
-  const filterValueIsNumber = verifyIsNumber(filterValue);
+  // const filterValueIsNumber = verifyIsNumber(filterValue);
+  const filterValueIsNumber = typeof filterValue === "number";
 
   if (
     (filterValueIsNumber || filterValueIsBool) &&
@@ -103,6 +109,43 @@ const prepareFilterQuery = ({ filter }: { filter: getAllProps["filter"] }) => {
   }
 
   const regEx = new RegExp(filterValue, "i");
+
+  if (verifyFilter.key === "startDate") {
+    return { createdAt: { $gte: new Date(filterValue) } };
+  }
+
+  if (verifyFilter.key === "endDate") {
+    return { createdAt: { $lte: new Date(filterValue) } };
+  }
+
+  if (verifyFilter.key === "startEdit") {
+    return { updatedAt: { $gte: new Date(filterValue) } };
+  }
+
+  if (verifyFilter.key === "endEdit") {
+    return { updatedAt: { $lte: new Date(filterValue) } };
+  }
+
+  if (verifyFilter.key === "minPrice") {
+    return {
+      $expr: { $gte: [{ $toDouble: "$price" }, +verifyFilter.value || 0] },
+    };
+  }
+
+  if (verifyFilter.key === "maxPrice") {
+    return {
+      $expr: { $lte: [{ $toDouble: "$price" }, +verifyFilter.value || 2000] },
+    };
+  }
+
+  if (verifyFilter.key === "_id" || verifyFilter.key === "access") {
+    const value = !isNaN(verifyFilter.value)
+      ? +verifyFilter.value
+      : verifyFilter.value;
+    return {
+      [verifyFilter.key]: value,
+    };
+  }
 
   return {
     [verifyFilter.key]: { $regex: regEx },

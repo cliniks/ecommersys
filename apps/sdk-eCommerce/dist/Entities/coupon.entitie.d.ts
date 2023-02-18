@@ -5,6 +5,7 @@ export declare type Coupon = {
     clientsAssigned: string[];
     storesAssigned: string[];
     categoriesAssigned: string[];
+    usedIds: string[];
     description: string;
     type: "percentage" | "fixed" | "shipping";
     value: string;

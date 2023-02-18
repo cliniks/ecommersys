@@ -25,6 +25,13 @@ export const authMutations = {
 
     return throwSuccess(verify.data);
   },
+  verifyToken: async (token: string) => {
+    const verify = await apiEcommerce.post("auth/verifyToken", { token });
+
+    if (!verify) return throwError("Não foi possível autenticar");
+
+    return throwSuccess(verify.data);
+  },
 };
 
 export type AuthErrors =

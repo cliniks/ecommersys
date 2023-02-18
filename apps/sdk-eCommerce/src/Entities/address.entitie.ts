@@ -5,6 +5,7 @@ export type Address = {
   number: Number;
   complement: String;
   city: String;
+  district: string;
   state: String;
   country: String;
   zipCode: String;

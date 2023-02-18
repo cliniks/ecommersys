@@ -4,7 +4,7 @@ export declare type User = {
     password: string;
     wallet: string;
     img: string;
-    userInfo: UserInfo;
+    userInfo: userInfo;
     melhorEnvioID: string;
     gatewayPagId: string;
     gatewayPagApiKey: string;
@@ -19,24 +19,27 @@ export declare type User = {
     createdAt?: Date;
     updatedAt?: Date;
 };
-export declare type UserInfo = {
+export declare type userInfo = {
     name: string;
     lastName: string;
     cpf: string;
     cnpj: string;
     cnae: string;
     enterpriseSocial: string;
+    personType: "juridica" | "fisica";
     enterpriseName: string;
+    district: string;
     address: string;
     number: string;
     phone: string;
     complement: string;
     birthDate: string;
+    country: string;
     city: string;
     state: string;
-    cep: string;
+    zipCode: string;
     email: string;
-    otherAddress: string[];
+    defaultAddress: String;
 };
 export declare type userStatistics = {
     productsViews: string[];

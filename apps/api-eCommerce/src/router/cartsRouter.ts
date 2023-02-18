@@ -4,16 +4,34 @@ import { cartsUseCases } from "../useCases/CartsUseCases";
 
 const CartRouter: Router = Router();
 
-CartRouter.get("/", cartsUseCases.FineOne);
+CartRouter.get("/", verifyers.verifyToken, cartsUseCases.FineOne);
 
 CartRouter.get("/all", verifyers.verifyAdmin, cartsUseCases.FindAll);
 
-CartRouter.get("/myCart", verifyers.verifyToken, cartsUseCases.FindAll);
+CartRouter.get("/getMyCart", verifyers.verifyToken, cartsUseCases.getMyCart);
 
-CartRouter.post("/", cartsUseCases.Add);
+CartRouter.post("/", verifyers.verifyToken, cartsUseCases.Add);
 
-CartRouter.patch("/:id", cartsUseCases.Update);
+CartRouter.patch("/:id", verifyers.verifyToken, cartsUseCases.Update);
 
-CartRouter.delete("/:id", cartsUseCases.Delete);
+CartRouter.patch(
+  "/incrementProduct/:id",
+  verifyers.verifyToken,
+  cartsUseCases.increment
+);
+
+CartRouter.patch(
+  "/decrementProduct/:id",
+  verifyers.verifyToken,
+  cartsUseCases.decrement
+);
+
+CartRouter.post(
+  "/insertCoupon/",
+  verifyers.verifyToken,
+  cartsUseCases.insertCoupon
+);
+
+CartRouter.delete("/:id", verifyers.verifyToken, cartsUseCases.Delete);
 
 export { CartRouter };

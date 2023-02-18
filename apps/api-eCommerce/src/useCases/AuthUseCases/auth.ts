@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import { UsersRepository } from "../../repositories/implementations/UsersRepository";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../../entities/user.entitie";
-import { ErrorHandling } from "../../errors/ErrorHandling";
 import { EnumErrorHandling } from "../../errors/enumErrors";
+import { UsersRepository } from "../../repositories";
 
-const User = new UsersRepository();
+const User = UsersRepository;
 
 export const auth = async (req: Request, res: Response) => {
   try {
@@ -28,14 +27,13 @@ export const auth = async (req: Request, res: Response) => {
           seller: user.storeId,
         });
       } else {
-        ErrorHandling({ code: EnumErrorHandling.incorrectPassword, res });
+        throw new Error(EnumErrorHandling[EnumErrorHandling.incorrectPassword]);
       }
     } else {
-      ErrorHandling({ code: EnumErrorHandling.noUserWithThisEmail, res });
+      throw new Error(EnumErrorHandling[EnumErrorHandling.noUserWithThisEmail]);
     }
-  } catch (error) {
-    console.log(error);
-    ErrorHandling({ code: EnumErrorHandling.noUserWithThisEmail, res });
+  } catch (error: any) {
+    res.status(400).send(error.toString());
   }
 };
 
@@ -44,8 +42,8 @@ export const verifyAccountExistence = async (req: Request, res: Response) => {
     const { username } = req.body;
     const verify = await User.getOne({ key: "username", value: username });
     if (verify) return res.json(true);
-    res.json(false);
+    return res.json(false);
   } catch (err) {
-    res.json(false);
+    return res.json(false);
   }
 };

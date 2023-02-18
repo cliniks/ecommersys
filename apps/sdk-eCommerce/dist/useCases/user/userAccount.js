@@ -7,6 +7,9 @@ class userAccount {
     async auth(props) {
         return (0, utils_1.Try)(services_1.authMutations.auth, props);
     }
+    async verifyToken(token) {
+        return (0, utils_1.Try)(services_1.authMutations.verifyToken, token);
+    }
     async createNewUser(data) {
         return await (0, utils_1.Try)(services_1.userMutations.createNewUser, data);
     }
@@ -22,6 +25,9 @@ class userAccount {
     async addAddress(address) {
         return await (0, utils_1.Try)(services_1.userMutations.addAddress, address);
     }
+    async setDefaultAddress(addressId) {
+        return await (0, utils_1.Try)(services_1.userMutations.setDefaultAddress, addressId);
+    }
     async updateAddress(props) {
         return await (0, utils_1.Try)(services_1.userMutations.updateAddress, props);
     }
@@ -33,6 +39,9 @@ class userAccount {
     }
     async solicitSeller(data) {
         return await (0, utils_1.Try)(services_1.userMutations.sellerSolicitation, data);
+    }
+    async verifySolicitation(id) {
+        return await (0, utils_1.Try)(services_1.userMutations.verifySolicitation, id);
     }
 }
 exports.userAccount = userAccount;

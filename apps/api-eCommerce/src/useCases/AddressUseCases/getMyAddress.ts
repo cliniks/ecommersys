@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
 import {
   addMyOwnStoreInMySearch,
   addMyOwnUserInMySearch,
 } from "../../utils/searchsUtils";
-import { AddressRepository } from "../../repositories/implementations/AddressRepository";
+import { IAddressRepository, getAllProps } from "../../repositories/Interfaces";
 
-export const getMyStoreAddress = async (req: Request, res: Response) => {
+export const getMyStoreAddress = async (
+  req: Request,
+  res: Response,
+  addresses: IAddressRepository
+) => {
   try {
     let {
       page = 1,
@@ -16,8 +19,6 @@ export const getMyStoreAddress = async (req: Request, res: Response) => {
     }: getAllProps = req.query;
 
     const user = await returnUserFromToken(req);
-
-    const addresses = new AddressRepository();
 
     const findMyAddresses = await addresses.getAll({
       page,
@@ -25,14 +26,18 @@ export const getMyStoreAddress = async (req: Request, res: Response) => {
       filter: addMyOwnStoreInMySearch(filter, user),
     });
 
-    res.json(findMyAddresses);
+    return res.json(findMyAddresses);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };
 
-export const getMyUserAddress = async (req: Request, res: Response) => {
+export const getMyUserAddress = async (
+  req: Request,
+  res: Response,
+  addresses: IAddressRepository
+) => {
   try {
     let {
       page = 1,
@@ -42,17 +47,15 @@ export const getMyUserAddress = async (req: Request, res: Response) => {
 
     const user = await returnUserFromToken(req);
 
-    const addresses = new AddressRepository();
-
     const findMyAddresses = await addresses.getAll({
       page,
       size,
       filter: addMyOwnUserInMySearch(filter, user),
     });
 
-    res.json(findMyAddresses);
+    return res.json(findMyAddresses);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
+import { ISellersRepository } from "../../repositories/Interfaces";
 
 export const getMyStore = async (
   req: Request,
@@ -15,9 +15,9 @@ export const getMyStore = async (
       value: user.storeId,
     });
 
-    res.json(findMyStore);
+    return res.json(findMyStore);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

@@ -1,14 +1,18 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const CouponSchema = new Schema(
   {
-    assined: [],
     name: {
       type: String,
       require: true,
       unique: true,
     },
+    productsAssigned: [String],
+    clientsAssigned: [String],
+    storesAssigned: [String],
+    categoriesAssigned: [String],
+    usedIds: [String],
     description: String,
     type: String,
     value: String,
@@ -30,14 +34,18 @@ export const CouponSchema = new Schema(
 CouponSchema.plugin(mongoosePaginate);
 
 export type Coupon = {
-  _id?: ObjectId;
+  _id?: string;
   name: string;
-  assined: string[];
+  productsAssigned: string[];
+  clientsAssigned: string[];
+  storesAssigned: string[];
+  categoriesAssigned: string[];
+  usedIds: string[];
   description: string;
   type: "percentage" | "fixed" | "shipping"; //confrimar todos os tipos
   value: string;
   minValue: string;
-  maxValue?: String;
+  maxValue?: string;
   used: number;
   limitForUse: number;
   isCashBack: boolean;

@@ -19,4 +19,8 @@ ProductsRoutes.patch("/:id", productsUseCases.Update);
 
 ProductsRoutes.delete("/:id", productsUseCases.Delete);
 
+ProductsRoutes.patch("/likeProduct/:id", productsUseCases.likeProduct);
+
+ProductsRoutes.patch("/favoriteProduct/:id", productsUseCases.favoriteProduct);
+
 export { ProductsRoutes };

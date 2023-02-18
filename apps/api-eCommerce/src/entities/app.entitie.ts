@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const appSchema = new Schema(
@@ -30,7 +30,7 @@ export const appSchema = new Schema(
 appSchema.plugin(mongoosePaginate);
 
 export type App = {
-  _id?: ObjectId;
+  _id?: string;
   tokens: Tokens;
   appInfo: AppInfo;
   username: string;

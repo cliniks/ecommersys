@@ -5,7 +5,7 @@ export declare type StoreSolicitate = {
     name: string;
     storeInfo: storeInfo;
     isActive: boolean;
-    owner?: string | User;
+    owner?: User;
     createdAt?: Date;
     updatedAt?: Date;
 };

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { MailSenderProvider } from "../../providers/implementations/MailSenderProvider";
 import { SendCodeEmail } from "../../Emails/templates/emailTemplates";
-import { RedisImplementation } from "../../repositories/implementations/RedisRepo";
-import { IRedisRepository } from "../../repositories/Interfaces/IRedisRepository";
+import { MailSenderProvider } from "../../providers/implementations/MailSenderProvider";
+import { RedisImplementation } from "../../repositories";
+import { IRedisRepository } from "../../repositories/Interfaces";
 
 const mailSender = new MailSenderProvider();
 const cache: IRedisRepository = new RedisImplementation();
@@ -34,7 +34,7 @@ export const confirmEmailToken = async (req: Request, res: Response) => {
   const cacheData = await cache.getHashData(email);
 
   if (!cacheData)
-    res.status(400).send("Não possui um registro com esse código!");
+    return res.status(400).send("Não possui um registro com esse código!");
 
   if (code === cacheData.code) {
     await cache.removeData(email);

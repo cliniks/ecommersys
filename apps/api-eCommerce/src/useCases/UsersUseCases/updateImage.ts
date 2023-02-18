@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
-import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
-import { S3Repository } from "../../repositories/implementations/S3Repository";
+
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { fileType } from "../../repositories/Interfaces/IS3Repository";
+
+import { S3Repository } from "../../repositories";
+
+import { IUsersRepository, fileType } from "../../repositories/Interfaces";
+
 const s3 = new S3Repository();
 
 export const updateImage = async (
@@ -19,7 +22,9 @@ export const updateImage = async (
       if (file) {
         try {
           console.log(file);
+
           const upload = await s3.uploadImage(file);
+
           return upload.Location;
         } catch (err) {
           return null;
@@ -30,8 +35,8 @@ export const updateImage = async (
 
     const newImage = (await img()) as string;
 
-    res.json(await repository.updateImage(user, newImage));
+    return res.json(await repository.updateImage(user, newImage));
   } catch (err) {
-    res.status(400).send("não foi possível atualizar a imagem");
+    return res.status(400).send("não foi possível atualizar a imagem");
   }
 };

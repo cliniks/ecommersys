@@ -10,6 +10,9 @@ class userDocuments {
     async getMyDocuments(data) {
         return (0, utils_1.Try)(services_1.userMutations.getMyDocuments, data);
     }
+    async getAllDocuments(data) {
+        return (0, utils_1.Try)(services_1.userMutations.getAllDocuments, data);
+    }
     async addDocument(data) {
         return (0, utils_1.Try)(services_1.userMutations.addDocument, data);
     }

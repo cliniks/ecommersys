@@ -3,6 +3,7 @@ import { Router } from "express";
 import { sellersUseCases } from "../useCases/SellersUseCases";
 import multer from "multer";
 import { SellerPoliciesRoutes } from "./sellerPoliciesRoutes";
+
 const upload = multer({ dest: "uploads/" });
 
 const SellersRoutes: Router = Router();
@@ -31,7 +32,7 @@ SellersRoutes.patch(
 
 SellersRoutes.patch(
   "/updateStoreBanner",
-  upload.single("banner"),
+  upload.single("img"),
   sellersUseCases.updateStoreBanner
 );
 

@@ -27,8 +27,8 @@ export class userCart implements IUserCart {
   }): Promise<Response<cartErrors, Cart>> {
     return await Try(cartMutations.removeProduct, props);
   }
-  async insertCoupon(CouponId: string): Promise<Response<cartErrors, Cart>> {
-    return await Try(cartMutations.insertCoupon, CouponId);
+  async insertCoupon(couponId: string): Promise<Response<cartErrors, Cart>> {
+    return await Try(cartMutations.insertCoupon, couponId);
   }
   async removeCoupon(CouponId: string): Promise<Response<cartErrors, Cart>> {
     return await Try(cartMutations.getMyCart, CouponId);

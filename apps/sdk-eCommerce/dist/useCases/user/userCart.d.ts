@@ -17,7 +17,7 @@ export declare class userCart implements IUserCart {
     removeProduct(props: {
         productId: string;
     }): Promise<Response<cartErrors, Cart>>;
-    insertCoupon(CouponId: string): Promise<Response<cartErrors, Cart>>;
+    insertCoupon(couponId: string): Promise<Response<cartErrors, Cart>>;
     removeCoupon(CouponId: string): Promise<Response<cartErrors, Cart>>;
     insertAddress(AddressId: string): Promise<Response<cartErrors, Cart>>;
     removeAddress(AddressId: string): Promise<Response<cartErrors, Cart>>;

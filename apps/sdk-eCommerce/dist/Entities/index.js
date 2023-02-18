@@ -31,3 +31,5 @@ __exportStar(require("./evaluation.entitie"), exports);
 __exportStar(require("./chat.entitie"), exports);
 __exportStar(require("./address.entitie"), exports);
 __exportStar(require("./documents.entitie"), exports);
+__exportStar(require("./admin.entitie"), exports);
+__exportStar(require("./commission.entitie"), exports);

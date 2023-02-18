@@ -1,51 +1,45 @@
 import { Socket } from "socket.io";
-import { User } from "../../../entities/user.entitie";
+import { MessageType, RoomType, User } from "../../../entities";
 import {
-  Chat,
-  Message,
-  MessageType,
-  Room,
-  RoomType,
-} from "../../../entities/chat.entitie";
-import { IChatRepository } from "../../../repositories/Interfaces/IChatRepository";
+  IChatRepository,
+  IRoomRepository,
+  IMessageRepository,
+} from "../../../repositories/Interfaces";
 
 export const chatMethods = async (
   socket: Socket<any>,
   user: Promise<User>,
-  repo: IChatRepository
+  chatRepo: IChatRepository,
+  roomRepo: IRoomRepository,
+  messageRepo: IMessageRepository
 ) => {
   socket.on("createRoom", async (body: RoomType) => {
     const User = await user;
-    let chat = await repo.getOne({ key: "owner", value: User._id });
+    let chat = await chatRepo.getOne({ key: "owner", value: User._id });
 
     if (!chat) {
-      const newChat = await repo.addOne(
-        new Chat({
-          owner: `${User._id}`,
-          isActive: true,
-          rooms: [],
-        })
-      );
+      const newChat = await chatRepo.addOne({
+        owner: `${User._id}`,
+        isActive: true,
+        rooms: [],
+      });
       console.log("newChat", newChat);
       chat = newChat;
     }
 
     console.log("chat", chat);
 
-    const newRoom = await repo.roomRepo.addOne(
-      new Room({
-        ...body,
-        users: `${body.users}${User._id}`,
-        modified: new Date(),
-        messages: [],
-      })
-    );
+    const newRoom = await roomRepo.addOne({
+      ...body,
+      users: `${body.users}${User._id}`,
+      modified: new Date(),
+      messages: [],
+    });
 
     console.log("newRoom", newRoom);
 
-    const updateChat = await repo.update(chat._id, {
-      $push: { rooms: newRoom },
-    });
+    const pushRoom: any = { $push: { rooms: newRoom } };
+    const updateChat = await chatRepo.update(`${chat._id}`, pushRoom);
 
     console.log("updateChat", updateChat);
 
@@ -53,11 +47,19 @@ export const chatMethods = async (
   });
 
   socket.on("connectRoom", async (body: { roomId: string }) => {
-    const room = await repo.roomRepo.getOne({ key: "_id", value: body.roomId });
+    const room = await roomRepo.getOne({ key: "_id", value: body.roomId });
 
-    const roomMessages: MessageType[] = await repo.roomRepo.messageRepo.getAll({
-      filter: { key: "roomId", value: body.roomId, fields: "sender type body" },
-    });
+    const roomMessages: MessageType[] = (
+      await messageRepo.getAll({
+        page: 0,
+        size: 100,
+        filter: {
+          key: "roomId",
+          value: body.roomId,
+          fields: "sender type body",
+        },
+      })
+    ).result;
 
     const roomObj = { room, messages: roomMessages };
 
@@ -71,17 +73,17 @@ export const chatMethods = async (
       sender: User._id,
       date: new Date(),
     });
-    const message = new Message({
+    const message = {
       ...body,
       sender: `${User._id}`,
-    });
+    };
     console.log(message);
   });
 
   socket.on("listAllChats", async () => {
-    const chats = await repo.getAll({});
-    const rooms = await repo.roomRepo.getAll({});
-    const messages = await repo.roomRepo.messageRepo.getAll({});
+    const chats = await chatRepo.getAll({});
+    const rooms = await roomRepo.getAll({});
+    const messages = await messageRepo.getAll({});
 
     socket.emit("list", {
       chats: chats,

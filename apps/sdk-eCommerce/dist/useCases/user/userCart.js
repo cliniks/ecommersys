@@ -16,8 +16,8 @@ class userCart {
     async removeProduct(props) {
         return await (0, utils_1.Try)(services_1.cartMutations.removeProduct, props);
     }
-    async insertCoupon(CouponId) {
-        return await (0, utils_1.Try)(services_1.cartMutations.insertCoupon, CouponId);
+    async insertCoupon(couponId) {
+        return await (0, utils_1.Try)(services_1.cartMutations.insertCoupon, couponId);
     }
     async removeCoupon(CouponId) {
         return await (0, utils_1.Try)(services_1.cartMutations.getMyCart, CouponId);

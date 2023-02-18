@@ -8,10 +8,10 @@ export const getCards = async (
 ) => {
   try {
     // retornar todos os cards
-    res.json({});
+    return res.json({});
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };
 
@@ -22,10 +22,10 @@ export const getCard = async (
 ) => {
   try {
     // retornar um card
-    res.json({});
+    return res.json({});
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };
 
@@ -36,10 +36,10 @@ export const addCard = async (
 ) => {
   try {
     // adicionar um card
-    res.json({});
+    return res.json({});
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };
 
@@ -50,10 +50,10 @@ export const updateCard = async (
 ) => {
   try {
     // atualizar um card
-    res.json({});
+    return res.json({});
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };
 
@@ -64,10 +64,10 @@ export const deleteCard = async (
 ) => {
   try {
     // deletar um card
-    res.json({});
+    return res.json({});
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };
 
@@ -84,9 +84,9 @@ export const paymentsPageInfo = async (
     // retornar transferências
     // retornar transferências
 
-    res.json({});
+    return res.json({});
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

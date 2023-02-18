@@ -1,6 +1,6 @@
 {
   "name": "ecommersys",
-  "version": "1.6.2",
+  "version": "1.7.4",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

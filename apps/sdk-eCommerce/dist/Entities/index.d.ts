@@ -15,3 +15,5 @@ export * from "./evaluation.entitie";
 export * from "./chat.entitie";
 export * from "./address.entitie";
 export * from "./documents.entitie";
+export * from "./admin.entitie";
+export * from "./commission.entitie";

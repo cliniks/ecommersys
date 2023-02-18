@@ -1,11 +1,11 @@
 import {
   Cart,
   Product,
-  UserInfo,
   User,
   Checkout,
   StoreSolicitate,
   CartResponse,
+  userInfo,
 } from "../Entities";
 
 import {
@@ -14,6 +14,7 @@ import {
   authRes,
   productErrors,
   checkoutErrors,
+  paymentMethodsErrors,
 } from "../services";
 
 import { Response } from "../Errors";
@@ -21,11 +22,16 @@ import { Response } from "../Errors";
 import { getAllProps, getAllReturn, getSingleProps } from "./IGlobal";
 import { Address } from "../Entities/address.entitie";
 import { DocumentsType } from "../Entities/documents.entitie";
+import {
+  PaymentMethodType,
+  tokenizeType,
+} from "../Entities/paymentMethod.entitie";
 
 export interface IUser {
   account: IUserAccount;
   product: IUserProduct;
   document: IUserDocument;
+  payment: IUserPayment;
   cart: IUserCart;
   order: IUserOrder;
   checkout: IUserCheckout;
@@ -42,6 +48,7 @@ export interface IUserAccount {
     props: getAllProps
   ) => Promise<Response<userErrors, getAllReturn<Address>>>;
   addAddress: (address: Address) => Promise<Response<userErrors, Address>>;
+  setDefaultAddress: (addressId: string) => Promise<Response<userErrors, User>>;
   updateAddress: (props: {
     addressId: string;
     data: Partial<Address>;
@@ -52,7 +59,7 @@ export interface IUserAccount {
   getMyUser: () => Promise<Response<userErrors, User>>;
   updateUserInfo: (props: {
     id: string;
-    data: Partial<UserInfo>;
+    data: Partial<userInfo>;
   }) => Promise<Response<userErrors, User>>;
   updateUserImage: (props: {
     id: string;
@@ -60,6 +67,9 @@ export interface IUserAccount {
   }) => Promise<Response<userErrors, User>>;
   solicitSeller: (
     data: StoreSolicitate
+  ) => Promise<Response<userErrors, StoreSolicitate>>;
+  verifySolicitation: (
+    id: string
   ) => Promise<Response<userErrors, StoreSolicitate>>;
 }
 
@@ -69,11 +79,22 @@ export interface IUserProduct {
   }: {
     productId: string;
   }): Promise<Response<productErrors, Product>>;
-  likeProduct({
-    productId,
-  }: {
-    productId: string;
-  }): Promise<Response<productErrors, Product>>;
+  likeProduct(productId: string): Promise<Response<productErrors, Product>>;
+  favoriteProduct(productId: string): Promise<Response<productErrors, Product>>;
+}
+export interface IUserPayment {
+  myUserCards(): Promise<
+    Response<paymentMethodsErrors, getAllReturn<PaymentMethodType>>
+  >;
+  mySellerCards(): Promise<
+    Response<paymentMethodsErrors, getAllReturn<PaymentMethodType>>
+  >;
+  addPaymentMethod(
+    data: tokenizeType
+  ): Promise<Response<paymentMethodsErrors, PaymentMethodType>>;
+  deletePaymentMethod(
+    id: string
+  ): Promise<Response<paymentMethodsErrors, string>>;
 }
 
 export interface IUserCart {
@@ -91,7 +112,7 @@ export interface IUserCart {
   removeProduct: (data: {
     productId: string;
   }) => Promise<Response<cartErrors, Cart>>;
-  insertCoupon: (CouponId: string) => Promise<Response<cartErrors, Cart>>;
+  insertCoupon: (couponId: string) => Promise<Response<cartErrors, Cart>>;
   removeCoupon: (CouponId: string) => Promise<Response<cartErrors, Cart>>;
   insertAddress: (AddressId: string) => Promise<Response<cartErrors, Cart>>;
   removeAddress: (AddressId: string) => Promise<Response<cartErrors, Cart>>;
@@ -122,11 +143,15 @@ export interface IUserCheckout {
     checkoutId: string
   ) => Promise<Response<checkoutErrors, Checkout>>;
 }
+
 export interface IUserDocument {
   getSingle: (
     props: getSingleProps
   ) => Promise<Response<userErrors, DocumentsType>>;
   getMyDocuments: (
+    data: getAllProps
+  ) => Promise<Response<userErrors, getAllReturn<DocumentsType>>>;
+  getAllDocuments: (
     data: getAllProps
   ) => Promise<Response<userErrors, getAllReturn<DocumentsType>>>;
   addDocument: (
@@ -136,9 +161,9 @@ export interface IUserDocument {
     documentId: string;
     data: Partial<DocumentsType>;
   }) => Promise<Response<userErrors, DocumentsType>>;
-  deleteDocument: (
-    documentId: string
-  ) => Promise<Response<userErrors, DocumentsType>>;
+  deleteDocument: (documentId: {
+    documentId: string;
+  }) => Promise<Response<userErrors, DocumentsType>>;
 }
 
 export interface IUserDashboard {}

@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const StoreSchema = new Schema(
@@ -19,17 +19,24 @@ export const StoreSchema = new Schema(
     segments: [],
     storeInfo: {
       cnpj: String,
+      cnae: String,
       address: String,
-      number: Number,
+      number: String,
       complement: String,
+      enterpriseSocial: String,
+      enterpriseName: String,
+      phone: String,
       city: String,
       state: String,
-      cep: String,
+      country: String,
+      district: String,
+      zipCode: String,
       email: String,
     },
     isActive: { type: Boolean, default: true },
     melhorEnvioID: String,
     asaasID: String,
+    asaasWalletId: String,
     asaasApiKey: String,
     owner: { type: String, required: true, unique: true },
     products: [],
@@ -53,7 +60,7 @@ export const StoreSchema = new Schema(
 StoreSchema.plugin(mongoosePaginate);
 
 export type Store = {
-  _id?: ObjectId;
+  _id?: string;
   name: string;
   wallet?: wallet;
   img?: string;
@@ -62,6 +69,7 @@ export type Store = {
   storeInfo: storeInfo;
   melhorEnvioID?: string;
   asaasID?: string;
+  asaasWalletId?: string;
   asaasApiKey?: string;
   owner: string;
   products?: string[];
@@ -84,12 +92,18 @@ export type wallet = {
 
 export type storeInfo = {
   cnpj: string;
+  cnae: string;
   address: string;
-  number: number;
+  number: string;
   complement: string;
+  enterpriseSocial: string;
+  enterpriseName: string;
+  phone: string;
   city: string;
   state: string;
-  cep: string;
+  country: string;
+  district: string;
+  zipCode: string;
   email: string;
 };
 

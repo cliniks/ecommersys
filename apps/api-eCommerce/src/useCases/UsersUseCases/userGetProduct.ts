@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { ProductsRepository } from "../../repositories/implementations/ProductsRepository";
-import { Product } from "../../entities/product.entitie";
-import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
+import { IUsersRepository } from "../../repositories/Interfaces";
+import { ProductsRepository } from "../../repositories";
+import { Product } from "../../entities";
 
 export const userGetProduct = async (
   req: Request,
@@ -14,7 +14,7 @@ export const userGetProduct = async (
 
     if (!id) throw new Error("não foi fornecido um id");
 
-    const productRepo = await new ProductsRepository();
+    const productRepo = ProductsRepository;
 
     let product: Product = await productRepo.getOne({
       key: "_id",
@@ -34,9 +34,9 @@ export const userGetProduct = async (
     repository.update(`${user._id}`, { statistics: user.statistics });
     await productRepo.update(id, { statistics: product.statistics });
 
-    res.json(product);
+    return res.json(product);
   } catch (err) {
     console.log(err);
-    res.status(400).send("você não esta logado.");
+    return res.status(400).send("você não esta logado.");
   }
 };

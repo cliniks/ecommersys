@@ -1,4 +1,4 @@
-import { StoreSolicitate, User, UserInfo } from "../../Entities";
+import { StoreSolicitate, User, userInfo } from "../../Entities";
 import { Address } from "../../Entities/address.entitie";
 import { DocumentsType } from "../../Entities/documents.entitie";
 import { Either, throwError, throwSuccess } from "../../Errors/Either";
@@ -12,6 +12,20 @@ export const userMutations = {
     data: StoreSolicitate
   ): Promise<Either<userErrors, StoreSolicitate>> => {
     const update = await apiEcommerce.post(`/sellerSolicitate`, data);
+
+    if (!update.data) return throwError("Não foi possível solicitar");
+
+    return throwSuccess(update.data);
+  },
+  verifySolicitation: async (
+    id: string
+  ): Promise<Either<userErrors, StoreSolicitate>> => {
+    const update = await apiEcommerce.get(`/sellerSolicitate`, {
+      params: {
+        key: "owner",
+        value: id,
+      },
+    });
 
     if (!update.data) return throwError("Não foi possível solicitar");
 
@@ -72,7 +86,7 @@ export const userMutations = {
     data,
   }: {
     id: string;
-    data: Partial<UserInfo>;
+    data: Partial<userInfo>;
   }): Promise<Either<userErrors, User>> => {
     const update = await apiEcommerce.patch(`/users/info/${id}`, data);
 
@@ -129,6 +143,14 @@ export const userMutations = {
     return throwSuccess(request.data);
   },
 
+  setDefaultAddress: async (addressId: string) => {
+    const request = await apiEcommerce.post(`/address/setDefault/${addressId}`);
+
+    if (!request.data) return throwError("Não foi possível adicionar endereço");
+
+    return throwSuccess(request.data);
+  },
+
   updateAddress: async ({
     addressId,
     data,
@@ -152,6 +174,17 @@ export const userMutations = {
 
   getMyDocuments: async (props: getAllProps) => {
     const request = await apiEcommerce.get("/documents/myDocuments", {
+      params: props,
+    });
+
+    if (!request.data)
+      return throwError("Não foi possível adicionar documento");
+
+    return throwSuccess(request.data);
+  },
+
+  getAllDocuments: async (props: getAllProps) => {
+    const request = await apiEcommerce.get("/documents/all", {
       params: props,
     });
 
@@ -188,7 +221,7 @@ export const userMutations = {
     documentId: string;
     data: Partial<DocumentsType>;
   }) => {
-    const request = await apiEcommerce.post(`/documents/${documentId}`, data);
+    const request = await apiEcommerce.patch(`/documents/${documentId}`, data);
 
     if (!request.data)
       return throwError("Não foi possível encontrar documento");

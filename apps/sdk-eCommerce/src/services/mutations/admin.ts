@@ -2,6 +2,7 @@ import { Store, StoreSolicitate } from "../../Entities";
 import { Either, throwError, throwSuccess } from "../../Errors/Either";
 import { getAllProps, getAllReturn, getSingleProps } from "../../interfaces";
 import { apiEcommerce } from "../axiosInstances";
+import { commissions } from "./commission";
 
 export const adminMutations = {
   acceptSellerSolicitation: async ({
@@ -11,6 +12,19 @@ export const adminMutations = {
   }): Promise<Either<adminErrors, Store>> => {
     const accept = await apiEcommerce.post(
       `/sellerSolicitate/confirm/${solicitationId}`
+    );
+
+    if (!accept) return throwError("Não foi possível liberar acesso");
+
+    return throwSuccess(accept.data);
+  },
+  rejectSellerSolicitation: async ({
+    solicitationId,
+  }: {
+    solicitationId: string;
+  }): Promise<Either<adminErrors, Store>> => {
+    const accept = await apiEcommerce.post(
+      `/sellerSolicitate/reject/${solicitationId}`
     );
 
     if (!accept) return throwError("Não foi possível liberar acesso");
@@ -39,6 +53,7 @@ export const adminMutations = {
 
     return throwSuccess(accept.data);
   },
+  commissions,
 };
 
 export type adminErrors =

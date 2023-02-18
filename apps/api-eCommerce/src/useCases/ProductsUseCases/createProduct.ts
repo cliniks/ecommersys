@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { IProductsRepository } from "../../repositories/interfaces/IProductsRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { Product } from "../../entities/product.entitie";
+import { IProductsRepository } from "../../repositories/Interfaces";
+import { Request, Response } from "express";
+import { Product } from "../../entities";
 
 export const createProduct = async (
   req: Request,
@@ -13,15 +13,18 @@ export const createProduct = async (
 
     let product: Product = { ...body };
 
+    if (!product.price) product.price = "0";
+    if (!product.regularPrice) product.regularPrice = "0";
+
     const user = await returnUserFromToken(req);
 
     product.owner = user.storeId;
 
     const resolveProductAdd = await repo.addOne(product);
 
-    res.json(resolveProductAdd);
+    return res.json(resolveProductAdd);
   } catch (err) {
     console.log("createProduct", err);
-    res.status(400).send("não foi possível criar.");
+    return res.status(400).send("não foi possível criar.");
   }
 };

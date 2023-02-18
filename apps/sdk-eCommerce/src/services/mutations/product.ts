@@ -48,6 +48,28 @@ export const productMutations = {
 
     return throwSuccess(products.data);
   },
+  favoriteProduct: async (
+    productId: string
+  ): Promise<Either<productErrors, Product>> => {
+    const products = await apiEcommerce.patch(
+      `/products/favoriteProduct/${productId}`
+    );
+
+    if (!products) return throwError("Não foi possível adicionar o produto");
+
+    return throwSuccess(products.data);
+  },
+  likeProduct: async (
+    productId: string
+  ): Promise<Either<productErrors, Product>> => {
+    const products = await apiEcommerce.patch(
+      `/products/likeProduct/${productId}`
+    );
+
+    if (!products) return throwError("Não foi possível adicionar o produto");
+
+    return throwSuccess(products.data);
+  },
   // addProductImg: async (
   //   img: Partial<Product>
   // ): Promise<Either<productErrors, Product>> => {

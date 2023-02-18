@@ -14,7 +14,10 @@ const ApiME = {
       const response = await MeApi.post("/seller/register", MEObject);
       const { data } = response;
       console.log(data);
-      const updateStoreModel = await storeModel.findByIdAndUpdate(createdStore._id, { melhorEnvioID: data.id });
+      const updateStoreModel = await storeModel.findByIdAndUpdate(
+        createdStore._id,
+        { melhorEnvioID: data.id }
+      );
       return updateStoreModel;
     } catch (err) {
       console.log("apiME createStore", err);
@@ -26,7 +29,10 @@ const ApiME = {
       const response = await MeApi.post("/seller/register", obj);
       const { data } = response;
       console.log(data);
-      const updateStoreModel = await userModel.findByIdAndUpdate(createdStore._id, { melhorEnvioID: data.id });
+      const updateStoreModel = await userModel.findByIdAndUpdate(
+        createdStore._id,
+        { melhorEnvioID: data.id }
+      );
       return updateStoreModel;
     } catch (err) {
       console.log("apiME addClient", err);

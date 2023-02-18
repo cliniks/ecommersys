@@ -1,4 +1,4 @@
-import { StoreSolicitate, User, UserInfo } from "../../Entities";
+import { StoreSolicitate, User, userInfo } from "../../Entities";
 import { Address } from "../../Entities/address.entitie";
 import { Response } from "../../Errors";
 import { IUserAccount, getAllProps, getAllReturn } from "../../interfaces";
@@ -18,6 +18,10 @@ export class userAccount implements IUserAccount {
     return Try(authMutations.auth, props);
   }
 
+  async verifyToken(token: string): Promise<Response<userErrors, authRes>> {
+    return Try(authMutations.verifyToken, token);
+  }
+
   async createNewUser(data: FormData): Promise<Response<userErrors, User>> {
     return await Try(userMutations.createNewUser, data);
   }
@@ -28,7 +32,7 @@ export class userAccount implements IUserAccount {
 
   async updateUserInfo(props: {
     id: string;
-    data: Partial<UserInfo>;
+    data: Partial<userInfo>;
   }): Promise<Response<userErrors, User>> {
     return await Try(userMutations.updateUserInfo, props);
   }
@@ -41,6 +45,11 @@ export class userAccount implements IUserAccount {
 
   async addAddress(address: Address): Promise<Response<userErrors, Address>> {
     return await Try(userMutations.addAddress, address);
+  }
+  async setDefaultAddress(
+    addressId: string
+  ): Promise<Response<userErrors, User>> {
+    return await Try(userMutations.setDefaultAddress, addressId);
   }
 
   async updateAddress(props: {
@@ -67,5 +76,10 @@ export class userAccount implements IUserAccount {
     data: StoreSolicitate
   ): Promise<Response<userErrors, StoreSolicitate>> {
     return await Try(userMutations.sellerSolicitation, data);
+  }
+  async verifySolicitation(
+    id: string
+  ): Promise<Response<userErrors, StoreSolicitate>> {
+    return await Try(userMutations.verifySolicitation, id);
   }
 }

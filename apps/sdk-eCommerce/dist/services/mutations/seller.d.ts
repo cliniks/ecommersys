@@ -23,29 +23,29 @@ export declare const sellerMutations: {
     }) => Promise<Either<sellerErrors, Store>>;
     updateStoreImage: (formData: FormData) => Promise<Either<sellerErrors, Store>>;
     updateStoreBanner: (formData: FormData) => Promise<Either<sellerErrors, Store>>;
-    getMyProducts: (props: getAllProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    getMyCategories: (props: getAllProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    getMyCoupons: (props: getAllProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    getOneAddress: (props: getSingleProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    getMyAddress: (props: getAllProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    addAddress: (data: Address) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
+    getMyProducts: (props: getAllProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    getMyCategories: (props: getAllProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    getMyCoupons: (props: getAllProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    getOneAddress: (props: getSingleProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    getMyAddress: (props: getAllProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    addAddress: (data: Address) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
     updateAddress: ({ addressId, data, }: {
         addressId: string;
         data: Partial<Address>;
-    }) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
+    }) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
     deleteAddress: ({ addressId }: {
         addressId: string;
-    }) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    getOnePolicy: (props: getSingleProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    getMyPolicies: (props: getAllProps) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
-    addPolicy: (data: StorePolicy) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
+    }) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    getOnePolicy: (props: getSingleProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    getMyPolicies: (props: getAllProps) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
+    addPolicy: (data: StorePolicy) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
     updatePolicy: ({ policyId, data, }: {
         policyId: string;
         data: Partial<StorePolicy>;
-    }) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
+    }) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
     deletePolicy: ({ policyId, }: {
         policyId: string;
         data: Partial<StorePolicy>;
-    }) => Promise<import("../../Errors/Either").isSuccess<any> | import("../../Errors/Either").isError<string>>;
+    }) => Promise<import("../../Errors/Either").isError<string> | import("../../Errors/Either").isSuccess<any>>;
 };
 export declare type sellerErrors = "Não foi possível encontrar este Usuário" | "Não foi possível atualizar este Usuário" | "Não foi possível atualizar usuário" | "Não foi possível enviar o e-mail" | "não foi possível validar o código" | "Não foi possível criar o usuário" | "Não foi possível encontrar produtos desse Seller";

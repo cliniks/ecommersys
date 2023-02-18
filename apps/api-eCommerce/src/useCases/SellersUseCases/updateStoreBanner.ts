@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { S3Repository } from "../../repositories/implementations/S3Repository";
-import { fileType } from "../../repositories/Interfaces/IS3Repository";
 import util from "util";
 import fs from "fs";
+import { ISellersRepository, fileType } from "../../repositories/Interfaces";
+import { S3Repository } from "../../repositories";
 const unlinkFile = util.promisify(fs.unlink);
 
 export const updateStoreBanner = async (
@@ -33,13 +32,13 @@ export const updateStoreBanner = async (
 
     const filePath = (await uploadedLinks()).Location;
 
-    const storeUploaded = await repo.update(findMyStore._id, {
+    const storeUploaded = await repo.update(`${findMyStore._id}`, {
       banner: filePath,
     });
 
-    res.json(storeUploaded);
+    return res.json(storeUploaded);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

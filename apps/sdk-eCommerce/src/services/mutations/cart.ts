@@ -17,7 +17,10 @@ export const cartMutations = {
     productId: string;
     amount: number;
   }): Promise<Either<cartErrors, Cart>> => {
-    const update = await apiEcommerce.patch(`/carts/incrementProduct`, data);
+    const update = await apiEcommerce.patch(
+      `/carts/incrementProduct/${data.cartId}`,
+      data
+    );
 
     if (!update.data)
       return throwError("Não foi possível adicionar o item ao carrinho");
@@ -29,7 +32,10 @@ export const cartMutations = {
     productId: string;
     amount: number;
   }): Promise<Either<cartErrors, Cart>> => {
-    const update = await apiEcommerce.patch(`/carts/decrementProduct`, data);
+    const update = await apiEcommerce.patch(
+      `/carts/decrementProduct/${data.cartId}`,
+      data
+    );
 
     if (!update.data)
       return throwError("Não foi possível adicionar o item ao carrinho");
@@ -51,9 +57,7 @@ export const cartMutations = {
   },
 
   insertCoupon: async (couponId: String): Promise<Either<cartErrors, Cart>> => {
-    const request = await apiEcommerce.patch("/carts/insertCoupon", {
-      couponId,
-    });
+    const request = await apiEcommerce.post("/carts/insertCoupon", couponId);
 
     if (!request.data) return throwError("Não foi possível adicionar cupom");
 

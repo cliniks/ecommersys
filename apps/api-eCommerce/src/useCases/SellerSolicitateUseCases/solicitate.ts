@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IStoreSolicitate } from "../../repositories/Interfaces/IStoreSolicitate";
+import { IStoreSolicitate } from "../../repositories/Interfaces/IStoreSolicitationRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
 
 export const solicitate = async (
@@ -9,10 +9,28 @@ export const solicitate = async (
 ) => {
   try {
     const { name, storeInfo } = req.body;
+    console.log(name, storeInfo);
     const getUser = await returnUserFromToken(req);
-    const add = await repo.addOne({ name, storeInfo, owner: getUser._id });
-    res.json(add);
-  } catch (err) {
-    res.status(400).send("não foi possível solicitar.");
+
+    const hasSolicitation = await repo.getOne({
+      key: "owner",
+      value: getUser._id,
+    });
+
+    if (!hasSolicitation || hasSolicitation.owner !== `${getUser._id}`) {
+      const add = await repo.addOne({
+        name,
+        storeInfo,
+        owner: `${getUser._id}`,
+        isActive: false,
+      });
+
+      return res.json(add);
+    }
+
+    return res.json(hasSolicitation);
+  } catch (err: any) {
+    console.log(err.message);
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

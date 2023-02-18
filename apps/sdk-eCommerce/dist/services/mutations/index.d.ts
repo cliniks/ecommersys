@@ -6,3 +6,7 @@ export * from "./cart";
 export * from "./checkout";
 export * from "./product";
 export * from "./admin";
+export * from "./category";
+export * from "./coupon";
+export * from "./upload";
+export * from "./payments";

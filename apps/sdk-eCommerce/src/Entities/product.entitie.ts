@@ -9,9 +9,10 @@ export type Product = {
   virtualProduct: boolean;
   isActive: boolean;
   shippingInfo: {
-    height: String;
-    width: String;
-    weight: String;
+    height: string;
+    width: string;
+    weight: string;
+    length: string;
   };
   owner: string;
   discount: discountType[];

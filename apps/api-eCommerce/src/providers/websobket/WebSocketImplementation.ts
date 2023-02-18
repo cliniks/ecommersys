@@ -4,13 +4,25 @@ import { Server } from "socket.io";
 import { createAdapter } from "@socket.io/redis-adapter";
 import { chatMethods } from "./chatMethods";
 import { getUserFromToken } from "../../utils/returnUserFromToken";
-import { ChatsRepository } from "../../repositories/implementations/ChatsRepository";
-import { IChatRepository } from "../../repositories/Interfaces/IChatRepository";
+import {
+  ChatsRepository,
+  MessagesRepository,
+  RoomsRepository,
+} from "../../repositories";
+import {
+  IChatRepository,
+  IMessageRepository,
+  IRoomRepository,
+} from "../../repositories/Interfaces";
 
 export class WebsocketImplementation implements IWebSocket {
   public io: Server = new Server();
 
-  private chatRepo: IChatRepository = new ChatsRepository();
+  public chatRepo: IChatRepository = ChatsRepository;
+
+  public roomRepo: IRoomRepository = RoomsRepository;
+
+  public messageRepo: IMessageRepository = MessagesRepository;
 
   constructor() {
     this.connect();
@@ -38,22 +50,16 @@ export class WebsocketImplementation implements IWebSocket {
   }
 
   userHandShake() {
-    const repo = this.chatRepo;
+    const chats = this.chatRepo;
+    const rooms = this.roomRepo;
+    const messages = this.messageRepo;
 
     this.io.on("connection", async function (socket) {
       const { handshake } = socket;
 
       const user = getUserFromToken(`${handshake.headers["x-access-token"]}`);
 
-      socket.emit("greeting-from-server", {
-        greeting: "Hello Client",
-      });
-
-      socket.on("greeting-from-client", function (message) {
-        console.log(message);
-      });
-
-      chatMethods(socket, user, repo);
+      chatMethods(socket, user, chats, rooms, messages);
     });
   }
 }

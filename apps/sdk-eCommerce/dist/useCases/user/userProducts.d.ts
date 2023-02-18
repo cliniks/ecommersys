@@ -6,7 +6,6 @@ export declare class userProduct implements IUserProduct {
     seeProduct({ productId, }: {
         productId: string;
     }): Promise<Response<productErrors, Product>>;
-    likeProduct({ productId, }: {
-        productId: string;
-    }): Promise<Response<productErrors, Product>>;
+    likeProduct(productId: string): Promise<Response<productErrors, Product>>;
+    favoriteProduct(productId: string): Promise<Response<productErrors, Product>>;
 }

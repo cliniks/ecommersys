@@ -6,6 +6,8 @@ const AddressRouter: Router = Router();
 
 AddressRouter.get("/", addressUseCases.FineOne);
 
+AddressRouter.get("/all", addressUseCases.FindAll);
+
 AddressRouter.get(
   "/myUserAddress",
   verifyers.verifyToken,
@@ -23,6 +25,8 @@ AddressRouter.post("/user", addressUseCases.AddUser);
 AddressRouter.post("/seller", addressUseCases.AddSeller);
 
 AddressRouter.patch("/:id", addressUseCases.Update);
+
+AddressRouter.post("/setDefault/:id", addressUseCases.setDefault);
 
 AddressRouter.delete("/:id", addressUseCases.Delete);
 

@@ -1,35 +1,43 @@
-import { ObjectId, Schema } from "mongoose";
-import mongoosePaginate from "mongoose-paginate";
+import { Schema } from "mongoose";
+import { Product } from "./product.entitie";
 
 export const CartSchema = new Schema(
   {
-    buyer: String,
-    productsInfo: [
-      {
-        productId: String,
-        amount: Number,
-        size: String,
-      },
-    ],
+    owner: String,
+    products: [],
+    coupons: [String],
     isActive: { type: Boolean, default: true },
   },
   {
     timestamps: true,
   }
 );
-CartSchema.plugin(mongoosePaginate);
 
 export type Cart = {
-  _id?: ObjectId;
-  buyer: string;
+  _id?: string;
+  owner: string;
   isActive: boolean;
-  productsInfo: ProductInfo[];
+  products: ProductInfo[];
+  coupons: string[];
   createdAt?: Date;
-  uodatedAt?: Date;
+  updatedAt?: Date;
 };
 
 export type ProductInfo = {
   productId: string;
   amount: number;
-  size: string;
 };
+
+export type CartReturn = {
+  _id?: string;
+  owner: string;
+  isActive: boolean;
+  products: ProductsReturn[];
+  coupons: string[];
+  totalPrice: number;
+  totalDiscount: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type ProductsReturn = ProductInfo & Product & { discountValue: number };

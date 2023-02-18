@@ -1,37 +1,48 @@
-import { UserModel, UserModelType } from "../../models/user.model";
+import { User } from "../../entities";
+import { TokenCard, tokenizeType } from "../../entities/paymentMethod.entitie";
+import { UsersRepository } from "../../repositories";
 import { AsassAPI } from "../../services/axiosInstance";
 import {
   chargeType,
   clientProps,
   creditCardChargeType,
   queryProps,
-} from "../IClientAsaasProvider";
+} from "../interfaces/IClientAsaasProvider";
+
+const userRepo = UsersRepository;
 
 export class ClientAsaasImplementation {
-  constructor() {}
   // add a client
-  async newClient({ data }: { data: UserModelType }) {
+  async newClient({ data }: { data: User }) {
     try {
       const { userInfo, _id } = data;
+
       const customerData = {
         name: userInfo.name,
         email: userInfo.email,
-        mobilePhone: userInfo.fone,
-        cpfCnpj: userInfo.cpf,
-        postalCode: userInfo.cep,
+        phone: userInfo.phone,
+        company: userInfo.enterpriseName,
+        mobilePhone: userInfo.phone,
+        cpfCnpj: userInfo.cnpj,
+        postalCode: userInfo.zipCode,
         address: userInfo.address,
         addressNumber: userInfo.number,
         complement: userInfo.complement,
+        state: userInfo.state,
         province: userInfo.city,
         externalReference: _id,
         notificationDisabled: false,
-        municipalInscription: userInfo.cep,
+        municipalInscription: userInfo.zipCode,
       };
+
       const addClient = await AsassAPI.post("customers", customerData);
-      console.log();
-      const updateUser = await UserModel.findByIdAndUpdate(_id, {
+
+      console.log(addClient.data);
+
+      const updateUser = await userRepo.update(`${_id}`, {
         gatewayPagId: addClient.data.id,
       });
+
       return updateUser;
     } catch (err: any) {
       console.log(err.response.data);
@@ -75,30 +86,42 @@ export class ClientAsaasImplementation {
     }
   }
   // generate a charge
-  async genCharge({
-    data,
-    client,
-    cartID,
-  }: {
-    data: chargeType;
-    client: UserModelType;
-    cartID: string;
-  }): Promise<any> {
+  // async genCharge({
+  //   data,
+  //   client,
+  //   cartID,
+  // }: {
+  //   data: chargeType;
+  //   client: User;
+  //   cartID: string;
+  // }): Promise<any> {
+  //   try {
+  //     const chargeConfig = {
+  //       ...data,
+  //       dueDate: new Date().toISOString(),
+  //       description: "Pedido 056984",
+  //       externalReference: cartID,
+  //       customer: client.gatewayPagId,
+  //     };
+  //     const createCharge = await AsassAPI.post("payments", chargeConfig);
+  //     await userRepo.update(`${client._id}`, {
+  //       $push: { buysUnderProcess: createCharge.data.id },
+  //     });
+  //     return createCharge.data;
+  //   } catch (err: any) {
+  //     console.log(err.response.data);
+  //     throw new Error(err);
+  //   }
+  // }
+  async genCharge(charge: any): Promise<any> {
     try {
-      const chargeConfig = {
-        ...data,
-        dueDate: new Date().toISOString(),
-        description: "Pedido 056984",
-        externalReference: cartID,
-        customer: client.gatewayPagId,
-      };
-      const createCharge = await AsassAPI.post("payments", chargeConfig);
-      await UserModel.updateOne(
-        { _id: client._id },
-        { $push: { buysUnderProcess: createCharge.data.id } }
-      );
+      const createCharge = await AsassAPI.post("payments", charge);
+      // await userRepo.update(`${client._id}`, {
+      //   $push: { buysUnderProcess: createCharge.data.id },
+      // });
       return createCharge.data;
     } catch (err: any) {
+      console.log(err.toString());
       console.log(err.response.data);
       throw new Error(err);
     }
@@ -108,7 +131,7 @@ export class ClientAsaasImplementation {
     client,
     chargeId,
   }: {
-    client: UserModelType;
+    client: User;
     chargeId: string;
   }): Promise<any> {
     try {
@@ -139,11 +162,11 @@ export class ClientAsaasImplementation {
   // generate a pix code
   async genPixCode({ id }: { id: string }): Promise<any> {
     try {
-      console.log(id);
-      const calculateResponse = await AsassAPI.post("customers");
+      const calculateResponse = await AsassAPI.get(`/payments/${id}/pixQrCode`);
       return calculateResponse.data;
     } catch (err: any) {
-      throw new Error(err);
+      console.log("genPixCode", err);
+      throw new Error(err.toString());
     }
   } // Ao gerar uma cobrança com as formas de pagamento "PIX", "BOLETO" ou "UNDEFINED" o pagamento via Pix é habilitado.
   // adicionar banco para recebimento
@@ -161,6 +184,19 @@ export class ClientAsaasImplementation {
       const calculateResponse = await AsassAPI.post("customers");
       return calculateResponse.data;
     } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
+  async tokenizeCard(cardData: tokenizeType): Promise<TokenCard> {
+    try {
+      const calculateResponse = await AsassAPI.post(
+        "creditCard/tokenize",
+        cardData
+      );
+      return calculateResponse.data;
+    } catch (err: any) {
+      console.log(err.response.data);
       throw new Error(err);
     }
   }

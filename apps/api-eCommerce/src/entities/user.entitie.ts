@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const UserSchema = new Schema(
@@ -21,11 +21,13 @@ export const UserSchema = new Schema(
     userInfo: {
       name: String,
       lastName: String,
+      personType: String,
       cpf: String,
       cnpj: String,
       cnae: String,
       enterpriseSocial: String,
       enterpriseName: String,
+      district: String,
       address: String,
       number: String,
       phone: String,
@@ -33,9 +35,10 @@ export const UserSchema = new Schema(
       birthDate: String,
       city: String,
       state: String,
-      cep: String,
+      country: String,
+      zipCode: String,
       email: String,
-      otherAddress: [String],
+      defaultAddress: String,
     },
     melhorEnvioID: String,
     gatewayPagId: String,
@@ -48,6 +51,7 @@ export const UserSchema = new Schema(
     access: {
       type: Number,
       default: 0,
+      enum: [0, 1, 2, 99],
     },
     statistics: {
       productsViews: [String],
@@ -60,7 +64,7 @@ export const UserSchema = new Schema(
 UserSchema.plugin(mongoosePaginate);
 
 export type User = {
-  _id?: ObjectId;
+  _id?: string;
   username: string;
   password: string;
   wallet: string;
@@ -87,18 +91,21 @@ export type userInfo = {
   cpf: string;
   cnpj: string;
   cnae: string;
+  personType: "juridica" | "fisica";
   enterpriseSocial: string;
   enterpriseName: string;
+  district: string;
   address: string;
   number: string;
   phone: string;
   complement: string;
   birthDate: string;
+  country: string;
   city: string;
   state: string;
-  cep: string;
+  zipCode: string;
   email: string;
-  otherAddress: string[];
+  defaultAddress: string;
 };
 
 export type userStatistics = {

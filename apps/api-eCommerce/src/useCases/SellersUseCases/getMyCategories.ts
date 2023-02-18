@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { CategoryRepository } from "../../repositories/implementations/CategoryRepository";
-import { getAllProps } from "../../repositories/interfaces/ICrudRepository";
 import { addMyOwnStoreInMySearch } from "../../utils/searchsUtils";
+import { CategoriesRepository } from "../../repositories";
+import { getAllProps } from "../../repositories/Interfaces";
 
 export const getMyCategories = async (req: Request, res: Response) => {
   try {
@@ -14,7 +14,7 @@ export const getMyCategories = async (req: Request, res: Response) => {
 
     const user = await returnUserFromToken(req);
 
-    const categories = new CategoryRepository();
+    const categories = CategoriesRepository;
 
     const findMyCategories = await categories.getAll({
       page,
@@ -22,9 +22,9 @@ export const getMyCategories = async (req: Request, res: Response) => {
       filter: addMyOwnStoreInMySearch(filter, user),
     });
 
-    res.json(findMyCategories);
+    return res.json(findMyCategories);
   } catch (err) {
     console.log(err);
-    res.status(400).send("não foi possível solicitar.");
+    return res.status(400).send("não foi possível solicitar.");
   }
 };

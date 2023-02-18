@@ -1,5 +1,5 @@
 import * as redis from "redis";
-import { IRedisRepository } from "../Interfaces/IRedisRepository";
+import { IRedisRepository } from "../Interfaces";
 
 class RedisImplementation implements IRedisRepository {
   private client: redis.RedisClientType;

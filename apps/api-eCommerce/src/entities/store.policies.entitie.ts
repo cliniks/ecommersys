@@ -8,7 +8,7 @@ export const StorePoliciesSchema = new Schema(
     type: String,
     status: String,
     isActive: { type: Boolean, default: true },
-    owner: { type: String, required: true, unique: true },
+    owner: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -18,7 +18,7 @@ StorePoliciesSchema.plugin(mongoosePaginate);
 
 export type StorePolicy = {
   name: string;
-  body: String;
+  body: string;
   status: string;
   owner: string;
   isActive: boolean;

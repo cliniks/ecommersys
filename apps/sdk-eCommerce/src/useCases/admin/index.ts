@@ -4,6 +4,7 @@ import { getAllProps, getAllReturn, getSingleProps } from "../../interfaces";
 import { IAdmin } from "../../interfaces/IAdmin";
 import { adminErrors, adminMutations } from "../../services";
 import { Try } from "../../utils";
+import { commission } from "./commission";
 
 class Admin implements IAdmin {
   async getAllSellerSolicitation(
@@ -17,10 +18,16 @@ class Admin implements IAdmin {
     return await Try(adminMutations.getSingleSellersSolicitation, props);
   }
   async confirmSellerSolicitation(props: {
-    storeSolicitationId: String;
+    solicitationId: String;
   }): Promise<Response<adminErrors, Store>> {
-    return await Try(adminMutations.getAllSellersSolicitation, props);
+    return await Try(adminMutations.acceptSellerSolicitation, props);
   }
+  async rejectSolicitation(props: {
+    solicitationId: String;
+  }): Promise<Response<adminErrors, Store>> {
+    return await Try(adminMutations.rejectSellerSolicitation, props);
+  }
+  commission = new commission();
 }
 
 export default new Admin();

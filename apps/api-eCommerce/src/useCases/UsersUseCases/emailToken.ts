@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { MailSenderProvider } from "../../providers/implementations/MailSenderProvider";
-import { IRedisRepository } from "../../repositories/Interfaces/IRedisRepository";
 import { SendCodeEmail } from "../../Emails/templates/emailTemplates";
+import { MailSenderProvider } from "../../providers/implementations/MailSenderProvider";
+import { IRedisRepository } from "../../repositories/Interfaces";
 
 const mailSender = new MailSenderProvider();
 

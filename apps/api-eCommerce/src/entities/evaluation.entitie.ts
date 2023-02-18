@@ -1,4 +1,4 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 export const EvaluationSchema = new Schema(
@@ -16,7 +16,7 @@ export const EvaluationSchema = new Schema(
 EvaluationSchema.plugin(mongoosePaginate);
 
 export type Evaluation = {
-  _id?: ObjectId;
+  _id?: string;
   productId: string;
   isActive: boolean;
   stars: number;
