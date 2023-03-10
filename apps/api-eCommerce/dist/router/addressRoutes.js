@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AddressRouter = void 0;
+const express_1 = require("express");
+const verifyers_1 = require("../middlewares/verifyers");
+const AddressUseCases_1 = require("../useCases/AddressUseCases");
+const AddressRouter = (0, express_1.Router)();
+exports.AddressRouter = AddressRouter;
+AddressRouter.get("/", AddressUseCases_1.addressUseCases.FineOne);
+AddressRouter.get("/all", AddressUseCases_1.addressUseCases.FindAll);
+AddressRouter.get("/myUserAddress", verifyers_1.verifyers.verifyToken, AddressUseCases_1.addressUseCases.FindAllUser);
+AddressRouter.get("/myStoreAddress", verifyers_1.verifyers.verifyToken, AddressUseCases_1.addressUseCases.FindAllStore);
+AddressRouter.post("/user", AddressUseCases_1.addressUseCases.AddUser);
+AddressRouter.post("/seller", AddressUseCases_1.addressUseCases.AddSeller);
+AddressRouter.patch("/:id", AddressUseCases_1.addressUseCases.Update);
+AddressRouter.post("/setDefault/:id", AddressUseCases_1.addressUseCases.setDefault);
+AddressRouter.delete("/:id", AddressUseCases_1.addressUseCases.Delete);

@@ -1,32 +1,27 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const appSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const appSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    username?: string | undefined;
-    password?: string | undefined;
+    username?: string;
+    password?: string;
     tokens?: {
-        appToken?: string | undefined;
-        devAppToken?: string | undefined;
-    } | undefined;
+        appToken?: string;
+        devAppToken?: string;
+    };
     appInfo?: {
-        number?: number | undefined;
-        name?: string | undefined;
-        cnpj?: string | undefined;
-        address?: string | undefined;
-        complement?: string | undefined;
-        city?: string | undefined;
-        state?: string | undefined;
-        cep?: string | undefined;
-        email?: string | undefined;
-    } | undefined;
+        number?: number;
+        name?: string;
+        cnpj?: string;
+        address?: string;
+        complement?: string;
+        city?: string;
+        state?: string;
+        email?: string;
+        cep?: string;
+    };
 }>;
-export type App = {
-    _id?: ObjectId;
+export declare type App = {
+    _id?: string;
     tokens: Tokens;
     appInfo: AppInfo;
     username: string;
@@ -35,11 +30,11 @@ export type App = {
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type Tokens = {
+export declare type Tokens = {
     appToken: string;
     devAppToken: string;
 };
-export type AppInfo = {
+export declare type AppInfo = {
     name: string;
     cnpj: string;
     address: string;

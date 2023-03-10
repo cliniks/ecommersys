@@ -9,30 +9,30 @@ class SellerUseCases {
     async addStore(req, res) {
         try {
             const add = await this.SellerProvider.addStore(req.body);
-            res.json(add);
+            return res.json(add);
         }
         catch (err) {
-            res.status(400).send({ err });
+            return res.status(400).send({ err });
         }
     }
     async confirmPayment(req, res) {
         try {
             const { orders } = req.body;
             const previewTags = await this.SellerProvider.confirmPayment(orders);
-            res.json(previewTags);
+            return res.json(previewTags);
         }
         catch (err) {
-            res.status(400).send({ err });
+            return res.status(400).send({ err });
         }
     }
     // Geração de etiquetas
     async getAccount(_, res) {
         try {
             const generateTag = await this.SellerProvider.getAccount();
-            res.json(generateTag);
+            return res.json(generateTag);
         }
         catch (err) {
-            res.status(400).send({ err });
+            return res.status(400).send({ err });
         }
     }
 }

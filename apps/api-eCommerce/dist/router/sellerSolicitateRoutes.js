@@ -9,4 +9,6 @@ exports.SellerSolicitateRoutes = SellerSolicitateRoutes;
 SellerSolicitateRoutes.get("/", SellerSolicitateUseCases_1.sellersSolicitateUseCases.FineOne);
 SellerSolicitateRoutes.get("/all", SellerSolicitateUseCases_1.sellersSolicitateUseCases.FindAll);
 SellerSolicitateRoutes.post("/", verifyers_1.verifyers.verifyToken, SellerSolicitateUseCases_1.sellersSolicitateUseCases.Solicitate);
+SellerSolicitateRoutes.delete("/:id", verifyers_1.verifyers.verifyToken, SellerSolicitateUseCases_1.sellersSolicitateUseCases.delete);
 SellerSolicitateRoutes.post("/confirm/:id", verifyers_1.verifyers.verifyToken, SellerSolicitateUseCases_1.sellersSolicitateUseCases.Confirm);
+SellerSolicitateRoutes.post("/reject/:id", verifyers_1.verifyers.verifyToken, SellerSolicitateUseCases_1.sellersSolicitateUseCases.Reject);

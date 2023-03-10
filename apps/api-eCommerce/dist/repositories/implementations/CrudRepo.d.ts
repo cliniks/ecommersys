@@ -1,17 +1,13 @@
-import mongoose from "mongoose";
-import { getAllProps, getOneProps, ICrudRepository } from "../interfaces/ICrudRepository";
-export declare class CrudRepo implements ICrudRepository {
+/// <reference types="mongoose-paginate" />
+import { Model } from "mongoose";
+import { ICrudRepository, getAllProps, getAllReturn, getOneProps } from "../Interfaces";
+export declare class CrudRepo<E> implements ICrudRepository<E> {
     private model;
-    constructor(model: mongoose.Model<any>);
-    getOne({ key, value }: getOneProps): Promise<any>;
-    getAll({ page, size, filter }: getAllProps): Promise<{
-        result: any[];
-        totalItems: number;
-        pageSize: number;
-        thisPage: number;
-        totalPage: number;
-    }>;
-    addOne(data: any): Promise<any>;
-    update(id: string, data: any): Promise<any>;
-    delete(id: string): Promise<any>;
+    constructor(model: Model<E>);
+    getOne({ key, value, fields }: getOneProps): Promise<import("mongoose").HydratedDocument<E, {}, {}>>;
+    getMany(idArray: string[], fields: string): Promise<import("mongoose").HydratedDocument<E, {}, {}>[]>;
+    getAll({ page, size, filter }: getAllProps): Promise<getAllReturn<E>>;
+    addOne(data: E): Promise<E>;
+    update(id: string, data: any): Promise<import("mongoose").HydratedDocument<E, {}, {}>>;
+    delete(id: string): Promise<import("mongoose").HydratedDocument<E, {}, {}>>;
 }

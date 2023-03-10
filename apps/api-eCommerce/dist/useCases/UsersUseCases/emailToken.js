@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.confirmEmailToken = exports.createEmailToken = void 0;
-const MailSenderProvider_1 = require("../../providers/implementations/MailSenderProvider");
 const emailTemplates_1 = require("../../Emails/templates/emailTemplates");
+const MailSenderProvider_1 = require("../../providers/implementations/MailSenderProvider");
 const mailSender = new MailSenderProvider_1.MailSenderProvider();
 const createEmailToken = async (req, res, cache) => {
     const { email } = req.body;

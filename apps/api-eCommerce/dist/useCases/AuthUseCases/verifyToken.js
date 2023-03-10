@@ -8,15 +8,17 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyToken = async (req, res) => {
     try {
         const { token } = req.body;
-        jsonwebtoken_1.default.verify(token, `${process.env.TOKEN_SECRET}`, (err, decoded) => {
-            if (err)
+        return jsonwebtoken_1.default.verify(token, `${process.env.TOKEN_SECRET}`, (err, decoded) => {
+            if (err) {
+                console.log("err", err);
                 return res.status(200).send(false);
-            decoded._id;
-            res.status(200).send(true);
+            }
+            console.log("success", decoded._id);
+            return res.status(200).send(true);
         });
     }
     catch (error) {
-        res.status(200).send(false);
+        return res.status(400).send(false);
     }
 };
 exports.verifyToken = verifyToken;

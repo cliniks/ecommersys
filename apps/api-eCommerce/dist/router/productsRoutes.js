@@ -13,3 +13,5 @@ ProductsRoutes.post("/", verifyers_1.verifyers.verifySeller,
 ProductsUseCases_1.productsUseCases.CreateProduct);
 ProductsRoutes.patch("/:id", ProductsUseCases_1.productsUseCases.Update);
 ProductsRoutes.delete("/:id", ProductsUseCases_1.productsUseCases.Delete);
+ProductsRoutes.patch("/likeProduct/:id", ProductsUseCases_1.productsUseCases.likeProduct);
+ProductsRoutes.patch("/favoriteProduct/:id", ProductsUseCases_1.productsUseCases.favoriteProduct);

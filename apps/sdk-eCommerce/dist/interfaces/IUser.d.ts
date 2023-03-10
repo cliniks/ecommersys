@@ -5,6 +5,7 @@ import { getAllProps, getAllReturn, getSingleProps } from "./IGlobal";
 import { Address } from "../Entities/address.entitie";
 import { DocumentsType } from "../Entities/documents.entitie";
 import { PaymentMethodType, tokenizeType } from "../Entities/paymentMethod.entitie";
+import { notificationTypes } from "../Entities/notification.entitie";
 export interface IUser {
     account: IUserAccount;
     product: IUserProduct;
@@ -14,6 +15,7 @@ export interface IUser {
     order: IUserOrder;
     checkout: IUserCheckout;
     dashboard: IUserDashboard;
+    notifications: IUserNotifications;
 }
 export interface IUserAccount {
     auth: (props: {
@@ -109,4 +111,7 @@ export interface IUserDocument {
     }) => Promise<Response<userErrors, DocumentsType>>;
 }
 export interface IUserDashboard {
+}
+export interface IUserNotifications {
+    myUserNotifications: () => Promise<notificationTypes[]>;
 }

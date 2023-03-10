@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { Cart, CartReturn } from "../../entities";
+import { Cart, CartReturn, ProductsReturn } from "../../entities";
 import { ICartsRepository } from "../../repositories/Interfaces";
-import { CouponsRepository, ProductsRepository } from "../../repositories";
 import { User } from "../../entities";
-import { cartWithCouponApplied } from "./applyCoupon";
-
-const couponRepo = CouponsRepository;
+import { getCartProducts } from "./getCartProducts";
 
 export const getMyCart = async (
   req: Request,
@@ -15,8 +12,6 @@ export const getMyCart = async (
 ) => {
   try {
     const user: User = await returnUserFromToken(req);
-
-    const products = ProductsRepository;
 
     let findMyCart: any = await repo.getOne({
       key: "owner",
@@ -30,38 +25,30 @@ export const getMyCart = async (
 
     let cart: Partial<CartReturn> = findMyCart._doc;
 
-    // const applyCoupon = verifyIfCanBeAplied(cart);
+    let productItems: any = cart?.products || [];
 
-    let totalPrice = 0;
+    let couponItems: any = cart?.coupons || [];
 
-    let productItems: any = Array.from(cart?.products);
-
-    if (productItems?.length > 0) {
-      for (let i = 0; i < productItems.length; i++) {
-        const getProduct: any = await products.getOne({
-          key: "_id",
-          value: `${productItems[i].productId}`,
-        });
-
-        productItems[i] = { ...productItems[i], ...getProduct._doc };
-        cart = { ...cart, products: productItems };
-      }
-      for (let prodIndex = 0; prodIndex < productItems.length; prodIndex++) {
-        const value =
-          +productItems[prodIndex].price * +productItems[prodIndex].amount;
-
-        totalPrice = totalPrice + value;
-      }
-
-      cart.totalPrice = totalPrice;
-    }
-
-    const verifyAppliedCoupons = await cartWithCouponApplied(
-      cart as CartReturn,
-      couponRepo
+    const getMYCartProducts: ProductsReturn[] = await getCartProducts(
+      productItems,
+      couponItems
     );
 
-    return res.json(verifyAppliedCoupons);
+    let totalValues = { totalPrice: 0, totalDiscount: 0 };
+
+    for (let product of getMYCartProducts) {
+      totalValues.totalPrice = +totalValues.totalPrice + +product.totalValue;
+      totalValues.totalDiscount =
+        +totalValues.totalDiscount + +product.discountValue || 0;
+    }
+
+    const cartReturn: Partial<CartReturn> = {
+      ...cart,
+      products: getMYCartProducts,
+      ...totalValues,
+    };
+
+    return res.json(cartReturn);
   } catch (err) {
     console.log(err);
     return res.status(400).send("não foi possível solicitar.");

@@ -1,13 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CrudRepo = void 0;
-const numberMethods_1 = require("../../utils/numberMethods");
 class CrudRepo {
     constructor(model) {
         this.model = model;
     }
-    async getOne({ key, value }) {
-        return await this.model.findOne({ [key]: value });
+    async getOne({ key, value, fields }) {
+        const fieldsAdjust = (fields === null || fields === void 0 ? void 0 : fields.includes(","))
+            ? fields.replaceAll(",", " ")
+            : "";
+        const get = await this.model
+            .findOne({ [key]: value })
+            .select(fieldsAdjust);
+        return get;
+    }
+    async getMany(idArray, fields) {
+        if (!idArray || idArray.length === 0)
+            return [];
+        const verifyArray = idArray.map((item) => {
+            const includesSlash = item.includes("/");
+            console.log({ includesSlash });
+            if (includesSlash) {
+                return item.split("/")[0];
+            }
+            return item;
+        });
+        const fieldsAdjust = (fields === null || fields === void 0 ? void 0 : fields.includes(","))
+            ? fields.replace(",", " ")
+            : fields;
+        return await this.model
+            .find({ _id: { $in: verifyArray } })
+            .select(fieldsAdjust);
     }
     async getAll({ page = 1, size = 10, filter }) {
         var _a, _b;
@@ -24,16 +47,16 @@ class CrudRepo {
             key: item,
             value: arrayFromKeyValues[index],
         }));
-        let query = {};
-        splitedObjects === null || splitedObjects === void 0 ? void 0 : splitedObjects.map((item) => {
+        let query = [];
+        splitedObjects === null || splitedObjects === void 0 ? void 0 : splitedObjects.forEach((item) => {
             if (item) {
                 const prepareValue = prepareFilterQuery({ filter: item });
-                query = Object.assign(Object.assign({}, query), prepareValue);
+                query.push(prepareValue);
             }
         });
-        console.log(Object.assign({}, query));
+        console.log("query", query);
         let data = await this.model
-            .find(query)
+            .find(query.length > 0 ? { $and: query } : {})
             .sort({ register: -1 })
             .skip(+size * (+page > 0 ? +page - 1 : 0))
             .limit(+size)
@@ -49,11 +72,13 @@ class CrudRepo {
         return obj;
     }
     async addOne(data) {
-        return (await this.model.create(data)).save();
+        const add = await this.model.create(data);
+        const newDoc = add.save();
+        return newDoc;
     }
     async update(id, data) {
         await this.model.findByIdAndUpdate(id, data);
-        return await this.getOne({ key: "_id", value: id });
+        return await this.model.findById(id);
     }
     async delete(id) {
         return await this.model.findByIdAndDelete(id);
@@ -69,15 +94,46 @@ const prepareFilterQuery = ({ filter }) => {
     if (!verifyFilter)
         return {};
     const filterValue = verifyFilter.value;
-    if (!filterValue)
+    if (!filterValue || filterValue === undefined || filterValue === "undefined")
         return {};
     const filterValueIsBool = typeof filterValue === "boolean" || ["true", "false"].includes(filterValue);
-    const filterValueIsNumber = (0, numberMethods_1.verifyIsNumber)(filterValue);
+    // const filterValueIsNumber = verifyIsNumber(filterValue);
+    const filterValueIsNumber = typeof filterValue === "number";
     if ((filterValueIsNumber || filterValueIsBool) &&
         typeof filterValue !== "object") {
         return { [verifyFilter.key]: filterValue };
     }
     const regEx = new RegExp(filterValue, "i");
+    if (verifyFilter.key === "startDate") {
+        return { createdAt: { $gte: new Date(filterValue) } };
+    }
+    if (verifyFilter.key === "endDate") {
+        return { createdAt: { $lte: new Date(filterValue) } };
+    }
+    if (verifyFilter.key === "startEdit") {
+        return { updatedAt: { $gte: new Date(filterValue) } };
+    }
+    if (verifyFilter.key === "endEdit") {
+        return { updatedAt: { $lte: new Date(filterValue) } };
+    }
+    if (verifyFilter.key === "minPrice") {
+        return {
+            $expr: { $gte: [{ $toDouble: "$price" }, +verifyFilter.value || 0] },
+        };
+    }
+    if (verifyFilter.key === "maxPrice") {
+        return {
+            $expr: { $lte: [{ $toDouble: "$price" }, +verifyFilter.value || 2000] },
+        };
+    }
+    if (verifyFilter.key === "_id" || verifyFilter.key === "access") {
+        const value = !isNaN(verifyFilter.value)
+            ? +verifyFilter.value
+            : verifyFilter.value;
+        return {
+            [verifyFilter.key]: value,
+        };
+    }
     return {
         [verifyFilter.key]: { $regex: regEx },
     };

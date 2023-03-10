@@ -1,48 +1,50 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const StoreSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const StoreSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     name: string;
     img: string;
-    banner: string;
-    segments: any[];
     isActive: boolean;
     owner: string;
-    products: any[];
+    products: import("mongoose").Types.DocumentArray<any> | any[];
+    messages: import("mongoose").Types.DocumentArray<any> | any[];
+    banner: string;
+    segments: import("mongoose").Types.DocumentArray<any> | any[];
     productsCount: number;
-    openOrders: any[];
-    salesHistory: any[];
-    salesToSend: any[];
-    messages: any[];
-    melhorEnvioID?: string | undefined;
-    asaasID?: string | undefined;
-    asaasApiKey?: string | undefined;
-    wallet?: {
-        history: any[];
-        amount: number;
-    } | undefined;
+    openOrders: import("mongoose").Types.DocumentArray<any> | any[];
+    salesHistory: import("mongoose").Types.DocumentArray<any> | any[];
+    salesToSend: import("mongoose").Types.DocumentArray<any> | any[];
     storeInfo?: {
-        number?: number | undefined;
-        cnpj?: string | undefined;
-        address?: string | undefined;
-        complement?: string | undefined;
-        city?: string | undefined;
-        state?: string | undefined;
-        cep?: string | undefined;
-        email?: string | undefined;
-    } | undefined;
+        number?: string;
+        cnpj?: string;
+        cnae?: string;
+        enterpriseSocial?: string;
+        enterpriseName?: string;
+        district?: string;
+        address?: string;
+        phone?: string;
+        complement?: string;
+        city?: string;
+        state?: string;
+        country?: string;
+        zipCode?: string;
+        email?: string;
+    };
+    melhorEnvioID?: string;
+    wallet?: {
+        amount: number;
+        history: import("mongoose").Types.DocumentArray<any> | any[];
+    };
     statistics?: {
         views: number;
-        clients: any[];
-    } | undefined;
-    tokenStripe?: string | undefined;
+        clients: import("mongoose").Types.DocumentArray<any> | any[];
+    };
+    asaasID?: string;
+    asaasWalletId?: string;
+    asaasApiKey?: string;
+    tokenStripe?: string;
 }>;
-export type Store = {
-    _id?: ObjectId;
+export declare type Store = {
+    _id?: string;
     name: string;
     wallet?: wallet;
     img?: string;
@@ -51,6 +53,7 @@ export type Store = {
     storeInfo: storeInfo;
     melhorEnvioID?: string;
     asaasID?: string;
+    asaasWalletId?: string;
     asaasApiKey?: string;
     owner: string;
     products?: string[];
@@ -65,21 +68,27 @@ export type Store = {
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type wallet = {
+export declare type wallet = {
     amount: number;
     history: [];
 };
-export type storeInfo = {
+export declare type storeInfo = {
     cnpj: string;
+    cnae: string;
     address: string;
-    number: number;
+    number: string;
     complement: string;
+    enterpriseSocial: string;
+    enterpriseName: string;
+    phone: string;
     city: string;
     state: string;
-    cep: string;
+    country: string;
+    district: string;
+    zipCode: string;
     email: string;
 };
-export type statistics = {
+export declare type statistics = {
     views: number;
     clients: string[];
 };

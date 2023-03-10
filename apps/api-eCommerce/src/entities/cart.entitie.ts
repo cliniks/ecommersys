@@ -40,4 +40,9 @@ export type CartReturn = {
   updatedAt?: Date;
 };
 
-export type ProductsReturn = ProductInfo & Product & { discountValue: number };
+export type ProductsReturn = ProductInfo &
+  Partial<Product> & {
+    discountValue: string;
+    couponApplied: string;
+    totalValue: string;
+  };

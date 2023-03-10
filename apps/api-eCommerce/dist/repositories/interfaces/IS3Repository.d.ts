@@ -2,7 +2,7 @@ export interface IS3Repository {
     uploadImage(file: fileType): Promise<any>;
     deleteFile(file: string): Promise<any>;
 }
-export type fileType = {
+export declare type fileType = {
     fieldname: string;
     originalname: string;
     encoding: string;

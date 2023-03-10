@@ -62,6 +62,8 @@ export const StoreCommissionSchema = new Schema(
 
 export type storeCommissionType = CommissionType & { storeId: string };
 
-export type productCommissionType = CommissionType & { productId: string };
+export type productCommissionType = storeCommissionType & { productId: string };
 
-export type categoryCommissionType = CommissionType & { categoryId: string };
+export type categoryCommissionType = storeCommissionType & {
+  categoryId: string;
+};

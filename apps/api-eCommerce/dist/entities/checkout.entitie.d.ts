@@ -1,35 +1,73 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const Checkout: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const Checkout: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    products: {
-        items: any[];
-        storeId?: string | undefined;
-        meValuePreview?: string | undefined;
-        store?: any;
+    coupons: string[];
+    store: {
+        products: {
+            value?: string;
+            discount?: string;
+            qnt?: number;
+            productId?: string;
+        }[];
+        value?: string;
+        storeId?: string;
+        discount?: string;
+        meValuePreview?: string;
     }[];
-    owner?: string | undefined;
-    meId?: string | undefined;
-    asaasId?: string | undefined;
+    paymentMethods: {
+        value?: string;
+        paymentType?: string;
+        paymentMethodId?: string;
+    }[];
+    address?: {
+        number?: string;
+        district?: string;
+        address?: string;
+        complement?: string;
+        city?: string;
+        state?: string;
+        country?: string;
+        zipCode?: string;
+    };
+    owner?: string;
+    totalValue?: string;
+    totalDiscount?: string;
 }>;
-export type Checkout = {
-    _id?: ObjectId;
-    owner: String;
-    products: Products[];
+export declare type Checkout = {
+    _id?: string;
+    owner: string;
+    products: CheckoutProducts[];
     isActive: boolean;
-    meId: String;
-    asaasId: String;
+    address: {
+        district: string;
+        address: string;
+        number: string;
+        complement: string;
+        city: string;
+        state: string;
+        country: string;
+        zipCode: string;
+    };
+    paymentMethods: CheckoutPaymentMethods[];
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type Products = {
-    storeId: String;
-    store: {};
-    items: [];
-    meValuePreview: String;
+export declare type CheckoutPaymentMethods = {
+    paymentType: string;
+    value: string;
+    paymentMethodId: string;
+};
+export declare type CheckoutStore = {
+    storeId: string;
+    products: CheckoutProducts[];
+    meValuePreview?: string;
+    value?: String;
+    discount?: String;
+};
+export declare type CheckoutProducts = {
+    productId: string;
+    qnt: number;
+    value?: String;
+    discount?: String;
 };

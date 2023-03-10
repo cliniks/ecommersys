@@ -6,14 +6,18 @@ const createProduct = async (req, res, repo) => {
     try {
         const { body } = req;
         let product = Object.assign({}, body);
+        if (!product.price)
+            product.price = "0";
+        if (!product.regularPrice)
+            product.regularPrice = "0";
         const user = await (0, returnUserFromToken_1.returnUserFromToken)(req);
         product.owner = user.storeId;
         const resolveProductAdd = await repo.addOne(product);
-        res.json(resolveProductAdd);
+        return res.json(resolveProductAdd);
     }
     catch (err) {
         console.log("createProduct", err);
-        res.status(400).send("não foi possível criar.");
+        return res.status(400).send("não foi possível criar.");
     }
 };
 exports.createProduct = createProduct;

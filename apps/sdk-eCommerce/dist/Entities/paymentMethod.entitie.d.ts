@@ -1,9 +1,11 @@
+export declare type PaymentType = "credit" | "debit" | "all";
 export declare type PaymentMethodType = {
     _id?: string;
     owner: string;
     creditCardNumber: string;
     creditCardBrand: string;
     creditCardToken: string;
+    paymentType: PaymentType;
     isActive: boolean;
     createdAt?: Date;
     updatedAt?: Date;

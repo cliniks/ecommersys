@@ -1,17 +1,12 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const WalletSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const WalletSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    amount?: string | undefined;
-    owner?: string | undefined;
+    owner?: string;
+    amount?: string;
 }>;
-export type Wallet = {
-    _id?: ObjectId;
+export declare type Wallet = {
+    _id?: string;
     owner: string;
     amount: string;
     isActive: boolean;

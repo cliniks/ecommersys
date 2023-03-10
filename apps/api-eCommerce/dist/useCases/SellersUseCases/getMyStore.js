@@ -9,11 +9,11 @@ const getMyStore = async (req, res, repo) => {
             key: "_id",
             value: user.storeId,
         });
-        res.json(findMyStore);
+        return res.json(findMyStore);
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.getMyStore = getMyStore;

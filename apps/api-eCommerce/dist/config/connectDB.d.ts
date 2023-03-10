@@ -3,36 +3,36 @@ export declare const dbconfig: {
     user: {
         authSource: string;
         authMongo: {
-            user: string | undefined;
-            pass: string | undefined;
+            user: string;
+            pass: string;
         };
     };
     seller: {
         authSource: string;
         authMongo: {
-            user: string | undefined;
-            pass: string | undefined;
+            user: string;
+            pass: string;
         };
     };
     sales: {
         authSource: string;
         authMongo: {
-            user: string | undefined;
-            pass: string | undefined;
+            user: string;
+            pass: string;
         };
     };
     cart: {
         authSource: string;
         authMongo: {
-            user: string | undefined;
-            pass: string | undefined;
+            user: string;
+            pass: string;
         };
     };
     products: {
         authSource: string;
         authMongo: {
-            user: string | undefined;
-            pass: string | undefined;
+            user: string;
+            pass: string;
         };
     };
 };

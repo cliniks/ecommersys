@@ -3,12 +3,15 @@ import { verifyers } from "../middlewares/verifyers";
 import { usersUseCases } from "../useCases/UsersUseCases";
 
 import multer from "multer";
+import { salesUseCases } from "../useCases/SalesUseCases";
 
 const upload = multer({ dest: "uploads/" });
 
 const UsersRoutes: Router = Router();
 
 UsersRoutes.get("/", verifyers.verifyToken, usersUseCases.FindOne);
+
+UsersRoutes.post("/many", verifyers.verifyToken, usersUseCases.FindMany);
 
 UsersRoutes.get("/verifyUser", verifyers.verifyToken, (_, res: Response) => {
   try {
@@ -21,6 +24,12 @@ UsersRoutes.get("/verifyUser", verifyers.verifyToken, (_, res: Response) => {
 UsersRoutes.get("/getMyUser", verifyers.verifyToken, usersUseCases.getMyUser);
 
 UsersRoutes.get("/all", verifyers.verifyToken, usersUseCases.FindAll);
+
+UsersRoutes.get(
+  "/getMyBuys",
+  verifyers.verifyToken,
+  salesUseCases.getMyUserBuys
+);
 
 UsersRoutes.post("/", upload.single("img"), usersUseCases.newUser);
 

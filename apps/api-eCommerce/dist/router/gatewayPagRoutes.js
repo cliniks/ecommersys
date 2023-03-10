@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.gatewayPagRouter = void 0;
+const express_1 = require("express");
+const ClientAsaasImplementation_1 = require("../providers/implementations/ClientAsaasImplementation");
+const controllers_1 = require("../providers/controllers");
+const gatewayPagRouter = (0, express_1.Router)();
+exports.gatewayPagRouter = gatewayPagRouter;
+const gatPag = new ClientAsaasImplementation_1.ClientAsaasImplementation();
+gatewayPagRouter.get("/", (req, res) => res.json("teste"));
+gatewayPagRouter.post("/tokenCard", controllers_1.TokenizeCard);

@@ -3,13 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.auth = void 0;
-const UsersRepository_1 = require("../../repositories/implementations/UsersRepository");
+exports.verifyAccountExistence = exports.auth = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const ErrorHandling_1 = require("../../errors/ErrorHandling");
 const enumErrors_1 = require("../../errors/enumErrors");
-const User = new UsersRepository_1.UsersRepository();
+const repositories_1 = require("../../repositories");
+const User = repositories_1.UsersRepository;
 const auth = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -28,16 +27,28 @@ const auth = async (req, res) => {
                 });
             }
             else {
-                (0, ErrorHandling_1.ErrorHandling)({ code: enumErrors_1.EnumErrorHandling.incorrectPassword, res });
+                throw new Error(enumErrors_1.EnumErrorHandling[enumErrors_1.EnumErrorHandling.incorrectPassword]);
             }
         }
         else {
-            (0, ErrorHandling_1.ErrorHandling)({ code: enumErrors_1.EnumErrorHandling.noUserWithThisEmail, res });
+            throw new Error(enumErrors_1.EnumErrorHandling[enumErrors_1.EnumErrorHandling.noUserWithThisEmail]);
         }
     }
     catch (error) {
-        console.log(error);
-        (0, ErrorHandling_1.ErrorHandling)({ code: enumErrors_1.EnumErrorHandling.noUserWithThisEmail, res });
+        res.status(400).send(error.toString());
     }
 };
 exports.auth = auth;
+const verifyAccountExistence = async (req, res) => {
+    try {
+        const { username } = req.body;
+        const verify = await User.getOne({ key: "username", value: username });
+        if (verify)
+            return res.json(true);
+        return res.json(false);
+    }
+    catch (err) {
+        return res.json(false);
+    }
+};
+exports.verifyAccountExistence = verifyAccountExistence;

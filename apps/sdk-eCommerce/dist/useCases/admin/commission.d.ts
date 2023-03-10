@@ -16,6 +16,7 @@ export declare class GlobalCommission implements IGlobalCommission<GlobalCommiss
 }
 export declare class ProductCommission implements IProductCommission<productCommissionType> {
     getSingle: (props: getSingleProps) => Promise<any>;
+    getByStore: (storeId: string) => Promise<any>;
     add: (data: Partial<productCommissionType>) => Promise<any>;
     getAll: (props: getAllProps) => Promise<any>;
     updateOne: (props: {
@@ -25,6 +26,7 @@ export declare class ProductCommission implements IProductCommission<productComm
 }
 export declare class CategoryCommission implements ICategoryCommission<categoryCommissionType> {
     getSingle: (props: getSingleProps) => Promise<any>;
+    getByStore: (storeId: string) => Promise<any>;
     add: (data: Partial<categoryCommissionType>) => Promise<any>;
     getAll: (props: getAllProps) => Promise<any>;
     updateOne: (props: {

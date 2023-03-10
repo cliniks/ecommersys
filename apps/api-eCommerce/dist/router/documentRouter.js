@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.documentRouter = void 0;
+const express_1 = require("express");
+const DocumentUseCases_1 = require("../useCases/DocumentUseCases");
+const documentRouter = (0, express_1.Router)();
+exports.documentRouter = documentRouter;
+documentRouter.get("/", DocumentUseCases_1.documentUseCases.FineOne);
+documentRouter.get("/myDocuments", DocumentUseCases_1.documentUseCases.getMyDocuments);
+documentRouter.get("/all", DocumentUseCases_1.documentUseCases.FindAll);
+documentRouter.post("/", DocumentUseCases_1.documentUseCases.Add);
+documentRouter.patch("/:id", DocumentUseCases_1.documentUseCases.Update);
+documentRouter.delete("/:id", DocumentUseCases_1.documentUseCases.Delete);

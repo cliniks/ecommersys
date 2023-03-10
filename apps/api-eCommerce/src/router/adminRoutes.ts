@@ -32,6 +32,10 @@ adminRoutes.get(
   "/commission/category/all",
   AdminUseCases.commission.Category.FindAll
 );
+adminRoutes.get(
+  "/commission/category/:storeId",
+  AdminUseCases.commission.Category.storeCategoryCommission
+);
 adminRoutes.post(
   "/commission/category",
   AdminUseCases.commission.Category.addOne
@@ -52,6 +56,10 @@ adminRoutes.get(
 adminRoutes.get(
   "/commission/product/all",
   AdminUseCases.commission.Product.FindAll
+);
+adminRoutes.get(
+  "/commission/product/:storeId",
+  AdminUseCases.commission.Product.storeProductCommission
 );
 adminRoutes.post(
   "/commission/product",

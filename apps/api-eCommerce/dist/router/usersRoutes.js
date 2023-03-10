@@ -22,7 +22,7 @@ UsersRoutes.get("/verifyUser", verifyers_1.verifyers.verifyToken, (_, res) => {
 });
 UsersRoutes.get("/getMyUser", verifyers_1.verifyers.verifyToken, UsersUseCases_1.usersUseCases.getMyUser);
 UsersRoutes.get("/all", verifyers_1.verifyers.verifyToken, UsersUseCases_1.usersUseCases.FindAll);
-UsersRoutes.post("/", UsersUseCases_1.usersUseCases.newUser);
+UsersRoutes.post("/", upload.single("img"), UsersUseCases_1.usersUseCases.newUser);
 UsersRoutes.patch("/image/:id", verifyers_1.verifyers.verifyToken, upload.single("img"), UsersUseCases_1.usersUseCases.updateImage);
 UsersRoutes.patch("/info/:id", verifyers_1.verifyers.verifyToken, UsersUseCases_1.usersUseCases.updateUserInfo);
 UsersRoutes.get("/seeProduct/:id", verifyers_1.verifyers.verifyToken, UsersUseCases_1.usersUseCases.seeProduct);

@@ -1,38 +1,10 @@
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose" />
-/// <reference types="mongoose-paginate" />
-/// <reference types="mongoose" />
-import { UserModelType } from "../../models/user.model";
-import { chargeType, clientProps, creditCardChargeType, queryProps } from "../IClientAsaasProvider";
+import { User } from "../../entities";
+import { TokenCard, tokenizeType } from "../../entities/paymentMethod.entitie";
+import { chargeType, clientProps, creditCardChargeType, queryProps } from "../interfaces/IClientAsaasProvider";
 export declare class ClientAsaasImplementation {
-    constructor();
     newClient({ data }: {
-        data: UserModelType;
-    }): Promise<(import("mongoose").Document<any, any, any> & {
-        _id: import("mongoose").Types.ObjectId;
-    }) | null>;
+        data: User;
+    }): Promise<User>;
     updateClient({ data, clientId, }: {
         data: clientProps;
         clientId: string;
@@ -43,13 +15,9 @@ export declare class ClientAsaasImplementation {
     getClient({ clientId }: {
         clientId: string;
     }): Promise<any>;
-    genCharge({ data, client, cartID, }: {
-        data: chargeType;
-        client: UserModelType;
-        cartID: string;
-    }): Promise<any>;
+    genCharge(charge: any): Promise<any>;
     getCharge({ client, chargeId, }: {
-        client: UserModelType;
+        client: User;
         chargeId: string;
     }): Promise<any>;
     genCreditCardCharge({ data, creditcard, }: {
@@ -61,4 +29,5 @@ export declare class ClientAsaasImplementation {
     }): Promise<any>;
     registerBank(): Promise<any>;
     registerPixCode(): Promise<any>;
+    tokenizeCard(cardData: tokenizeType): Promise<TokenCard>;
 }

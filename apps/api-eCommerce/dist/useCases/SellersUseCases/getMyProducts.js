@@ -2,23 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMyProducts = void 0;
 const returnUserFromToken_1 = require("../../utils/returnUserFromToken");
-const ProductsRepository_1 = require("../../repositories/implementations/ProductsRepository");
+const searchsUtils_1 = require("../../utils/searchsUtils");
+const repositories_1 = require("../../repositories");
 const getMyProducts = async (req, res) => {
     try {
-        let { page, size, filter } = req.query;
+        let { page = 1, size = 10, filter = { key: "", value: "", fields: "" }, } = req.query;
         const user = await (0, returnUserFromToken_1.returnUserFromToken)(req);
-        const products = new ProductsRepository_1.ProductsRepository();
-        filter = {
-            key: `owner ${filter === null || filter === void 0 ? void 0 : filter.key}`,
-            value: `${user.storeId}  ${filter === null || filter === void 0 ? void 0 : filter.value}`,
-            fields: "",
-        };
-        const findMyProducts = await products.getAll({ page, size, filter });
-        res.json(findMyProducts);
+        const products = repositories_1.ProductsRepository;
+        const findMyProducts = await products.getAll({
+            page,
+            size,
+            filter: (0, searchsUtils_1.addMyOwnStoreInMySearch)(filter, user),
+        });
+        return res.json(findMyProducts);
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.getMyProducts = getMyProducts;

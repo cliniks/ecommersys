@@ -10,6 +10,7 @@ import {
 import { IUsersRepository, fileType } from "../../repositories/Interfaces";
 import { clientAssasProvider } from "../../providers";
 import { Address, Cart } from "../../entities";
+import { makeApi } from "../../services/axiosInstance";
 const s3 = new S3Repository();
 const unlinkFile = util.promisify(fs.unlink);
 
@@ -55,6 +56,8 @@ export const newUser = async (
     };
 
     const user = await repository.addOne(userData);
+
+    makeApi.post("", { type: "createAccount", userInfo: user.userInfo });
 
     const addAddress = await AddressRepo.addOne({
       ...user.userInfo,

@@ -10,9 +10,4 @@ export declare type CommissionType = {
     updatedAt?: Date;
     createdAt?: Date;
 };
-export declare type GlobalCommissionType = {
-    global: CommissionType;
-    categories: CommissionType & {
-        categoryId: String;
-    };
-};
+export declare type GlobalCommissionType = CommissionType;

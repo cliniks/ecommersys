@@ -26,3 +26,4 @@ __exportStar(require("./category"), exports);
 __exportStar(require("./coupon"), exports);
 __exportStar(require("./upload"), exports);
 __exportStar(require("./payments"), exports);
+__exportStar(require("./notifications"), exports);

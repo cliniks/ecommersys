@@ -156,7 +156,7 @@ export const createPayment = async (
         storeValues.push(stores[s].storeId);
     }
 
-    const saleResponse: Sales = {
+    const saleResponse: Sales | any = {
       userId: user._id,
       addressId: userAddress._id,
       sellers: stores,
@@ -167,6 +167,8 @@ export const createPayment = async (
       billingType,
       storeIds: storeValues,
     };
+
+    // VEFIRY AMOUNT
 
     console.log({ saleResponse });
 

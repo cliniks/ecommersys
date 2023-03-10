@@ -1,7 +1,8 @@
 import { StoreSolicitate, Store } from "../../Entities";
+import { notificationTypes } from "../../Entities/notification.entitie";
 import { Response } from "../../Errors";
 import { getAllProps, getAllReturn, getSingleProps } from "../../interfaces";
-import { IAdmin } from "../../interfaces/IAdmin";
+import { IAdmin, IAdminNotifications } from "../../interfaces/IAdmin";
 import { adminErrors } from "../../services";
 import { commission } from "./commission";
 declare class Admin implements IAdmin {
@@ -14,6 +15,7 @@ declare class Admin implements IAdmin {
         solicitationId: String;
     }): Promise<Response<adminErrors, Store>>;
     commission: commission;
+    notification: IAdminNotifications<notificationTypes>;
 }
 declare const _default: Admin;
 export default _default;

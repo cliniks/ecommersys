@@ -6,6 +6,8 @@ const AuthUseCases_1 = require("../useCases/AuthUseCases");
 const AuthRoutes = (0, express_1.Router)();
 exports.AuthRoutes = AuthRoutes;
 AuthRoutes.post("/", AuthUseCases_1.authUseCases.auth);
+AuthRoutes.post("/accountExistence", AuthUseCases_1.authUseCases.verifyAccountExistence);
 AuthRoutes.post("/verifyToken", AuthUseCases_1.authUseCases.verifyToken);
+AuthRoutes.post("/changePassword", AuthUseCases_1.authUseCases.changePassword);
 AuthRoutes.post("/createEmailToken", AuthUseCases_1.authUseCases.createEmailToken);
 AuthRoutes.post("/confirmEmailToken", AuthUseCases_1.authUseCases.confirmEmailToken);

@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { Product } from "./product.entitie";
+import { ProductsReturn } from "./cart.entitie";
 
 export const paymentStatus = [
   "PENDING",
@@ -24,6 +25,8 @@ export const SalesSchema = new Schema(
         walletId: String,
         products: [
           {
+            amount: Number,
+            productId: String,
             imgs: [String],
             name: String,
             owner: String,
@@ -43,8 +46,18 @@ export const SalesSchema = new Schema(
             _id: String,
             virtualProduct: Boolean,
             categories: [String],
+            discountValue: String,
+            couponApplied: String,
+            totalValue: String,
           },
         ],
+      },
+    ],
+    documents: [
+      {
+        docId: String,
+        productId: [String],
+        docUrl: String,
       },
     ],
     userId: String,
@@ -70,6 +83,9 @@ export const SalesSchema = new Schema(
         "PIX",
       ],
     },
+    installmentCount: Number,
+    paymentLogs: [],
+    paymentsConfirmed: [],
     storeIds: [String],
     paymentStatus: { type: String, enum: paymentStatus },
     paymentId: String,
@@ -79,6 +95,12 @@ export const SalesSchema = new Schema(
     timestamps: true,
   }
 );
+
+export type SaleDocuments = {
+  docId: string;
+  productId: string[];
+  docUrl: string;
+};
 
 export type Sales = {
   _id?: string;
@@ -91,6 +113,7 @@ export type Sales = {
     cardToken: string;
     id: string;
   };
+  documents: SaleDocuments[];
   coupons: string[];
   totalValue: number;
   totalDiscount: number;
@@ -98,6 +121,9 @@ export type Sales = {
   billingType: billingType;
   paymentStatus?: paymentTypes;
   paymentId?: string;
+  installmentCount?: number;
+  paymentLogs?: any[];
+  paymentsConfirmed?: any[];
   storeIds: string[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -110,7 +136,7 @@ export type ProductSaleInfo = {
 
 export type StoreMapped = {
   storeId: string;
-  products: ProductMapped[];
+  products: ProductsReturn[];
   totalPrice: number;
   walletId: string;
   totalDiscount: number;
@@ -146,3 +172,10 @@ export type billingType =
   | "TRANSFER"
   | "DEPOSIT"
   | "PIX";
+
+export const assasPaymentSchema = new Schema(
+  {},
+  {
+    timestamps: true,
+  }
+);

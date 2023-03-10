@@ -1,26 +1,21 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const CategorySchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const CategorySchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    name?: string | undefined;
-    owner?: string | undefined;
-    description?: string | undefined;
-    hierarchy?: string | undefined;
-    isGlobal?: boolean | undefined;
+    isGlobal: boolean;
+    name?: string;
+    owner?: string;
+    description?: string;
+    hierarchy?: string;
 }>;
-export type Category = {
-    _id?: ObjectId;
-    name: String;
-    description: String;
-    hierarchy?: String;
+export declare type Category = {
+    _id?: string;
+    name: string;
+    description: string;
+    hierarchy?: string;
     isGlobal?: Boolean;
     isActive: Boolean;
-    owner?: String;
+    owner?: string;
     createdAt?: Date;
     updatedAt?: Date;
 };

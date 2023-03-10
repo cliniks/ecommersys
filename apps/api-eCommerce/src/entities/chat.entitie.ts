@@ -7,8 +7,9 @@ export const ChatSchema = new Schema(
       require: true,
       unique: true,
     },
+    status: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
-    rooms: [],
+    rooms: [String],
   },
   {
     timestamps: true,
@@ -21,6 +22,7 @@ export const MessageSchema = new Schema(
     type: String,
     body: String,
     roomId: String,
+    read: [String],
   },
   {
     timestamps: true,
@@ -29,9 +31,9 @@ export const MessageSchema = new Schema(
 
 export const RoomSchema = new Schema(
   {
-    users: String,
+    users: [],
     lastMessage: Object,
-    messages: [],
+    messages: [String],
     modified: Date,
   },
   {
@@ -42,24 +44,27 @@ export const RoomSchema = new Schema(
 export type ChatType = {
   _id?: ObjectId;
   owner: string;
-  isActive: boolean;
-  rooms: RoomType[];
+  isActive?: boolean;
+  status?: boolean;
+  rooms?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 };
 
 export type RoomType = {
-  users: string;
-  lastMessage: MessageType;
-  messages: MessageType[];
-  modified: Date;
+  _id?: string;
+  users: string[];
+  lastMessage?: MessageType;
+  isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 };
 
 export type MessageType = {
+  _id?: string;
   sender: string;
   type: "text" | "image" | "document";
+  read?: string[];
   body: string;
   roomId: string;
   createdAt?: Date;

@@ -66,6 +66,12 @@ const CategoryCommission = {
             return (0, Errors_1.throwError)("Não foi possível achar o commissão");
         return (0, Errors_1.throwSuccess)(response.data);
     },
+    getByStore: async (storeId) => {
+        const response = await axiosInstances_1.apiEcommerce.get(`/admin/commission/category/${storeId}`);
+        if (!response.data)
+            return (0, Errors_1.throwError)("Não foi possível achar o commissão");
+        return (0, Errors_1.throwSuccess)(response.data);
+    },
     add: async (data) => {
         const response = await axiosInstances_1.apiEcommerce.post(`/admin/commission/category`, data);
         if (!response.data)
@@ -92,6 +98,12 @@ const ProductCommission = {
         const response = await axiosInstances_1.apiEcommerce.get(`/admin/commission/product`, {
             params: { key, value },
         });
+        if (!response.data)
+            return (0, Errors_1.throwError)("Não foi possível achar o commissão");
+        return (0, Errors_1.throwSuccess)(response.data);
+    },
+    getByStore: async (storeId) => {
+        const response = await axiosInstances_1.apiEcommerce.get(`/admin/commission/product/${storeId}`);
         if (!response.data)
             return (0, Errors_1.throwError)("Não foi possível achar o commissão");
         return (0, Errors_1.throwSuccess)(response.data);

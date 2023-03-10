@@ -28,6 +28,7 @@ export declare const commissions: {
             key: string;
             value: string;
         }) => Promise<Either<commissionErrors, categoryCommissionType>>;
+        getByStore: (storeId: string) => Promise<Either<commissionErrors, categoryCommissionType[]>>;
         add: (data: Partial<categoryCommissionType>) => Promise<Either<commissionErrors, categoryCommissionType>>;
         getAll: (props: getAllProps) => Promise<Either<commissionErrors, getAllReturn<categoryCommissionType>>>;
         update: ({ commissionId, data, }: {
@@ -40,6 +41,7 @@ export declare const commissions: {
             key: string;
             value: string;
         }) => Promise<Either<commissionErrors, productCommissionType>>;
+        getByStore: (storeId: string) => Promise<Either<commissionErrors, productCommissionType[]>>;
         add: (data: Partial<productCommissionType>) => Promise<Either<commissionErrors, productCommissionType>>;
         getAll: (props: getAllProps) => Promise<Either<commissionErrors, getAllReturn<productCommissionType>>>;
         update: ({ commissionId, data, }: {

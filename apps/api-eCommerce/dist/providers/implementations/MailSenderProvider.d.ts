@@ -1,4 +1,4 @@
-import { IMailSenderProvider, IMessage } from "../IMailSenderProvider";
+import { IMailSenderProvider, IMessage } from "../interfaces/IMailSenderProvider";
 export declare class MailSenderProvider implements IMailSenderProvider {
     private transporter;
     constructor();

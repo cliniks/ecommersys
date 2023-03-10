@@ -7,12 +7,16 @@ exports.CouponSchema = void 0;
 const mongoose_1 = require("mongoose");
 const mongoose_paginate_1 = __importDefault(require("mongoose-paginate"));
 exports.CouponSchema = new mongoose_1.Schema({
-    assined: [],
     name: {
         type: String,
         require: true,
         unique: true,
     },
+    productsAssigned: [String],
+    clientsAssigned: [String],
+    storesAssigned: [String],
+    categoriesAssigned: [String],
+    usedIds: [String],
     description: String,
     type: String,
     value: String,

@@ -1,36 +1,39 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const CouponSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const CouponSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    assined: any[];
+    productsAssigned: string[];
+    clientsAssigned: string[];
+    storesAssigned: string[];
+    categoriesAssigned: string[];
+    usedIds: string[];
     used: number;
     isCashBack: boolean;
     isFreeShipping: boolean;
     startDate: Date;
-    name?: string | undefined;
-    type?: string | undefined;
-    owner?: string | undefined;
-    value?: string | undefined;
-    description?: string | undefined;
-    minValue?: string | undefined;
-    maxValue?: string | undefined;
-    limitForUse?: number | undefined;
-    endDate?: Date | undefined;
+    type?: string;
+    value?: string;
+    name?: string;
+    owner?: string;
+    minValue?: string;
+    maxValue?: string;
+    description?: string;
+    limitForUse?: number;
+    endDate?: Date;
 }>;
-export type Coupon = {
-    _id?: ObjectId;
+export declare type Coupon = {
+    _id?: string;
     name: string;
-    assined: string[];
+    productsAssigned: string[];
+    clientsAssigned: string[];
+    storesAssigned: string[];
+    categoriesAssigned: string[];
+    usedIds: string[];
     description: string;
     type: "percentage" | "fixed" | "shipping";
     value: string;
     minValue: string;
-    maxValue?: String;
+    maxValue?: string;
     used: number;
     limitForUse: number;
     isCashBack: boolean;

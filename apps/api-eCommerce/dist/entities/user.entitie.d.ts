@@ -1,45 +1,48 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const UserSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    img: string;
-    isActive: boolean;
+import { Schema } from "mongoose";
+export declare const UserSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     username: string;
     password: string;
-    wishList: any[];
-    favorites: any[];
-    likes: any[];
+    img: string;
+    isActive: boolean;
+    wishList: import("mongoose").Types.DocumentArray<any> | any[];
+    favorites: import("mongoose").Types.DocumentArray<any> | any[];
+    likes: import("mongoose").Types.DocumentArray<any> | any[];
     access: number;
-    melhorEnvioID?: string | undefined;
-    wallet?: string | undefined;
+    userInfo?: {
+        number?: string;
+        name?: string;
+        lastName?: string;
+        personType?: string;
+        cpf?: string;
+        cnpj?: string;
+        cnae?: string;
+        enterpriseSocial?: string;
+        enterpriseName?: string;
+        district?: string;
+        address?: string;
+        phone?: string;
+        complement?: string;
+        birthDate?: string;
+        city?: string;
+        state?: string;
+        country?: string;
+        zipCode?: string;
+        email?: string;
+        defaultAddress?: string;
+    };
+    melhorEnvioID?: string;
+    gatewayPagId?: string;
+    gatewayPagApiKey?: string;
+    storeId?: string;
+    orders?: number;
+    wallet?: string;
     statistics?: {
         productsViews: string[];
-    } | undefined;
-    gatewayPagId?: string | undefined;
-    gatewayPagApiKey?: string | undefined;
-    storeId?: string | undefined;
-    orders?: number | undefined;
-    userInfo?: {
-        number?: number | undefined;
-        name?: string | undefined;
-        address?: string | undefined;
-        complement?: string | undefined;
-        city?: string | undefined;
-        state?: string | undefined;
-        cep?: string | undefined;
-        email?: string | undefined;
-        lastName?: string | undefined;
-        fone?: string | undefined;
-        cpf?: string | undefined;
-        birthDate?: string | undefined;
-    } | undefined;
+    };
 }>;
-export type User = {
-    _id?: ObjectId;
+export declare type User = {
+    _id?: string;
     username: string;
     password: string;
     wallet: string;
@@ -59,19 +62,28 @@ export type User = {
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type userInfo = {
+export declare type userInfo = {
     name: string;
     lastName: string;
-    fone: string;
     cpf: string;
+    cnpj: string;
+    cnae: string;
+    personType: "juridica" | "fisica";
+    enterpriseSocial: string;
+    enterpriseName: string;
+    district: string;
     address: string;
-    number: Number;
+    number: string;
+    phone: string;
     complement: string;
+    birthDate: string;
+    country: string;
     city: string;
     state: string;
-    cep: string;
+    zipCode: string;
     email: string;
+    defaultAddress: string;
 };
-export type userStatistics = {
+export declare type userStatistics = {
     productsViews: string[];
 };

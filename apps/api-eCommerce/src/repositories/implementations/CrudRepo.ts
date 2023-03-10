@@ -6,13 +6,39 @@ import {
   getOneProps,
 } from "../Interfaces";
 
-// import { verifyIsNumber } from "../../utils/numberMethods";
-
 export class CrudRepo<E> implements ICrudRepository<E> {
   constructor(private model: Model<E>) {}
 
-  async getOne({ key, value }: getOneProps) {
-    return await this.model.findOne({ [key as any]: value });
+  async getOne({ key, value, fields }: getOneProps) {
+    const fieldsAdjust = fields?.includes(",")
+      ? fields.replaceAll(",", " ")
+      : "";
+
+    const query = { [key as any]: value };
+
+    const get = await this.model.findOne(query).select(fieldsAdjust);
+
+    return get;
+  }
+
+  async getMany(idArray: string[], fields: string) {
+    if (!idArray || idArray.length === 0) return [];
+    const verifyArray = idArray.map((item) => {
+      const includesSlash = item.includes("/");
+      console.log({ includesSlash });
+      if (includesSlash) {
+        return item.split("/")[0];
+      }
+      return item;
+    });
+
+    const fieldsAdjust = fields?.includes(",")
+      ? fields.replace(",", " ")
+      : fields;
+
+    return await this.model
+      .find({ _id: { $in: verifyArray } })
+      .select(fieldsAdjust);
   }
 
   async getAll({ page = 1, size = 10, filter }: getAllProps) {
@@ -47,7 +73,7 @@ export class CrudRepo<E> implements ICrudRepository<E> {
 
     let data = await this.model
       .find(query.length > 0 ? { $and: query } : {})
-      .sort({ register: -1 })
+      .sort({ createdAt: -1 })
       .skip(+size * (+page > 0 ? +page - 1 : 0))
       .limit(+size)
       .select(fields);

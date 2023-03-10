@@ -1,5 +1,5 @@
+import { notificationTypes } from "../../Entities/notification.entitie";
 import { ISellerNotifications } from "../../interfaces";
 export declare class sellerNotifications implements ISellerNotifications {
-    connectNotifications(): void;
-    disableNotifications(): void;
+    mySellerNotifications(): Promise<notificationTypes[]>;
 }

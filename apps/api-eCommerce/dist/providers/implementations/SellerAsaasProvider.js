@@ -2,32 +2,38 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SellerAsaasImplementation = void 0;
 // import { StoreModel } from "../../models/store.model";
-const user_model_1 = require("../../models/user.model");
+const repositories_1 = require("../../repositories");
 const axiosInstance_1 = require("../../services/axiosInstance");
+const sellerRepo = repositories_1.SellersRepository;
 class SellerAsaasImplementation {
     constructor() { }
     async addStore(store) {
         try {
-            const { name, storeInfo, _id, owner } = store;
-            const getUser = await user_model_1.UserModel.findById(owner);
+            const { name, storeInfo, _id } = store;
             const storeData = {
                 name: name,
                 email: storeInfo.email,
-                mobilePhone: getUser.userInfo.fone,
+                mobilePhone: storeInfo.phone,
+                phone: storeInfo.phone,
                 cpfCnpj: storeInfo.cnpj,
                 companyType: "MEI",
-                birthDate: null,
-                postalCode: storeInfo.cep,
+                postalCode: storeInfo.zipCode,
                 address: storeInfo.address,
                 addressNumber: storeInfo.number,
                 complement: storeInfo.complement,
                 province: storeInfo.city,
                 externalReference: _id,
                 notificationDisabled: false,
-                municipalInscription: storeInfo.cep,
+                municipalInscription: storeInfo.zipCode,
             };
             const add = await axiosInstance_1.AsassAPI.post("accounts", storeData);
-            return add.data;
+            console.log(add === null || add === void 0 ? void 0 : add.data);
+            sellerRepo.update(_id, {
+                asaasID: add.data.id,
+                asaasApiKey: add.data.apiKey,
+                asaasWalletId: add.data.walletId,
+            });
+            return add === null || add === void 0 ? void 0 : add.data;
         }
         catch (err) {
             console.log(err.response.data);

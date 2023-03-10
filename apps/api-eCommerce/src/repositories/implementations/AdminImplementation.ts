@@ -25,6 +25,8 @@ export class GlobalCommissionImplementation implements IGlobalCommission {
 
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
   addOne = (data: GlobalCommissionType) => this.crud.addOne(data);
@@ -42,6 +44,8 @@ export class StoreCommissionImplementation implements IStoreCommission {
   }
 
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
+
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
 
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
@@ -61,6 +65,8 @@ export class CategoryCommissionImplementation implements ICategoryCommission {
 
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
   addOne = (data: categoryCommissionType) => this.crud.addOne(data);
@@ -78,6 +84,8 @@ export class ProductCommissionImplementation implements IProductCommission {
   }
 
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
+
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
 
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 

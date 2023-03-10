@@ -20,6 +20,8 @@ export class LeadsImplementation implements ILeadsRepository<LeadType> {
   getAll = (props: getAllProps): Promise<getAllReturn<LeadType>> =>
     this.crud.getAll(props);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: LeadType): Promise<LeadType> => this.crud.addOne(data);
 
   update = (id: string, data: Partial<LeadType>): Promise<LeadType> =>

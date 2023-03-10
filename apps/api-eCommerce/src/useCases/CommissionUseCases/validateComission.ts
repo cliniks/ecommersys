@@ -16,23 +16,23 @@ export const verifyStoreCommission = () => {};
 
 export const verifyGlobalCommission = async (): Promise<CommissionType> => {
   const getActualCommission: any = await adminCommissionRepo.getAll({});
-  return getActualCommission.result[0].global;
+  return getActualCommission.result[0];
 };
 
 export const applyCommission = async (price: number) => {
   const commission = await verifyGlobalCommission();
   const type = commission.commissionType;
   const calcPercentageResponse = () => {
-    return +price - (+commission.fixed / 100) * +commission.percentage;
+    return +price - (+price / 100) * +commission.percentage;
   };
   const calcFixedResponse = () => {
     return price - addDot(+commission.fixed);
   };
   const calcFixedAndPercentageResponse = () => {
-    const percentage = addDot(
-      (+commission.fixed / 100) * +commission.percentage
-    );
+    const percentage = (+price / 100) * +commission.percentage;
+
     const fixed = price - addDot(+commission.fixed);
+
     return fixed - percentage;
   };
 
@@ -43,7 +43,7 @@ export const applyCommission = async (price: number) => {
       ? calcFixedResponse()
       : calcFixedAndPercentageResponse();
 
-  console.log({ resultPrice });
+  // console.log({ resultPrice });
 
   return resultPrice;
 };

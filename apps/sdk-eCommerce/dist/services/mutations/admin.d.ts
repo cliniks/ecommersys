@@ -12,12 +12,12 @@ export declare const adminMutations: {
     getSingleSellersSolicitation: (props: getSingleProps) => Promise<Either<adminErrors, StoreSolicitate>>;
     commissions: {
         GlobalCommission: {
-            getSingle: ({ key, value, }: getSingleProps) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").GlobalCommissionType>>;
-            getAll: (props: getAllProps) => Promise<Either<import("./commission").commissionErrors, getAllReturn<import("../../Entities").GlobalCommissionType>>>;
+            getSingle: ({ key, value, }: getSingleProps) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").CommissionType>>;
+            getAll: (props: getAllProps) => Promise<Either<import("./commission").commissionErrors, getAllReturn<import("../../Entities").CommissionType>>>;
             update: ({ commissionId, data, }: {
                 commissionId: string;
-                data: Partial<import("../../Entities").GlobalCommissionType>;
-            }) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").GlobalCommissionType>>;
+                data: Partial<import("../../Entities").CommissionType>;
+            }) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").CommissionType>>;
         };
         StoreCommission: {
             getSingle: ({ key, value, }: {
@@ -36,6 +36,7 @@ export declare const adminMutations: {
                 key: string;
                 value: string;
             }) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").categoryCommissionType>>;
+            getByStore: (storeId: string) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").categoryCommissionType[]>>;
             add: (data: Partial<import("../../Entities").categoryCommissionType>) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").categoryCommissionType>>;
             getAll: (props: getAllProps) => Promise<Either<import("./commission").commissionErrors, getAllReturn<import("../../Entities").categoryCommissionType>>>;
             update: ({ commissionId, data, }: {
@@ -48,6 +49,7 @@ export declare const adminMutations: {
                 key: string;
                 value: string;
             }) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").productCommissionType>>;
+            getByStore: (storeId: string) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").productCommissionType[]>>;
             add: (data: Partial<import("../../Entities").productCommissionType>) => Promise<Either<import("./commission").commissionErrors, import("../../Entities").productCommissionType>>;
             getAll: (props: getAllProps) => Promise<Either<import("./commission").commissionErrors, getAllReturn<import("../../Entities").productCommissionType>>>;
             update: ({ commissionId, data, }: {

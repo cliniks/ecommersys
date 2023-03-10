@@ -26,6 +26,7 @@ import {
   PaymentMethodType,
   tokenizeType,
 } from "../Entities/paymentMethod.entitie";
+import { notificationTypes } from "../Entities/notification.entitie";
 
 export interface IUser {
   account: IUserAccount;
@@ -36,6 +37,7 @@ export interface IUser {
   order: IUserOrder;
   checkout: IUserCheckout;
   dashboard: IUserDashboard;
+  notifications: IUserNotifications;
 }
 
 export interface IUserAccount {
@@ -167,3 +169,7 @@ export interface IUserDocument {
 }
 
 export interface IUserDashboard {}
+
+export interface IUserNotifications {
+  myUserNotifications: () => Promise<notificationTypes[]>;
+}

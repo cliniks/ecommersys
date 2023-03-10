@@ -1,4 +1,4 @@
-import { IUser, IUserAccount, IUserCart, IUserCheckout, IUserDashboard, IUserDocument, IUserOrder, IUserPayment, IUserProduct } from "../../interfaces/IUser";
+import { IUser, IUserAccount, IUserCart, IUserCheckout, IUserDashboard, IUserDocument, IUserNotifications, IUserOrder, IUserPayment, IUserProduct } from "../../interfaces/IUser";
 export * from "./userAccount";
 export * from "./userCart";
 export * from "./userCheckout";
@@ -14,6 +14,7 @@ declare class User implements IUser {
     order: IUserOrder;
     checkout: IUserCheckout;
     document: IUserDocument;
+    notifications: IUserNotifications;
 }
 declare const _default: User;
 export default _default;

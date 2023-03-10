@@ -21,6 +21,7 @@ import { get } from "../CrudUseCases/get";
 import { newUser } from "./newUser";
 
 import { myUser } from "./myUser";
+import { getMany } from "../CrudUseCases/getMany";
 
 const users = UsersRepository;
 
@@ -28,6 +29,9 @@ const cache = new RedisImplementation();
 
 export const usersUseCases = {
   FindOne: async (req: Request, res: Response) => await get(req, res, users),
+
+  FindMany: async (req: Request, res: Response) =>
+    await getMany(req, res, users),
 
   getMyUser: async (req: Request, res: Response) => await myUser(req, res),
 

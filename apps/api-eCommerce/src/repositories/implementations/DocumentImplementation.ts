@@ -19,6 +19,8 @@ class DocumentImplementation implements IDocumentRepository {
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: DocumentsType) => this.crud.addOne(data);
 
   update = (id: string, data: any) => this.crud.update(id, data);

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sellersUseCases = void 0;
-const SellersRepository_1 = require("../../repositories/implementations/SellersRepository");
 const add_1 = require("../CrudUseCases/add");
 const delete_1 = require("../CrudUseCases/delete");
 const get_1 = require("../CrudUseCases/get");
@@ -15,9 +14,12 @@ const getMyProducts_1 = require("./getMyProducts");
 const getMyCategories_1 = require("./getMyCategories");
 const updateStoreImage_1 = require("./updateStoreImage");
 const updateStoreBanner_1 = require("./updateStoreBanner");
-const sellersRepo = new SellersRepository_1.SellersRepository();
+const repositories_1 = require("../../repositories");
+const getMany_1 = require("../CrudUseCases/getMany");
+const sellersRepo = repositories_1.SellersRepository;
 exports.sellersUseCases = {
     FineOne: async (req, res) => await (0, get_1.get)(req, res, sellersRepo),
+    FineMany: async (req, res) => await (0, getMany_1.getMany)(req, res, sellersRepo),
     FindAll: async (req, res) => await (0, getAll_1.getAll)(req, res, sellersRepo),
     Add: async (req, res) => await (0, add_1.add)(req, res, sellersRepo),
     Update: async (req, res) => await (0, update_1.update)(req, res, sellersRepo),

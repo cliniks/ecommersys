@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SellerPoliciesRoutes = void 0;
+const express_1 = require("express");
+const SellerPoliciesUseCases_1 = require("../useCases/SellerPoliciesUseCases");
+// import { verifyers } from "../middlewares/verifyers";
+const SellerPoliciesRoutes = (0, express_1.Router)();
+exports.SellerPoliciesRoutes = SellerPoliciesRoutes;
+SellerPoliciesRoutes.get("/", SellerPoliciesUseCases_1.sellerPoliciesUseCases.FineOne);
+SellerPoliciesRoutes.get("/all", SellerPoliciesUseCases_1.sellerPoliciesUseCases.FindAll);
+SellerPoliciesRoutes.get("/myPolicies", SellerPoliciesUseCases_1.sellerPoliciesUseCases.getMyPolicies);
+SellerPoliciesRoutes.post("/", SellerPoliciesUseCases_1.sellerPoliciesUseCases.Add);
+SellerPoliciesRoutes.patch("/:id", SellerPoliciesUseCases_1.sellerPoliciesUseCases.Update);
+SellerPoliciesRoutes.delete("/:id", SellerPoliciesUseCases_1.sellerPoliciesUseCases.Delete);

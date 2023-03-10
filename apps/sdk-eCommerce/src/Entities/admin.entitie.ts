@@ -8,7 +8,4 @@ export type CommissionType = {
   createdAt?: Date;
 };
 
-export type GlobalCommissionType = {
-  global: CommissionType;
-  categories: CommissionType & { categoryId: String };
-};
+export type GlobalCommissionType = CommissionType;

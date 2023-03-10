@@ -8,6 +8,7 @@ const SalesRoutes = (0, express_1.Router)();
 exports.SalesRoutes = SalesRoutes;
 SalesRoutes.get("/", SalesUseCases_1.salesUseCases.FineOne);
 SalesRoutes.get("/all", SalesUseCases_1.salesUseCases.FindAll);
-SalesRoutes.post("/", SalesUseCases_1.salesUseCases.Add);
+// SalesRoutes.post("/", salesUseCases.Add);
 SalesRoutes.patch("/:id", SalesUseCases_1.salesUseCases.Update);
 SalesRoutes.delete("/:id", SalesUseCases_1.salesUseCases.Delete);
+SalesRoutes.post("/genPayment", SalesUseCases_1.salesUseCases.Add);

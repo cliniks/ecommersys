@@ -2,11 +2,15 @@ import { Request, Response } from "express";
 
 export const get = async (req: Request, res: Response, repository: any) => {
   try {
-    const { key, value } = req.query as { key: string; value: string };
+    const { key, value, fields } = req.query as {
+      key: string;
+      value: string;
+      fields: string;
+    };
 
-    const getOne = await repository.getOne({ key, value });
+    const getOne = await repository.getOne({ key, value, fields });
 
-    console.log({ key }, { value }, getOne[key]?.toString());
+    console.log({ key }, { value }, { fields }, getOne[key]?.toString());
 
     if (!getOne || !getOne[key] || getOne[key]?.toString() !== value)
       throw new Error("não foi possível encontrar");

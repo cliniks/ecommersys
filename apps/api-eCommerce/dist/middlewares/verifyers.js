@@ -7,16 +7,25 @@ exports.verifyers = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const returnUserFromToken_1 = require("../utils/returnUserFromToken");
 const getFromHeaders_1 = require("../utils/getFromHeaders");
+const timeFunctions_1 = require("../utils/timeFunctions");
 const verifyers = {
     async verifyToken(req, res, next) {
         try {
             const token = `${req === null || req === void 0 ? void 0 : req.headers["x-access-token"]}`;
             const tokenSecret = `${process.env.TOKEN_SECRET}`;
+            const decode = jsonwebtoken_1.default.decode(token);
+            const infos = {
+                date: (0, timeFunctions_1.converToLocalTime)(new Date()),
+                path: req.originalUrl,
+                userId: decode === null || decode === void 0 ? void 0 : decode._id,
+            };
+            console.log(infos);
             jsonwebtoken_1.default.verify(token, tokenSecret);
             next();
         }
-        catch (error) {
-            res.status(400).send(error.toString());
+        catch (err) {
+            console.log("verifyToken:", err);
+            res.status(400).send(err.message);
         }
     },
     async verifyAppToken(req, res, next) {
@@ -29,8 +38,8 @@ const verifyers = {
             else
                 throw new Error("Token da aplicação é necessária, contate o supporte");
         }
-        catch (error) {
-            res.status(400).send(error.toString());
+        catch (err) {
+            res.status(400).send(err.message);
         }
     },
     async verifySeller(req, res, next) {

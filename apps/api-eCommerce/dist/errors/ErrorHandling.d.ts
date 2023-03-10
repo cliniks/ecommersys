@@ -4,7 +4,7 @@ export declare const ErrorHandling: ({ code, message, res }: ErrorHandling) => R
 declare const Response: (code: EnumErrorHandling) => {
     message: string;
 };
-export type ErrorHandling = {
+export declare type ErrorHandling = {
     code: EnumErrorHandling;
     message?: string;
     res: Response;

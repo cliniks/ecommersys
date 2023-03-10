@@ -1,94 +1,89 @@
-import { Socket } from "socket.io";
-import { MessageType, RoomType, User } from "../../../entities";
+import { Server, Socket } from "socket.io";
+import { User } from "../../../entities";
 import {
   IChatRepository,
   IRoomRepository,
   IMessageRepository,
 } from "../../../repositories/Interfaces";
+import { getMyChats } from "../../../useCases/ChatsUseCases/getMyChats";
+import { getRoomMessages } from "../../../useCases/ChatsUseCases/getRoomMessages";
+import { sendMessage } from "../../../useCases/ChatsUseCases/sendMessage";
+// import { createRoom } from "../../../useCases/ChatsUseCases/createRoom";
 
 export const chatMethods = async (
   socket: Socket<any>,
   user: Promise<User>,
+  io: Server,
   chatRepo: IChatRepository,
   roomRepo: IRoomRepository,
   messageRepo: IMessageRepository
 ) => {
-  socket.on("createRoom", async (body: RoomType) => {
-    const User = await user;
-    let chat = await chatRepo.getOne({ key: "owner", value: User._id });
+  const userData = await user;
 
-    if (!chat) {
-      const newChat = await chatRepo.addOne({
-        owner: `${User._id}`,
-        isActive: true,
-        rooms: [],
-      });
-      console.log("newChat", newChat);
-      chat = newChat;
+  socket.on("listenMyUserChat", async () => {
+    const getChat = await getMyChats(userData._id);
+
+    socket.emit(`myChat/${userData._id.toString()}`, getChat);
+  });
+
+  socket.on("listenMyStoreChat", async () => {
+    const getChat = await getMyChats(userData.storeId);
+
+    socket.emit(`myChat/${userData.storeId.toString()}`, getChat);
+  });
+
+  socket.on("listenRoom", async ({ roomId }: { roomId: string }) => {
+    const getRoom = await getRoomMessages(roomId, userData._id.toString());
+
+    const rooms = socket.rooms;
+
+    rooms.forEach((item) => {
+      socket.leave(item);
+    });
+
+    socket.join(roomId);
+
+    socket.emit(`room/${roomId.toString()}`, getRoom);
+  });
+
+  socket.on(
+    "sendUserMessage",
+    async ({
+      roomId,
+      type,
+      body,
+    }: {
+      roomId: string;
+      type: "text" | "image" | "document";
+      body: string;
+    }) => {
+      await sendMessage(roomId, userData._id, type, body);
+
+      const getRoom = await getRoomMessages(roomId, userData._id.toString());
+
+      io.emit(`room/${roomId.toString()}`, getRoom);
     }
+  );
 
-    console.log("chat", chat);
+  socket.on(
+    "sendStoreMessage",
+    async ({
+      roomId,
+      type,
+      body,
+    }: {
+      roomId: string;
+      type: "text" | "image" | "document";
+      body: string;
+    }) => {
+      await sendMessage(roomId, userData.storeId, type, body);
 
-    const newRoom = await roomRepo.addOne({
-      ...body,
-      users: `${body.users}${User._id}`,
-      modified: new Date(),
-      messages: [],
-    });
+      const getRoom = await getRoomMessages(
+        roomId,
+        userData.storeId.toString()
+      );
 
-    console.log("newRoom", newRoom);
-
-    const pushRoom: any = { $push: { rooms: newRoom } };
-    const updateChat = await chatRepo.update(`${chat._id}`, pushRoom);
-
-    console.log("updateChat", updateChat);
-
-    return updateChat;
-  });
-
-  socket.on("connectRoom", async (body: { roomId: string }) => {
-    const room = await roomRepo.getOne({ key: "_id", value: body.roomId });
-
-    const roomMessages: MessageType[] = (
-      await messageRepo.getAll({
-        page: 0,
-        size: 100,
-        filter: {
-          key: "roomId",
-          value: body.roomId,
-          fields: "sender type body",
-        },
-      })
-    ).result;
-
-    const roomObj = { room, messages: roomMessages };
-
-    return roomObj;
-  });
-
-  socket.on("sendMessage", async (body: MessageType) => {
-    const User = await user;
-    console.log("mensagem", {
-      ...body,
-      sender: User._id,
-      date: new Date(),
-    });
-    const message = {
-      ...body,
-      sender: `${User._id}`,
-    };
-    console.log(message);
-  });
-
-  socket.on("listAllChats", async () => {
-    const chats = await chatRepo.getAll({});
-    const rooms = await roomRepo.getAll({});
-    const messages = await messageRepo.getAll({});
-
-    socket.emit("list", {
-      chats: chats,
-      rooms: rooms,
-      messages: messages,
-    });
-  });
+      io.emit(`room/${roomId.toString()}`, getRoom);
+    }
+  );
 };

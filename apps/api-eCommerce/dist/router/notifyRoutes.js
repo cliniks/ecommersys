@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotifyRouter = void 0;
+const express_1 = require("express");
+const NotifyUseCases_1 = require("../useCases/NotifyUseCases");
+const NotifyRouter = (0, express_1.Router)();
+exports.NotifyRouter = NotifyRouter;
+NotifyRouter.get("/", NotifyUseCases_1.notifyUseCases.FineOne);
+NotifyRouter.get("/myUserNotifies", NotifyUseCases_1.notifyUseCases.getMyUserNotifications);
+NotifyRouter.get("/mySellerNotifies", NotifyUseCases_1.notifyUseCases.getMySellerNotifications);
+NotifyRouter.get("/globalNotifies", NotifyUseCases_1.notifyUseCases.getGlobalNotifications);
+NotifyRouter.get("/many", NotifyUseCases_1.notifyUseCases.findMany);
+NotifyRouter.get("/all", NotifyUseCases_1.notifyUseCases.FindAll);
+NotifyRouter.post("/", NotifyUseCases_1.notifyUseCases.Add);
+NotifyRouter.patch("/:id", NotifyUseCases_1.notifyUseCases.Update);
+NotifyRouter.delete("/:id", NotifyUseCases_1.notifyUseCases.Delete);

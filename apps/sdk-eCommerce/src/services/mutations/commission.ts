@@ -122,6 +122,17 @@ const CategoryCommission = {
 
     return throwSuccess(response.data);
   },
+  getByStore: async (
+    storeId: string
+  ): Promise<Either<commissionErrors, categoryCommissionType[]>> => {
+    const response = await apiEcommerce.get(
+      `/admin/commission/category/${storeId}`
+    );
+
+    if (!response.data) return throwError("Não foi possível achar o commissão");
+
+    return throwSuccess(response.data);
+  },
   add: async (
     data: Partial<categoryCommissionType>
   ): Promise<Either<commissionErrors, categoryCommissionType>> => {
@@ -176,6 +187,17 @@ const ProductCommission = {
     const response = await apiEcommerce.get(`/admin/commission/product`, {
       params: { key, value },
     });
+
+    if (!response.data) return throwError("Não foi possível achar o commissão");
+
+    return throwSuccess(response.data);
+  },
+  getByStore: async (
+    storeId: string
+  ): Promise<Either<commissionErrors, productCommissionType[]>> => {
+    const response = await apiEcommerce.get(
+      `/admin/commission/product/${storeId}`
+    );
 
     if (!response.data) return throwError("Não foi possível achar o commissão");
 

@@ -1,1 +1,1 @@
-export declare const bearerTokenFromHeader: (token: string) => string | undefined;
+export declare const bearerTokenFromHeader: (token: string) => string;

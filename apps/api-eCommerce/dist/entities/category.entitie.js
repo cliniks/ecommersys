@@ -10,7 +10,7 @@ exports.CategorySchema = new mongoose_1.Schema({
     name: String,
     description: String,
     hierarchy: String,
-    isGlobal: Boolean,
+    isGlobal: { type: Boolean, default: true },
     owner: String,
     isActive: { type: Boolean, default: true },
 }, {

@@ -29,11 +29,13 @@ const socket_io_1 = require("socket.io");
 const redis_adapter_1 = require("@socket.io/redis-adapter");
 const chatMethods_1 = require("./chatMethods");
 const returnUserFromToken_1 = require("../../utils/returnUserFromToken");
-const ChatsRepository_1 = require("../../repositories/implementations/ChatsRepository");
+const repositories_1 = require("../../repositories");
 class WebsocketImplementation {
     constructor() {
         this.io = new socket_io_1.Server();
-        this.chatRepo = new ChatsRepository_1.ChatsRepository();
+        this.chatRepo = repositories_1.ChatsRepository;
+        this.roomRepo = repositories_1.RoomsRepository;
+        this.messageRepo = repositories_1.MessagesRepository;
         this.connect();
     }
     connect() {
@@ -52,17 +54,13 @@ class WebsocketImplementation {
         console.log("Socket aberto na porta", socketPort);
     }
     userHandShake() {
-        const repo = this.chatRepo;
+        const chats = this.chatRepo;
+        const rooms = this.roomRepo;
+        const messages = this.messageRepo;
         this.io.on("connection", async function (socket) {
             const { handshake } = socket;
             const user = (0, returnUserFromToken_1.getUserFromToken)(`${handshake.headers["x-access-token"]}`);
-            socket.emit("greeting-from-server", {
-                greeting: "Hello Client",
-            });
-            socket.on("greeting-from-client", function (message) {
-                console.log(message);
-            });
-            (0, chatMethods_1.chatMethods)(socket, user, repo);
+            (0, chatMethods_1.chatMethods)(socket, user, chats, rooms, messages);
         });
     }
 }

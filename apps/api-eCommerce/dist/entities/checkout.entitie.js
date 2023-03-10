@@ -8,17 +8,39 @@ const mongoose_1 = require("mongoose");
 const mongoose_paginate_1 = __importDefault(require("mongoose-paginate"));
 exports.Checkout = new mongoose_1.Schema({
     owner: String,
-    products: [
+    coupons: [String],
+    address: {
+        district: String,
+        address: String,
+        number: String,
+        complement: String,
+        city: String,
+        state: String,
+        country: String,
+        zipCode: String,
+    },
+    store: [
         {
             storeId: String,
-            store: {},
-            items: [],
+            products: [
+                {
+                    productId: String,
+                    qnt: Number,
+                    value: String,
+                    discount: String,
+                },
+            ],
             meValuePreview: String,
+            value: String,
+            discount: String,
         },
     ],
+    totalValue: String,
+    totalDiscount: String,
+    paymentMethods: [
+        { paymentType: String, paymentMethodId: String, value: String },
+    ],
     isActive: { type: Boolean, default: true },
-    meId: String,
-    asaasId: String,
 }, {
     timestamps: true,
 });

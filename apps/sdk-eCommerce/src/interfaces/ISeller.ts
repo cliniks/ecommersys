@@ -1,4 +1,5 @@
 import { Category, Checkout, Coupon, Product, Store } from "../Entities";
+import { notificationTypes } from "../Entities/notification.entitie";
 import { StorePolicy } from "../Entities/store.policies.entitie";
 import { Response } from "../Errors";
 import { checkoutErrors, sellerErrors } from "../services";
@@ -23,8 +24,9 @@ export interface ISellerDashboard {
 }
 
 export interface ISellerNotifications {
-  connectNotifications(): void;
-  disableNotifications(): void;
+  // connectNotifications(): void;
+  // disableNotifications(): void;
+  mySellerNotifications: () => Promise<notificationTypes[]>;
 }
 
 export interface ISellerAccount {

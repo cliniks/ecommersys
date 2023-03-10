@@ -1,4 +1,4 @@
-import express, { NextFunction, Request } from "express";
+import express, { NextFunction, Request, Express } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { router } from "./router/mainRouter";
@@ -22,12 +22,23 @@ import { documentRouter } from "./router/documentRouter";
 import { GatewayPagImplementation } from "./repositories";
 import { paymentMethodsRouter } from "./router/paymentMethodsRouter";
 import { adminRoutes } from "./router/adminRoutes";
+import { ClientsRouter } from "./router/clientsRouter";
+import { NotifyRouter } from "./router/notifyRoutes";
+import { WebhookRoutes } from "./router/webhooks";
+import { BulkRoutes } from "./router/bulkRoutes";
+import http from "http";
+import { ChatsRoutes } from "./router/chatsRouter";
+import { IWebSocket } from "./providers/websobket/IWebSocket";
+import { TestsRoutes } from "./router/tests";
 
 class App {
   public server: any;
+  public app: Express;
+  public websocket: IWebSocket;
 
   constructor() {
-    this.server = express();
+    this.app = express();
+    this.server = http.createServer(this.app);
     this.middlewares();
     this.routes();
     this.exceptionHandler();
@@ -35,42 +46,44 @@ class App {
   }
 
   async middlewares() {
-    this.server.use(cors());
-    this.server.use(bodyParser.json());
-    this.server.use(bodyParser.urlencoded({ extended: true }));
-    new WebsocketImplementation();
+    this.app.use(cors());
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.websocket = new WebsocketImplementation(this.server);
   }
 
   routes() {
     // verifyers.verifyAppToken,
-    this.server.use("/", router);
-    this.server.use("/auth", verifyers.verifyAppToken, AuthRoutes);
-    this.server.use("/carts", verifyers.verifyAppToken, CartRouter);
-    this.server.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
-    this.server.use(
+    this.app.use("/", router);
+    this.app.use("/auth", verifyers.verifyAppToken, AuthRoutes);
+    this.app.use("/carts", verifyers.verifyAppToken, CartRouter);
+    this.app.use("/sellers", verifyers.verifyAppToken, SellersRoutes);
+    this.app.use(
       "/sellers/policies",
       verifyers.verifyAppToken,
       SellerPoliciesRoutes
     );
-    this.server.use("/address", verifyers.verifyAppToken, AddressRouter);
-    this.server.use(
-      "/payments",
-      verifyers.verifyAppToken,
-      paymentMethodsRouter
-    );
-    this.server.use(
+    this.app.use("/address", verifyers.verifyAppToken, AddressRouter);
+    this.app.use("/payments", verifyers.verifyAppToken, paymentMethodsRouter);
+    this.app.use(
       "/sellerSolicitate",
       verifyers.verifyAppToken,
       SellerSolicitateRoutes
     );
-    this.server.use("/sales", verifyers.verifyAppToken, SalesRoutes);
-    this.server.use("/products", verifyers.verifyAppToken, ProductsRoutes);
-    this.server.use("/users", verifyers.verifyAppToken, UsersRoutes);
-    this.server.use("/categories", verifyers.verifyAppToken, CategoryRouter);
-    this.server.use("/coupons", verifyers.verifyAppToken, CouponsRouter);
-    this.server.use("/globals", verifyers.verifyAppToken, globalRouter);
-    this.server.use("/documents", verifyers.verifyAppToken, documentRouter);
-    this.server.use(
+    this.app.use("/sales", verifyers.verifyAppToken, SalesRoutes);
+    this.app.use("/products", verifyers.verifyAppToken, ProductsRoutes);
+    this.app.use("/users", verifyers.verifyAppToken, UsersRoutes);
+    this.app.use("/categories", verifyers.verifyAppToken, CategoryRouter);
+    this.app.use("/coupons", verifyers.verifyAppToken, CouponsRouter);
+    this.app.use("/globals", verifyers.verifyAppToken, globalRouter);
+    this.app.use("/documents", verifyers.verifyAppToken, documentRouter);
+    this.app.use("/clients", verifyers.verifyAppToken, ClientsRouter);
+    this.app.use("/notify", verifyers.verifyAppToken, NotifyRouter);
+    this.app.use("/chats", verifyers.verifyAppToken, ChatsRoutes);
+    this.app.use("/webhooks", WebhookRoutes(this.websocket));
+    this.app.use("/tests", TestsRoutes(this.websocket));
+    this.app.use("/bulk", BulkRoutes);
+    this.app.use(
       "/admin",
       verifyers.verifyAppToken,
       verifyers.verifyAdmin,
@@ -79,7 +92,7 @@ class App {
   }
 
   exceptionHandler() {
-    this.server.use(
+    this.app.use(
       async (err: any, _: Request, res: any, _next: NextFunction) => {
         if (process.env.NODE_ENV === "development") {
           ErrorHandling({

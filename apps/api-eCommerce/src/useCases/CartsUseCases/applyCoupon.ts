@@ -36,7 +36,7 @@ export const cartWithCouponApplied = async (
         ) {
           console.log("coupon is generic, can be used in any product");
           const percentage = (+getProduct.price / 100) * +coupon.value;
-          getProduct.discountValue = percentage;
+          getProduct.discountValue = percentage.toString();
           totalDiscount = +(totalDiscount + percentage * getProduct.amount)
             .toString()
             .split(".")[0];
@@ -56,7 +56,7 @@ export const cartWithCouponApplied = async (
           console.log("coupon contain this product");
 
           const percentage = (+getProduct.price / 100) * +coupon.value;
-          getProduct.discountValue = percentage;
+          getProduct.discountValue = percentage.toString();
           totalDiscount = +(totalDiscount + percentage * getProduct.amount)
             .toString()
             .split(".")[0];
@@ -78,7 +78,7 @@ export const cartWithCouponApplied = async (
         ) {
           console.log("coupon contain this category");
           const percentage = (+getProduct.price / 100) * +coupon.value;
-          getProduct.discountValue = percentage;
+          getProduct.discountValue = percentage.toString();
           totalDiscount = +(totalDiscount + percentage * getProduct.amount)
             .toString()
             .split(".")[0];
@@ -97,7 +97,7 @@ export const cartWithCouponApplied = async (
         ) {
           console.log("coupon contain this store");
           const percentage = (+getProduct.price / 100) * +coupon.value;
-          getProduct.discountValue = percentage;
+          getProduct.discountValue = percentage.toString();
           totalDiscount = +(totalDiscount + percentage * getProduct.amount)
             .toString()
             .split(".")[0];

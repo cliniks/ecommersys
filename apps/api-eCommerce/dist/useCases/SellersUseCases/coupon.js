@@ -2,35 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateCoupon = exports.deleteCoupon = exports.createCoupon = exports.getMyCoupons = void 0;
 // import { ISellersRepository } from "../../repositories/Interfaces/ISellersRepository";
-const returnUserFromToken_1 = require("../../utils/returnUserFromToken");
-const CouponRepository_1 = require("../../repositories/implementations/CouponRepository");
-const coupons = new CouponRepository_1.CouponRepository();
-const getMyCoupons = async (req, res) => {
-    try {
-        let { page, size, filter } = req.query;
-        const user = await (0, returnUserFromToken_1.returnUserFromToken)(req);
-        filter = {
-            key: `owner ${filter === null || filter === void 0 ? void 0 : filter.key}`,
-            value: `${user.storeId}  ${filter === null || filter === void 0 ? void 0 : filter.value}`,
-            fields: "",
-        };
-        const findMyCoupons = await coupons.getAll({ page, size, filter });
-        res.json(findMyCoupons);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(400).send("não foi possível solicitar.");
-    }
-};
+const getMyCoupons_1 = require("./getMyCoupons");
+const repositories_1 = require("../../repositories");
+const coupons = repositories_1.CouponsRepository;
+const getMyCoupons = async (req, res) => (0, getMyCoupons_1.getMyCouponsFunc)(req, res);
 exports.getMyCoupons = getMyCoupons;
 const createCoupon = async (req, res) => {
     try {
         const create = await coupons.addOne(req.body);
-        res.json(create);
+        return res.json(create);
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.createCoupon = createCoupon;
@@ -38,11 +22,11 @@ const deleteCoupon = async (req, res) => {
     try {
         const { couponId } = req.body;
         const remove = await coupons.delete(couponId);
-        res.json(remove);
+        return res.json(remove);
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.deleteCoupon = deleteCoupon;
@@ -50,11 +34,11 @@ const updateCoupon = async (req, res) => {
     try {
         const { couponId, data } = req.body;
         const update = await coupons.update(couponId, data);
-        return update;
+        return res.json(update);
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.updateCoupon = updateCoupon;

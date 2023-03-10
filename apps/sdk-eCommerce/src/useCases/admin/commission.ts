@@ -41,6 +41,8 @@ export class ProductCommission
 {
   getSingle = async (props: getSingleProps) =>
     Try(commissions.ProductCommission.getSingle, props);
+  getByStore = async (storeId: string) =>
+    Try(commissions.ProductCommission.getByStore, storeId);
   add = async (data: Partial<productCommissionType>) =>
     Try(commissions.ProductCommission.add, data);
   getAll = async (props: getAllProps) =>
@@ -56,6 +58,8 @@ export class CategoryCommission
 {
   getSingle = async (props: getSingleProps) =>
     Try(commissions.CategoryCommission.getSingle, props);
+  getByStore = async (storeId: string) =>
+    Try(commissions.CategoryCommission.getByStore, storeId);
   add = async (data: Partial<categoryCommissionType>) =>
     Try(commissions.CategoryCommission.add, data);
   getAll = async (props: getAllProps) =>

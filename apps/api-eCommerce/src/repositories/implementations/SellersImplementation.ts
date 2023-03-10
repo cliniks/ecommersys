@@ -15,9 +15,12 @@ class SellersImplementation implements ISellersRepository {
     this.crud = new CrudRepo(this.model);
   }
 
-  getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
+  getOne = ({ key, value, fields }: getOneProps) =>
+    this.crud.getOne({ key, value, fields });
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
+
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
 
   addOne = (data: Store) => this.crud.addOne(data);
 

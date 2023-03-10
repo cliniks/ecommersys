@@ -13,6 +13,7 @@ exports.ProductSchema = new mongoose_1.Schema({
     },
     description: String,
     price: String,
+    regularPrice: String,
     virtualProduct: Boolean,
     imgs: [String],
     partners: [String],
@@ -20,6 +21,7 @@ exports.ProductSchema = new mongoose_1.Schema({
     shippingInfo: {
         height: String,
         width: String,
+        length: String,
         weight: String,
     },
     owner: String,

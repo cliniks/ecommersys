@@ -3,12 +3,15 @@ import { Router } from "express";
 import { sellersUseCases } from "../useCases/SellersUseCases";
 import multer from "multer";
 import { SellerPoliciesRoutes } from "./sellerPoliciesRoutes";
+import { salesUseCases } from "../useCases/SalesUseCases";
 
 const upload = multer({ dest: "uploads/" });
 
 const SellersRoutes: Router = Router();
 
 SellersRoutes.get("/", sellersUseCases.FineOne);
+
+SellersRoutes.post("/many", sellersUseCases.FineMany);
 
 SellersRoutes.get("/all", sellersUseCases.FindAll);
 
@@ -19,6 +22,8 @@ SellersRoutes.get("/getMyProducts", sellersUseCases.getMyProducts);
 SellersRoutes.get("/getMyCategories", sellersUseCases.getMyCategories);
 
 SellersRoutes.get("/getMyCoupons", sellersUseCases.getMyCoupons);
+
+SellersRoutes.get("/getMySells", salesUseCases.getMySellerBuys);
 
 SellersRoutes.use("policies", SellerPoliciesRoutes);
 

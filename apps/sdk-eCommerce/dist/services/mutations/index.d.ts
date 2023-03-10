@@ -10,3 +10,4 @@ export * from "./category";
 export * from "./coupon";
 export * from "./upload";
 export * from "./payments";
+export * from "./notifications";

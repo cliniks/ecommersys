@@ -1,5 +1,4 @@
 import { Schema } from "mongoose";
-import { categoryCommissionType } from "./commission.entitie";
 
 export const DocumentsAdminSchema = new Schema(
   {
@@ -12,39 +11,18 @@ export const DocumentsAdminSchema = new Schema(
 
 export const GlobalCommissionSchema = new Schema(
   {
-    global: {
-      commissionType: {
-        type: String,
-        enum: ["percentage", "fixed+percentage", "fixed"],
-      },
-      percentage: Number,
-      fixed: Number,
-      scalable: [
-        {
-          minValue: Number,
-          maxValue: Number,
-          percentage: Number,
-          fixed: Number,
-        },
-      ],
+    commissionType: {
+      type: String,
+      enum: ["percentage", "fixed+percentage", "fixed"],
     },
-    categories: [
+    percentage: Number,
+    fixed: Number,
+    scalable: [
       {
-        commissionType: {
-          type: String,
-          enum: ["percentage", "fixed+percentage", "fixed"],
-        },
-        categoryId: String,
+        minValue: Number,
+        maxValue: Number,
         percentage: Number,
         fixed: Number,
-        scalable: [
-          {
-            minValue: Number,
-            maxValue: Number,
-            percentage: Number,
-            fixed: Number,
-          },
-        ],
       },
     ],
   },
@@ -66,11 +44,6 @@ export type CommissionType = {
     percentage: Number;
     fixed: Number;
   }[];
-  updatedAt: Date;
-  createdAt: Date;
-};
-
-export type GlobalCommissionType = {
-  global: CommissionType;
-  categories: categoryCommissionType[];
+  updatedAt?: Date;
+  createdAt?: Date;
 };

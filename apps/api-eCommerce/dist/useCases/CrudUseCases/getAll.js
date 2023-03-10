@@ -4,10 +4,11 @@ exports.getAll = void 0;
 const getAll = async (req, res, repository) => {
     try {
         const { page, size, filter } = req.query;
+        const filterConfirm = typeof filter === "string" ? JSON.parse(filter) : filter;
         return res.json(await repository.getAll({
             page: page && +page,
             size: size && +size,
-            filter,
+            filter: filterConfirm,
         }));
     }
     catch (err) {

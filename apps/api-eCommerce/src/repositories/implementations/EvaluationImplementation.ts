@@ -19,6 +19,8 @@ class EvaluationImplementation implements IEvaluationRepository {
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: Evaluation) => this.crud.addOne(data);
 
   update = (id: string, data: Partial<Evaluation>) =>

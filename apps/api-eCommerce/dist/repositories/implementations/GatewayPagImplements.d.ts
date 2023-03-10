@@ -1,8 +1,5 @@
-import { IGatewayPagRepository } from "../interfaces/IGatewayPagRepository";
-import { ConnectRepo } from "./ConnectRepo";
-declare class GatewayPagRepository extends ConnectRepo implements IGatewayPagRepository {
-    constructor();
+import { IGatewayPagRepository } from "../Interfaces";
+export declare class GatewayPagImplementation implements IGatewayPagRepository {
     AddPayment(): Promise<any>;
     UpdatePayment(): Promise<any>;
 }
-export { GatewayPagRepository };

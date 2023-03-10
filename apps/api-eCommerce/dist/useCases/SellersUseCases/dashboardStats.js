@@ -17,7 +17,7 @@ const dashboardStats = async (_, res
         // retornar satisfação do cliente
         // retornar items mais comprados
         // retornar info de localidade da compra do item
-        res.json({
+        return res.json({
             totalSells: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             gainsAndProfits: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             canceledOrders: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,7 +36,7 @@ const dashboardStats = async (_, res
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.dashboardStats = dashboardStats;

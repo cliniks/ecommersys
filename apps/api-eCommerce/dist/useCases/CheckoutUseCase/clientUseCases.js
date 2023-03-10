@@ -11,10 +11,10 @@ class UserUseCases {
     async newClient(req, res) {
         try {
             const createClient = await this.GPProvider.newClient({ data: req.body });
-            res.json(createClient);
+            return res.json(createClient);
         }
         catch (err) {
-            res.status(400).send({ err });
+            return res.status(400).send({ err });
         }
     }
     async genCharge(req, res) {
@@ -25,26 +25,26 @@ class UserUseCases {
                 client: userData,
                 cartID: "1234",
             });
-            res.json(calculateShipping);
+            return res.json(calculateShipping);
         }
         catch (err) {
-            res.status(400).send({ err });
+            return res.status(400).send({ err });
         }
     }
     async getCharge(req, res) {
         try {
             const id = req.params.id;
             if (!id)
-                res.status(400).send("não foi possível encontrar Id");
+                return res.status(400).send("não foi possível encontrar Id");
             const userData = await (0, returnUserFromToken_1.returnUserFromToken)(req);
             const calculateShipping = await this.GPProvider.getCharge({
                 client: userData,
                 chargeId: id,
             });
-            res.json(calculateShipping);
+            return res.json(calculateShipping);
         }
         catch (err) {
-            res.status(400).send({ err });
+            return res.status(400).send({ err });
         }
     }
 }

@@ -7,11 +7,11 @@ const getCards = async (_, res
 ) => {
     try {
         // retornar todos os cards
-        res.json({});
+        return res.json({});
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.getCards = getCards;
@@ -20,11 +20,11 @@ const getCard = async (_, res
 ) => {
     try {
         // retornar um card
-        res.json({});
+        return res.json({});
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.getCard = getCard;
@@ -33,11 +33,11 @@ const addCard = async (_, res
 ) => {
     try {
         // adicionar um card
-        res.json({});
+        return res.json({});
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.addCard = addCard;
@@ -46,11 +46,11 @@ const updateCard = async (_, res
 ) => {
     try {
         // atualizar um card
-        res.json({});
+        return res.json({});
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.updateCard = updateCard;
@@ -59,11 +59,11 @@ const deleteCard = async (_, res
 ) => {
     try {
         // deletar um card
-        res.json({});
+        return res.json({});
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.deleteCard = deleteCard;
@@ -77,11 +77,11 @@ const paymentsPageInfo = async (_, res
         // retornar pagamentos
         // retornar transferências
         // retornar transferências
-        res.json({});
+        return res.json({});
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("não foi possível solicitar.");
+        return res.status(400).send("não foi possível solicitar.");
     }
 };
 exports.paymentsPageInfo = paymentsPageInfo;

@@ -1,18 +1,13 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const EvaluationSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const EvaluationSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    owner?: string | undefined;
-    productId?: string | undefined;
-    stars?: number | undefined;
+    owner?: string;
+    productId?: string;
+    stars?: number;
 }>;
-export type Evaluation = {
-    _id?: ObjectId;
+export declare type Evaluation = {
+    _id?: string;
     productId: string;
     isActive: boolean;
     stars: number;

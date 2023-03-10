@@ -1,3 +1,3 @@
-export type cacheObj = {
+export declare type cacheObj = {
     code: string;
 };

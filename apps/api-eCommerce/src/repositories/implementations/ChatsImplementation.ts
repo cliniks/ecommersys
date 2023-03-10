@@ -21,6 +21,8 @@ export class ChatsImplementation implements IChatRepository {
 
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: ChatType) => this.crud.addOne(data);
 
   update = (id: string, data: Partial<ChatType>) => this.crud.update(id, data);
@@ -39,6 +41,8 @@ export class RoomsImplementation implements IRoomRepository {
 
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: RoomType) => this.crud.addOne(data);
 
   update = (id: string, data: Partial<RoomType>) => this.crud.update(id, data);
@@ -56,6 +60,8 @@ export class MessagesImplementation implements IMessageRepository {
   getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
 
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
+
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
 
   addOne = (data: MessageType) => this.crud.addOne(data);
 

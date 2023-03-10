@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IStoreSolicitate } from "../../repositories/Interfaces/IStoreSolicitationRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
+import { makeApi } from "../../services/axiosInstance";
 
 export const solicitate = async (
   req: Request,
@@ -15,6 +16,12 @@ export const solicitate = async (
     const hasSolicitation = await repo.getOne({
       key: "owner",
       value: getUser._id,
+    });
+
+    makeApi.post("", {
+      type: "sellerSolicitation",
+      userInfo: getUser.userInfo,
+      storeInfo: hasSolicitation.storeInfo,
     });
 
     if (!hasSolicitation || hasSolicitation.owner !== `${getUser._id}`) {

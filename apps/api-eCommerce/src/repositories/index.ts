@@ -1,16 +1,21 @@
 import {
   addressModel,
   cartModel,
+  categoryCommissionsModel,
   categoryModel,
   chatModel,
   couponModel,
   documentModel,
   evaluationModel,
+  globalCommissionModel,
   messageModel,
+  notifyModel,
   paymentMethodModel,
+  productCommissionsModel,
   productModel,
   roomModel,
   salesModel,
+  storeCommissionsModel,
   storeModel,
   storePolicyModel,
   storeSolicitationModel,
@@ -47,8 +52,26 @@ import StoreSolicitateImplementation from "./implementations/StoreSolicitateImpl
 
 import UsersImplementation from "./implementations/UsersImplementation";
 import PaymentMethodsImplementation from "./implementations/PaymentMethodsImplementation";
+import {
+  CategoryCommissionImplementation,
+  GlobalCommissionImplementation,
+  ProductCommissionImplementation,
+  StoreCommissionImplementation,
+} from "./implementations/AdminImplementation";
+import { NotifyImplementation } from "./implementations/NotifyImplementation";
 
 export const AddressesRepository = new AddressImplementation(addressModel);
+
+export const AdminCommissionRepository = {
+  globalCommission: new GlobalCommissionImplementation(globalCommissionModel),
+  productsCommission: new ProductCommissionImplementation(
+    productCommissionsModel
+  ),
+  categoryCommission: new CategoryCommissionImplementation(
+    categoryCommissionsModel
+  ),
+  storeCommission: new StoreCommissionImplementation(storeCommissionsModel),
+};
 
 export const CartsRepository = new CartsImplementation(cartModel);
 
@@ -81,6 +104,8 @@ export const StorePoliciesRepository = new StorePoliciesImplementation(
 export const StoreSolicitationRepository = new StoreSolicitateImplementation(
   storeSolicitationModel
 );
+
+export const notifyRepository = new NotifyImplementation(notifyModel);
 
 export const PaymentMethodRepository = new PaymentMethodsImplementation(
   paymentMethodModel

@@ -6,10 +6,12 @@ export const NotificationSchema = new Schema(
     message: String,
     direction: {
       type: String,
-      enum: ["allStores", "allClients", "client", "store", "all"],
+      enum: ["allStores", "allClients", "client", "store", "global"],
     },
     directionId: [String],
+    isFixed: { type: Boolean, default: false },
     path: String,
+    isRead: [String],
     startDate: Date,
     endDate: Date,
     isActive: { type: Boolean, default: true },
@@ -23,12 +25,14 @@ export type notificationTypes = {
   _id?: string;
   title: string;
   message: string;
-  direction: "allStores" | "allClients" | "client" | "store" | "all";
+  direction: "allStores" | "allClients" | "client" | "store" | "global";
   directionId: string[];
+  isFixed: boolean;
   path: string;
   startDate: Date;
   endDate: Date;
+  isRead: string[];
   isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

@@ -22,7 +22,8 @@
     "allowSyntheticDefaultImports": true,
     "allowUnusedLabels": true,
     "noUncheckedIndexedAccess": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "lib": ["es2021"]
   },
   "include": ["src"],
   "exclude": [

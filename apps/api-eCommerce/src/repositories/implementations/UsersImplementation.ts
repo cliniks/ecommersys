@@ -27,9 +27,12 @@ class UsersImplementation implements IUsersRepository {
     return await this.model.findById(user._id);
   }
 
-  getOne = ({ key, value }: getOneProps) => this.crud.getOne({ key, value });
+  getOne = ({ key, value, fields }: getOneProps) =>
+    this.crud.getOne({ key, value, fields });
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
+
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
 
   addOne = (data: User) => this.crud.addOne(data);
 

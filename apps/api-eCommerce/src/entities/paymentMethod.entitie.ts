@@ -6,6 +6,11 @@ export const PaymentMethodScheema = new Schema(
     creditCardNumber: String,
     creditCardBrand: String,
     creditCardToken: String,
+    paymentType: {
+      type: String,
+      enum: ["credit", "debit", "all"],
+      default: "credit",
+    },
     isActive: { type: Boolean, default: true },
   },
   {
@@ -13,12 +18,15 @@ export const PaymentMethodScheema = new Schema(
   }
 );
 
+export type PaymentType = "credit" | "debit" | "all";
+
 export type PaymentMethodType = {
   _id?: string;
   owner: string;
   creditCardNumber: string;
   creditCardBrand: string;
   creditCardToken: string;
+  paymentType: PaymentType;
   isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;

@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userGetProduct = void 0;
 const returnUserFromToken_1 = require("../../utils/returnUserFromToken");
-const ProductsRepository_1 = require("../../repositories/implementations/ProductsRepository");
+const repositories_1 = require("../../repositories");
 const userGetProduct = async (req, res, repository) => {
     try {
         const { id } = req.params;
         if (!id)
             throw new Error("não foi fornecido um id");
-        const productRepo = await new ProductsRepository_1.ProductsRepository();
+        const productRepo = repositories_1.ProductsRepository;
         let product = await productRepo.getOne({
             key: "_id",
             value: id,
@@ -23,11 +23,11 @@ const userGetProduct = async (req, res, repository) => {
             user.statistics.productsViews.push(`${product._id}`);
         repository.update(`${user._id}`, { statistics: user.statistics });
         await productRepo.update(id, { statistics: product.statistics });
-        res.json(product);
+        return res.json(product);
     }
     catch (err) {
         console.log(err);
-        res.status(400).send("você não esta logado.");
+        return res.status(400).send("você não esta logado.");
     }
 };
 exports.userGetProduct = userGetProduct;

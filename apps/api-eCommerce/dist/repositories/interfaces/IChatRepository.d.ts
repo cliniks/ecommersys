@@ -1,9 +1,8 @@
-import { ICrudRepository } from "./ICrudRepository";
-export interface IChatRepository extends ICrudRepository {
-    roomRepo: IRoomRepository;
+import { ICrudRepository } from ".";
+import { ChatType, MessageType, RoomType } from "../../entities";
+export interface IChatRepository extends ICrudRepository<ChatType> {
 }
-export interface IRoomRepository extends ICrudRepository {
-    messageRepo: IMessageRepository;
+export interface IRoomRepository extends ICrudRepository<RoomType> {
 }
-export interface IMessageRepository extends ICrudRepository {
+export interface IMessageRepository extends ICrudRepository<MessageType> {
 }

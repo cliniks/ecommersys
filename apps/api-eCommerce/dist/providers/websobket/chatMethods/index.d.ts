@@ -1,4 +1,4 @@
 import { Socket } from "socket.io";
-import { User } from "../../../entities/user.entitie";
-import { IChatRepository } from "../../../repositories/Interfaces/IChatRepository";
-export declare const chatMethods: (socket: Socket<any>, user: Promise<User>, repo: IChatRepository) => Promise<void>;
+import { User } from "../../../entities";
+import { IChatRepository, IRoomRepository, IMessageRepository } from "../../../repositories/Interfaces";
+export declare const chatMethods: (socket: Socket<any>, user: Promise<User>, chatRepo: IChatRepository, roomRepo: IRoomRepository, messageRepo: IMessageRepository) => Promise<void>;

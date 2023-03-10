@@ -1,4 +1,4 @@
-import { ISellerCheckoutProvider } from "../ISellerCheckoutProvider";
+import { ISellerCheckoutProvider } from "../interfaces/ISellerCheckoutProvider";
 export declare class SellerAsaasImplementation implements ISellerCheckoutProvider {
     constructor();
     addStore(store: any): Promise<any>;

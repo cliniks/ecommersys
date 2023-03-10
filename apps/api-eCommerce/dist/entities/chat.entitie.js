@@ -22,7 +22,7 @@ exports.MessageSchema = new mongoose_1.Schema({
     timestamps: true,
 });
 exports.RoomSchema = new mongoose_1.Schema({
-    users: String,
+    users: [String],
     lastMessage: Object,
     messages: [],
     modified: Date,

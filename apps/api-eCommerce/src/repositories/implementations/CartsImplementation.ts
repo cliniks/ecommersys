@@ -19,6 +19,8 @@ class CartsImplementation implements ICartsRepository {
 
   getAll = (pagFilter: getAllProps) => this.crud.getAll(pagFilter);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: Cart) => this.crud.addOne(data);
 
   update = (id: string, data: any) => this.crud.update(id, data);

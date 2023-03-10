@@ -16,7 +16,7 @@ import {
   Evaluation,
   EvaluationSchema,
   GlobalCommissionSchema,
-  GlobalCommissionType,
+  CommissionType,
   MessageSchema,
   MessageType,
   Product,
@@ -43,6 +43,8 @@ import {
   LeadType,
   ProductCommissionSchema,
   CategoryCommissionSchema,
+  notificationTypes,
+  NotificationSchema,
 } from "../../entities";
 
 class Model<E> {
@@ -103,6 +105,12 @@ export const evaluationModel = new Model<Evaluation>(
   "products"
 ).model;
 
+export const notifyModel = new Model<notificationTypes>(
+  "notifications",
+  NotificationSchema,
+  "notifications"
+).model;
+
 // export const gatewayPagModel = new Model("payments",);
 
 export const productModel = new Model<Product>(
@@ -120,7 +128,7 @@ export const storePolicyModel = new Model<StorePolicy>(
   "stores"
 ).model;
 
-export const globalCommissionModel = new Model<GlobalCommissionType>(
+export const globalCommissionModel = new Model<CommissionType>(
   "globalCommissions",
   GlobalCommissionSchema,
   "admin_db"

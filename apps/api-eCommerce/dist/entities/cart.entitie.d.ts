@@ -1,29 +1,38 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const CartSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+import { Product } from "./product.entitie";
+export declare const CartSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    productsInfo: {
-        amount?: number | undefined;
-        size?: string | undefined;
-        productId?: string | undefined;
-    }[];
-    buyer?: string | undefined;
+    products: import("mongoose").Types.DocumentArray<any> | any[];
+    coupons: string[];
+    owner?: string;
 }>;
-export type Cart = {
-    _id?: ObjectId;
-    buyer: string;
+export declare type Cart = {
+    _id?: string;
+    owner: string;
     isActive: boolean;
-    productsInfo: ProductInfo[];
+    products: ProductInfo[];
+    coupons: string[];
     createdAt?: Date;
-    uodatedAt?: Date;
+    updatedAt?: Date;
 };
-export type ProductInfo = {
+export declare type ProductInfo = {
     productId: string;
     amount: number;
-    size: string;
+};
+export declare type CartReturn = {
+    _id?: string;
+    owner: string;
+    isActive: boolean;
+    products: ProductsReturn[];
+    coupons: string[];
+    totalPrice: number;
+    totalDiscount: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+};
+export declare type ProductsReturn = ProductInfo & Partial<Product> & {
+    discountValue: string;
+    couponApplied: string;
+    totalValue: string;
 };

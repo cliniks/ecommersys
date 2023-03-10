@@ -1,4 +1,4 @@
-import { IRedisRepository } from "../Interfaces/IRedisRepository";
+import { IRedisRepository } from "../Interfaces";
 declare class RedisImplementation implements IRedisRepository {
     private client;
     constructor();

@@ -45,4 +45,24 @@ AsassAPI.interceptors.request.use((config: any) => {
   return config;
 });
 
-export { AsassAPI, Api };
+const MEApi = axios.create({
+  baseURL: process.env.ME_URL,
+});
+
+MEApi.interceptors.request.use((config) => {
+  const token = process.env.ME_TOKEN;
+  if (config.headers === undefined) config.headers = {};
+
+  if (token) {
+    config.headers = {
+      Accept: "application/json",
+      "User-Agent": "Aplicação (dev@cliniks.com.br)",
+      Authorization: `Bearer ${token}`,
+    };
+    return config;
+  }
+});
+
+const makeApi = axios.create({ baseURL: process.env.MAKE_PIPEFY_ENDPOINT });
+
+export { AsassAPI, Api, makeApi, MEApi };

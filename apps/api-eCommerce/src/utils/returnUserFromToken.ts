@@ -5,34 +5,33 @@ import { UsersRepository } from "../repositories";
 
 const returnUserFromToken = async (req: Request): Promise<User> => {
   try {
-    const repo = UsersRepository;
+    const userRepo = UsersRepository;
 
     const token = req.headers["x-access-token"];
 
     const decoded: User | any = jwt.decode(`${token}`);
 
-    const userID = decoded._id;
+    const userID = await decoded;
 
-    const user = (await repo.getOne({
-      key: "_id",
-      value: userID,
-    })) as User;
+    const user = await userRepo.getOne({ key: "_id", value: userID._id });
 
     return user;
   } catch (error) {
+    console.log({ error });
     return null;
   }
 };
 
 const getUserFromToken = async (token: string): Promise<User> => {
   try {
-    const repo = UsersRepository;
+    const userRepo = UsersRepository;
     const decoded: User | any = jwt.decode(`${token}`);
-    const { userID } = decoded;
-    return (await repo.getOne({
-      key: "_id",
-      value: userID,
-    })) as User;
+
+    const userID = await decoded;
+
+    const user = await userRepo.getOne({ key: "_id", value: userID._id });
+
+    return user;
   } catch (error) {
     return null;
   }

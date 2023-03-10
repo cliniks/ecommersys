@@ -23,7 +23,7 @@ export class ClientAsaasImplementation {
         phone: userInfo.phone,
         company: userInfo.enterpriseName,
         mobilePhone: userInfo.phone,
-        cpfCnpj: userInfo.cnpj,
+        cpfCnpj: userInfo.cnpj || userInfo.cpf,
         postalCode: userInfo.zipCode,
         address: userInfo.address,
         addressNumber: userInfo.number,
@@ -168,7 +168,19 @@ export class ClientAsaasImplementation {
       console.log("genPixCode", err);
       throw new Error(err.toString());
     }
-  } // Ao gerar uma cobrança com as formas de pagamento "PIX", "BOLETO" ou "UNDEFINED" o pagamento via Pix é habilitado.
+  }
+  // Ao gerar uma cobrança com as formas de pagamento "PIX", "BOLETO" ou "UNDEFINED" o pagamento via Pix é habilitado.
+  async genBoleto({ id }: { id: string }): Promise<any> {
+    try {
+      const calculateResponse = await AsassAPI.get(
+        `/payments/${id}/identificationField`
+      );
+      return calculateResponse.data;
+    } catch (err: any) {
+      console.log("genPixCode", err);
+      throw new Error(err.toString());
+    }
+  }
   // adicionar banco para recebimento
   async registerBank(): Promise<any> {
     try {

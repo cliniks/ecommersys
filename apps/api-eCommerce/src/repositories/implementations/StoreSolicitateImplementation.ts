@@ -19,6 +19,8 @@ class StoreSolicitateImplementation implements IStoreSolicitate {
 
   getAll = (props: getAllProps) => this.crud.getAll(props);
 
+  getMany = (ids: string[], fields?: string) => this.crud.getMany(ids, fields);
+
   addOne = (data: StoreSolicitate) => this.crud.addOne(data);
 
   update = (id: string, data: any) => this.crud.update(id, data);

@@ -19,6 +19,7 @@ const userCart_1 = require("./userCart");
 const userCheckout_1 = require("./userCheckout");
 const userDashboard_1 = require("./userDashboard");
 const userDocuments_1 = require("./userDocuments");
+const userNotifications_1 = require("./userNotifications");
 const userOrder_1 = require("./userOrder");
 const userPayments_1 = require("./userPayments");
 const userProducts_1 = require("./userProducts");
@@ -38,6 +39,7 @@ class User {
         this.order = new userOrder_1.userOrder();
         this.checkout = new userCheckout_1.userCheckout();
         this.document = new userDocuments_1.userDocuments();
+        this.notifications = new userNotifications_1.userNotifications();
     }
 }
 exports.default = new User();

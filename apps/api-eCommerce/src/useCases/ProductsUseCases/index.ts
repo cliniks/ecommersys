@@ -8,12 +8,15 @@ import { ProductsRepository } from "../../repositories";
 import { favoriteProduct } from "./favoriteProduct";
 import { likeProduct } from "./likeProduct";
 import { getSingleProduct } from "./getProduct";
+import { getMany } from "../CrudUseCases/getMany";
 
 const products = ProductsRepository;
 
 export const productsUseCases = {
   FineOne: async (req: Request, res: Response) =>
     await getSingleProduct(req, res, products),
+  FindMany: async (req: Request, res: Response) =>
+    await getMany(req, res, products),
   FindAll: async (req: Request, res: Response) =>
     await getAll(req, res, products),
   CreateProduct: async (req: Request, res: Response) =>

@@ -1,56 +1,60 @@
 /// <reference types="mongoose-paginate" />
-import { ObjectId, Schema } from "mongoose";
-export declare const ProductSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+import { Schema } from "mongoose";
+export declare const ProductSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     name: string;
     isActive: boolean;
     imgs: string[];
     partners: string[];
-    discount: string[];
+    discount: {
+        key: string[];
+        type?: string;
+        percentage?: number;
+        active?: boolean;
+    }[];
     categories: string[];
     tags: string[];
     hangTags: string[];
-    owner?: string | undefined;
     statistics?: {
         favorites: string[];
         likers: string[];
-        views?: number | undefined;
-        likes?: number | undefined;
-        favorite?: number | undefined;
-        buys?: number | undefined;
-    } | undefined;
-    description?: string | undefined;
-    price?: string | undefined;
-    virtualProduct?: boolean | undefined;
-    status?: boolean | undefined;
+        likes?: number;
+        views?: number;
+        favorite?: number;
+        buys?: number;
+    };
+    owner?: string;
+    description?: string;
+    price?: string;
+    regularPrice?: string;
+    virtualProduct?: boolean;
+    status?: boolean;
     shippingInfo?: {
-        height?: string | undefined;
-        width?: string | undefined;
-        weight?: string | undefined;
-    } | undefined;
+        length?: string;
+        height?: string;
+        width?: string;
+        weight?: string;
+    };
     stockInfo?: {
-        qnt?: number | undefined;
-        sku?: string | undefined;
-        SoldIndividually?: boolean | undefined;
-    } | undefined;
+        qnt?: number;
+        sku?: string;
+        SoldIndividually?: boolean;
+    };
 }>;
-export type Product = {
-    _id?: ObjectId;
+export declare type Product = {
+    _id?: string;
     name: string;
     description: string;
     price: string;
+    regularPrice: string;
     imgs: string[];
     partners: string[];
     virtualProduct: boolean;
     isActive: boolean;
     shippingInfo: {
-        height: String;
-        width: String;
-        weight: String;
+        height: string;
+        width: string;
+        weight: string;
+        length: string;
     };
     owner: string;
     discount: discountType[];
@@ -74,7 +78,7 @@ export type Product = {
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type discountType = {
+export declare type discountType = {
     key: string[];
     type: string;
     active: boolean;

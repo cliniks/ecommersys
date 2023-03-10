@@ -1,38 +1,23 @@
 /// <reference types="mongoose-paginate" />
 import { ObjectId, Schema } from "mongoose";
-export declare const ChatSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
+export declare const ChatSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
     isActive: boolean;
-    rooms: any[];
-    owner?: string | undefined;
+    rooms: import("mongoose").Types.DocumentArray<any> | any[];
+    owner?: string;
 }>;
-export declare const MessageSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    type?: string | undefined;
-    body?: string | undefined;
-    sender?: string | undefined;
-    roomId?: string | undefined;
+export declare const MessageSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
+    type?: string;
+    sender?: string;
+    body?: string;
+    roomId?: string;
 }>;
-export declare const RoomSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
-    timestamps: true;
-}>, {
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    messages: any[];
-    users?: string | undefined;
+export declare const RoomSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, "type", {
+    users: string[];
+    messages: import("mongoose").Types.DocumentArray<any> | any[];
     lastMessage?: any;
-    modified?: Date | undefined;
+    modified?: Date;
 }>;
-export type ChatType = {
+export declare type ChatType = {
     _id?: ObjectId;
     owner: string;
     isActive: boolean;
@@ -40,15 +25,15 @@ export type ChatType = {
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type RoomType = {
-    users: string;
+export declare type RoomType = {
+    users: string[];
     lastMessage: MessageType;
     messages: MessageType[];
     modified: Date;
     createdAt?: Date;
     updatedAt?: Date;
 };
-export type MessageType = {
+export declare type MessageType = {
     sender: string;
     type: "text" | "image" | "document";
     body: string;

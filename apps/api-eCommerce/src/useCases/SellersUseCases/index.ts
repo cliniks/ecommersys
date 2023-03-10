@@ -21,12 +21,15 @@ import { getMyCategories } from "./getMyCategories";
 import { updateStoreImage } from "./updateStoreImage";
 import { updateStoreBanner } from "./updateStoreBanner";
 import { SellersRepository } from "../../repositories";
+import { getMany } from "../CrudUseCases/getMany";
 
 const sellersRepo = SellersRepository;
 
 export const sellersUseCases = {
   FineOne: async (req: Request, res: Response) =>
     await get(req, res, sellersRepo),
+  FineMany: async (req: Request, res: Response) =>
+    await getMany(req, res, sellersRepo),
   FindAll: async (req: Request, res: Response) =>
     await getAll(req, res, sellersRepo),
   Add: async (req: Request, res: Response) => await add(req, res, sellersRepo),

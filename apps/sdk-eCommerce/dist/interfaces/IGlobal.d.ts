@@ -1,6 +1,7 @@
 import { Category, Product, Store } from "../Entities";
+import { notificationTypes } from "../Entities/notification.entitie";
 import { Response } from "../Errors";
-import { productErrors, sellerErrors } from "../services";
+import { notifyErrors, productErrors, sellerErrors } from "../services";
 import { categoryErrors } from "../services/mutations/category";
 import { EmailSenderErrors } from "../services/mutations/emailSender";
 export interface IGlobal {
@@ -9,11 +10,16 @@ export interface IGlobal {
     categories: IGlobalCategories;
     sellers: IGlobalSellers;
     emailSender: IGlobalEmailSender;
+    notifications: IGlobalNotifications;
     logs: ILog[];
 }
 export interface IGlobalProducts {
     getSingle(props: getSingleProps): Promise<Response<productErrors, Product>>;
     getAll(props: getAllProps): Promise<Response<productErrors, getAllReturn<Product>>>;
+}
+export interface IGlobalNotifications {
+    getAll(props: getAllProps): Promise<Response<notifyErrors, getAllReturn<notificationTypes>>>;
+    readNotification(id: string): Promise<Response<notifyErrors, notificationTypes>>;
 }
 export interface IGlobalUploads {
     uploadImage(props: FormData): Promise<Response<productErrors, string>>;

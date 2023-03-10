@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientAsaasImplementation = void 0;
-const user_model_1 = require("../../models/user.model");
+const repositories_1 = require("../../repositories");
 const axiosInstance_1 = require("../../services/axiosInstance");
+const userRepo = repositories_1.UsersRepository;
 class ClientAsaasImplementation {
-    constructor() { }
     // add a client
     async newClient({ data }) {
         try {
@@ -12,20 +12,23 @@ class ClientAsaasImplementation {
             const customerData = {
                 name: userInfo.name,
                 email: userInfo.email,
-                mobilePhone: userInfo.fone,
-                cpfCnpj: userInfo.cpf,
-                postalCode: userInfo.cep,
+                phone: userInfo.phone,
+                company: userInfo.enterpriseName,
+                mobilePhone: userInfo.phone,
+                cpfCnpj: userInfo.cnpj || userInfo.cpf,
+                postalCode: userInfo.zipCode,
                 address: userInfo.address,
                 addressNumber: userInfo.number,
                 complement: userInfo.complement,
+                state: userInfo.state,
                 province: userInfo.city,
                 externalReference: _id,
                 notificationDisabled: false,
-                municipalInscription: userInfo.cep,
+                municipalInscription: userInfo.zipCode,
             };
             const addClient = await axiosInstance_1.AsassAPI.post("customers", customerData);
-            console.log();
-            const updateUser = await user_model_1.UserModel.findByIdAndUpdate(_id, {
+            console.log(addClient.data);
+            const updateUser = await userRepo.update(`${_id}`, {
                 gatewayPagId: addClient.data.id,
             });
             return updateUser;
@@ -69,14 +72,43 @@ class ClientAsaasImplementation {
         }
     }
     // generate a charge
-    async genCharge({ data, client, cartID, }) {
+    // async genCharge({
+    //   data,
+    //   client,
+    //   cartID,
+    // }: {
+    //   data: chargeType;
+    //   client: User;
+    //   cartID: string;
+    // }): Promise<any> {
+    //   try {
+    //     const chargeConfig = {
+    //       ...data,
+    //       dueDate: new Date().toISOString(),
+    //       description: "Pedido 056984",
+    //       externalReference: cartID,
+    //       customer: client.gatewayPagId,
+    //     };
+    //     const createCharge = await AsassAPI.post("payments", chargeConfig);
+    //     await userRepo.update(`${client._id}`, {
+    //       $push: { buysUnderProcess: createCharge.data.id },
+    //     });
+    //     return createCharge.data;
+    //   } catch (err: any) {
+    //     console.log(err.response.data);
+    //     throw new Error(err);
+    //   }
+    // }
+    async genCharge(charge) {
         try {
-            const chargeConfig = Object.assign(Object.assign({}, data), { dueDate: new Date().toISOString(), description: "Pedido 056984", externalReference: cartID, customer: client.gatewayPagId });
-            const createCharge = await axiosInstance_1.AsassAPI.post("payments", chargeConfig);
-            await user_model_1.UserModel.updateOne({ _id: client._id }, { $push: { buysUnderProcess: createCharge.data.id } });
+            const createCharge = await axiosInstance_1.AsassAPI.post("payments", charge);
+            // await userRepo.update(`${client._id}`, {
+            //   $push: { buysUnderProcess: createCharge.data.id },
+            // });
             return createCharge.data;
         }
         catch (err) {
+            console.log(err.toString());
             console.log(err.response.data);
             throw new Error(err);
         }
@@ -107,12 +139,12 @@ class ClientAsaasImplementation {
     // generate a pix code
     async genPixCode({ id }) {
         try {
-            console.log(id);
-            const calculateResponse = await axiosInstance_1.AsassAPI.post("customers");
+            const calculateResponse = await axiosInstance_1.AsassAPI.get(`/payments/${id}/pixQrCode`);
             return calculateResponse.data;
         }
         catch (err) {
-            throw new Error(err);
+            console.log("genPixCode", err);
+            throw new Error(err.toString());
         }
     } // Ao gerar uma cobrança com as formas de pagamento "PIX", "BOLETO" ou "UNDEFINED" o pagamento via Pix é habilitado.
     // adicionar banco para recebimento
@@ -132,6 +164,16 @@ class ClientAsaasImplementation {
             return calculateResponse.data;
         }
         catch (err) {
+            throw new Error(err);
+        }
+    }
+    async tokenizeCard(cardData) {
+        try {
+            const calculateResponse = await axiosInstance_1.AsassAPI.post("creditCard/tokenize", cardData);
+            return calculateResponse.data;
+        }
+        catch (err) {
+            console.log(err.response.data);
             throw new Error(err);
         }
     }
