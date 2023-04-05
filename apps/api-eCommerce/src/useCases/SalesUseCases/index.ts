@@ -17,13 +17,16 @@ import { getMyUserBuys } from "./getMyUserBuys";
 import { getMySellerBuys } from "./getMySellerBuys";
 import { verifyPaymentStatus } from "./verifyPaymentMethods";
 import { getSingleOrder } from "./getSingleOrder";
+import { getAllSales } from "./getAllSales";
+import { UpdateDocument } from "./genPayment/updateDocument";
 
 const sales = SalesRepository;
 
 export const salesUseCases = {
   FineOne: async (req: Request, res: Response) => await get(req, res, sales),
 
-  FindAll: async (req: Request, res: Response) => await getAll(req, res, sales),
+  FindAll: async (req: Request, res: Response) =>
+    await getAllSales(req, res, sales),
 
   getMyUserBuys: async (req: Request, res: Response) =>
     await getMyUserBuys(req, res, sales),
@@ -46,4 +49,10 @@ export const salesUseCases = {
 
   cancelOrder: async (req: Request, res: Response) =>
     await verifyPaymentStatus(req, res, sales),
+
+  insertOrderDocument: async (req: Request, res: Response) =>
+    await verifyPaymentStatus(req, res, sales),
+
+  updateDocument: async (req: Request, res: Response) =>
+    UpdateDocument(req, res, sales),
 };

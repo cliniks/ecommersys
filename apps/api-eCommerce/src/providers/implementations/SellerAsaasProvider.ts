@@ -16,7 +16,7 @@ export class SellerAsaasImplementation implements ISellerCheckoutProvider {
         email: storeInfo.email,
         mobilePhone: storeInfo.phone,
         phone: storeInfo.phone,
-        cpfCnpj: storeInfo.cnpj,
+        cpfCnpj: storeInfo.cpf || storeInfo.cnpj,
         companyType: "MEI",
         postalCode: storeInfo.zipCode,
         address: storeInfo.address,

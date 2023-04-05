@@ -92,6 +92,7 @@ export const createPayment = async (
         imgs: getProduct.imgs,
         name: getProduct.name,
         owner: getProduct.owner,
+        // storeName:,
         price: getProduct.price,
         regularPrice: getProduct.regularPrice,
         shippingInfo: getProduct.shippingInfo,

@@ -9,8 +9,8 @@ importers:
       turbo: latest
     devDependencies:
       eslint-config-custom: link:packages/eslint-config-custom
-      prettier: 2.8.3
-      turbo: 1.7.0
+      prettier: 2.8.7
+      turbo: 1.8.6
 
   apps/api-eCommerce:
     specifiers:
@@ -189,6 +189,7 @@ importers:
       '@mui/material': ^5.10.11
       '@mui/styles': ^5.10.10
       '@mui/x-date-pickers': ^5.0.6
+      '@react-br-forms/cpf-cnpj-mask': github:react-br-forms/cpf-cnpj-mask
       '@reduxjs/toolkit': ^1.8.6
       '@types/draftjs-to-html': ^0.8.1
       '@types/filesize': ^5.0.0
@@ -211,7 +212,7 @@ importers:
       date-fns: ^2.29.3
       draft-js: ^0.11.7
       draftjs-to-html: ^0.9.1
-      ecommersys: ^1.8.0
+      ecommersys: ^1.8.1
       filesize: ^10.0.5
       formik: ^2.2.9
       formik-mui: 5.0.0-alpha.0
@@ -240,6 +241,7 @@ importers:
       react-i18next: ^12.0.0
       react-imask: ^6.4.3
       react-number-format: ^5.1.3
+      react-phone-input-2: ^2.15.1
       react-quill: ^2.0.0
       react-redux: ^8.0.4
       react-router-dom: ^6.4.2
@@ -271,6 +273,7 @@ importers:
       '@mui/material': registry.npmmirror.com/@mui/material/5.10.11_dqge6ix3sjwueqhzcenpc5wc2q
       '@mui/styles': registry.npmmirror.com/@mui/styles/5.10.10_kzbn2opkn2327fwg5yzwzya5o4
       '@mui/x-date-pickers': registry.npmmirror.com/@mui/x-date-pickers/5.0.6_jgzv6hlpoxwbmu5elabduf3rf4
+      '@react-br-forms/cpf-cnpj-mask': github.com/react-br-forms/cpf-cnpj-mask/00a7b96e1403f506d00f09ef3264823f484e13b8_v2m5e27vhdewzwhryxwfaorcca
       '@reduxjs/toolkit': registry.npmmirror.com/@reduxjs/toolkit/1.8.6_kuo2ie247izvzll3jejufdtq3q
       '@types/draftjs-to-html': 0.8.1
       '@types/node': registry.npmmirror.com/@types/node/16.18.0
@@ -315,6 +318,7 @@ importers:
       react-i18next: registry.npmmirror.com/react-i18next/12.0.0_aenbukojujz4qdlyd4cxxbdygi
       react-imask: registry.npmmirror.com/react-imask/6.4.3_react@18.2.0
       react-number-format: 5.1.3_biqbaboplfbrettd7655fr4n2y
+      react-phone-input-2: 2.15.1_biqbaboplfbrettd7655fr4n2y
       react-quill: registry.npmmirror.com/react-quill/2.0.0_biqbaboplfbrettd7655fr4n2y
       react-redux: registry.npmmirror.com/react-redux/8.0.4_2pve2u2ah4ef4dgi7jxt2wvw64
       react-router-dom: registry.npmmirror.com/react-router-dom/6.4.2_biqbaboplfbrettd7655fr4n2y
@@ -377,7 +381,7 @@ importers:
       eslint: registry.npmmirror.com/eslint/7.32.0
       eslint-config-next: registry.npmmirror.com/eslint-config-next/12.3.1_3rubbgt5ekhqrcgx4uwls3neim
       eslint-config-prettier: registry.npmmirror.com/eslint-config-prettier/8.5.0_eslint@7.32.0
-      eslint-config-turbo: 0.0.7_eslint@7.32.0
+      eslint-config-turbo: 1.8.6_eslint@7.32.0
       eslint-plugin-react: registry.npmmirror.com/eslint-plugin-react/7.31.8_eslint@7.32.0
     devDependencies:
       typescript: registry.npmmirror.com/typescript/4.8.4
@@ -3434,17 +3438,17 @@ packages:
     resolution: {integrity: sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==}
     engines: {node: '>=0.8.0'}
 
-  /eslint-config-turbo/0.0.7_eslint@7.32.0:
-    resolution: {integrity: sha512-WbrGlyfs94rOXrhombi1wjIAYGdV2iosgJRndOZtmDQeq5GLTzYmBUCJQZWtLBEBUPCj96RxZ2OL7Cn+xv/Azg==}
+  /eslint-config-turbo/1.8.6_eslint@7.32.0:
+    resolution: {integrity: sha512-LSMqrHmFeQcYRuBnzrzw+B2bJ3+o8wxPkRwfK0Y+SSLsq2F/niRJ2kqB8j4uOSCfxybHHpFEB2CgUpQiiyfeoQ==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: registry.npmmirror.com/eslint/7.32.0
-      eslint-plugin-turbo: 0.0.7_eslint@7.32.0
+      eslint-plugin-turbo: 1.8.6_eslint@7.32.0
     dev: false
 
-  /eslint-plugin-turbo/0.0.7_eslint@7.32.0:
-    resolution: {integrity: sha512-iajOH8eD4jha3duztGVBD1BEmvNrQBaA/y3HFHf91vMDRYRwH7BpHSDFtxydDpk5ghlhRxG299SFxz7D6z4MBQ==}
+  /eslint-plugin-turbo/1.8.6_eslint@7.32.0:
+    resolution: {integrity: sha512-LieXzur+4XtIsLst8GdupTMhvGn2ebFetG3AVErh2jHBy1EobPHbatjcdNZQMy5EsdG35axQVB8KFF3jo4u+OQ==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
@@ -4378,6 +4382,18 @@ packages:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
     dev: false
 
+  /lodash.memoize/4.1.2:
+    resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
+    dev: false
+
+  /lodash.reduce/4.6.0:
+    resolution: {integrity: sha512-6raRe2vxCYBhpBu+B+TtNGUzah+hQjVdu3E17wfusjyrXBka2nBS8OH/gjVZ5PvHOhWmIZTYri09Z6n/QfnNMw==}
+    dev: false
+
+  /lodash.startswith/4.2.1:
+    resolution: {integrity: sha512-XClYR1h4/fJ7H+mmCKppbiBmljN/nGs73iq2SjCT9SF4CBPoUHzLvWmH1GtZMhMBZSiRkHXfeA2RY1eIlJ75ww==}
+    dev: false
+
   /lodash.throttle/4.1.1:
     resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
     dev: false
@@ -5128,8 +5144,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /prettier/2.8.3:
-    resolution: {integrity: sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -5319,6 +5335,22 @@ packages:
       react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^18.0.0
       react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^18.0.0
     dependencies:
+      prop-types: 15.8.1
+      react: registry.npmmirror.com/react/18.2.0
+      react-dom: registry.npmmirror.com/react-dom/18.2.0_react@18.2.0
+    dev: false
+
+  /react-phone-input-2/2.15.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-W03abwhXcwUoq+vUFvC6ch2+LJYMN8qSOiO889UH6S7SyMCQvox/LF3QWt+cZagZrRdi5z2ON3omnjoCUmlaYw==}
+    peerDependencies:
+      react: ^16.12.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+      react-dom: ^16.12.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+    dependencies:
+      classnames: 2.3.2
+      lodash.debounce: 4.0.8
+      lodash.memoize: 4.1.2
+      lodash.reduce: 4.6.0
+      lodash.startswith: 4.2.1
       prop-types: 15.8.1
       react: registry.npmmirror.com/react/18.2.0
       react-dom: registry.npmmirror.com/react-dom/18.2.0_react@18.2.0
@@ -6024,65 +6056,65 @@ packages:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: false
 
-  /turbo-darwin-64/1.7.0:
-    resolution: {integrity: sha512-hSGAueSf5Ko8J67mpqjpt9FsP6ePn1nMcl7IVPoJq5dHsgX3anCP/BPlexJ502bNK+87DDyhQhJ/LPSJXKrSYQ==}
+  /turbo-darwin-64/1.8.6:
+    resolution: {integrity: sha512-VlXkQR0TEBAEyBRsvAXBax+fj1EdPKPliwBaCnRLiDUcA/8wYlKte/Kk6ubmj9E0n7U/B4keCxxHiJZqW/5Rqg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.7.0:
-    resolution: {integrity: sha512-BLLOW5W6VZxk5+0ZOj5AO1qjM0P5isIgjbEuyAl8lHZ4s9antUbY4CtFrspT32XxPTYoDl4UjviPMcSsbcl3WQ==}
+  /turbo-darwin-arm64/1.8.6:
+    resolution: {integrity: sha512-w4L2QLj90ex68UXxTPoqtZPl8mWzc6a1RtPjQhoxAWtZf9T2WXi813dCzYEbVUVC09/DOW/VxZRN7sb2r0KP9A==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.7.0:
-    resolution: {integrity: sha512-aw2qxmfZa+kT87SB3GNUoFimqEPzTlzlRqhPgHuAAT6Uf0JHnmebPt4K+ZPtDNl5yfVmtB05bhHPqw+5QV97Yg==}
+  /turbo-linux-64/1.8.6:
+    resolution: {integrity: sha512-eV245jefIhMAZskqQKalFwreC5UEdQcuHcBiWcgUk0py76fbwB7+1HfH5cmeJlb3a1sB6f3H0HHmGPmb34feCA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.7.0:
-    resolution: {integrity: sha512-AJEx2jX+zO5fQtJpO3r6uhTabj4oSA5ZhB7zTs/rwu/XqoydsvStA4X8NDW4poTbOjF7DcSHizqwi04tSMzpJw==}
+  /turbo-linux-arm64/1.8.6:
+    resolution: {integrity: sha512-Kiw3nyEvNU6Bpil4zE5FwhasPAOi59R4YdCmjJp0Sen6V9u+/Jij6SWwaoUdATORJLiYQBbhontWBH55B53VDw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.7.0:
-    resolution: {integrity: sha512-ewj7PPv2uxqv0r31hgnBa3E5qwUu7eyVRP5M1gB/TJXfSHduU79gbxpKCyxIZv2fL/N2/3U7EPOQPSZxBAoljA==}
+  /turbo-windows-64/1.8.6:
+    resolution: {integrity: sha512-34BkAG9r4nE00xeMeVahaF82h8R6SO+IIOcD60fNr2p+Ch+YcQa+DbEWA/KUj3coUTIiNP5XnRCLRUYADdlxjQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.7.0:
-    resolution: {integrity: sha512-LzjOUzveWkvTD0jP8DBMYiAnYemmydsvqxdSmsUapHHJkl6wKZIOQNSO7pxsy+9XM/1/+0f9Y9F9ZNl5lePTEA==}
+  /turbo-windows-arm64/1.8.6:
+    resolution: {integrity: sha512-4jWUaI7Lmonp2I3x81GruiCYd0aQsG/xDOYhuv9+j2yIgB/UHJFz/P8PWp/nziwPtGpRd/AheDlPzzyd9lWoqw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.7.0:
-    resolution: {integrity: sha512-cwympNwQNnQZ/TffBd8yT0i0O10Cf/hlxccCYgUcwhcGEb9rDjE5thDbHoHw1hlJQUF/5ua7ERJe7Zr0lNE/ww==}
+  /turbo/1.8.6:
+    resolution: {integrity: sha512-6IOOaa8ytgjnSCTnp3LKAd2uGBZ/Kmx8ZPlI/YMWuKMUqvkXKLbh+w76ApMgMm+faUqti+QujVWovCu2kY6KuQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.7.0
-      turbo-darwin-arm64: 1.7.0
-      turbo-linux-64: 1.7.0
-      turbo-linux-arm64: 1.7.0
-      turbo-windows-64: 1.7.0
-      turbo-windows-arm64: 1.7.0
+      turbo-darwin-64: 1.8.6
+      turbo-darwin-arm64: 1.8.6
+      turbo-linux-64: 1.8.6
+      turbo-linux-arm64: 1.8.6
+      turbo-windows-64: 1.8.6
+      turbo-windows-arm64: 1.8.6
     dev: true
 
   /type-fest/0.7.1:
@@ -6403,6 +6435,21 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  github.com/react-br-forms/cpf-cnpj-mask/00a7b96e1403f506d00f09ef3264823f484e13b8_v2m5e27vhdewzwhryxwfaorcca:
+    resolution: {tarball: https://codeload.github.com/react-br-forms/cpf-cnpj-mask/tar.gz/00a7b96e1403f506d00f09ef3264823f484e13b8}
+    id: github.com/react-br-forms/cpf-cnpj-mask/00a7b96e1403f506d00f09ef3264823f484e13b8
+    name: '@react-br-forms/cpf-cnpj-mask'
+    version: 1.0.6
+    peerDependencies:
+      prop-types: ^15.6.0
+      react: ^16.0.0
+      react-dom: ^16.0.0
+    dependencies:
+      prop-types: registry.npmmirror.com/prop-types/15.8.1
+      react: registry.npmmirror.com/react/18.2.0
+      react-dom: registry.npmmirror.com/react-dom/18.2.0_react@18.2.0
     dev: false
 
   registry.npmmirror.com/@ampproject/remapping/2.2.0:
@@ -9090,7 +9137,7 @@ packages:
       '@babel/helper-compilation-targets': registry.npmmirror.com/@babel/helper-compilation-targets/7.19.3_@babel+core@7.19.6
       '@babel/helper-plugin-utils': registry.npmmirror.com/@babel/helper-plugin-utils/7.19.0
       debug: 4.3.4
-      lodash.debounce: registry.npmmirror.com/lodash.debounce/4.0.8
+      lodash.debounce: 4.0.8
       resolve: registry.npmmirror.com/resolve/1.22.1
       semver: registry.npmmirror.com/semver/6.3.0
     transitivePeerDependencies:
@@ -13337,7 +13384,7 @@ packages:
       '@typescript-eslint/scope-manager': registry.npmmirror.com/@typescript-eslint/scope-manager/5.41.0
       '@typescript-eslint/types': registry.npmmirror.com/@typescript-eslint/types/5.41.0
       '@typescript-eslint/typescript-estree': registry.npmmirror.com/@typescript-eslint/typescript-estree/5.41.0_typescript@4.8.4
-      debug: 4.3.4
+      debug: registry.npmmirror.com/debug/4.3.4
       eslint: registry.npmmirror.com/eslint/8.26.0
       typescript: registry.npmmirror.com/typescript/4.8.4
     transitivePeerDependencies:
@@ -14891,7 +14938,7 @@ packages:
     dependencies:
       browserslist: registry.npmmirror.com/browserslist/4.21.4
       caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001425
-      lodash.memoize: registry.npmmirror.com/lodash.memoize/4.1.2
+      lodash.memoize: 4.1.2
       lodash.uniq: registry.npmmirror.com/lodash.uniq/4.5.0
     dev: false
 
@@ -17040,7 +17087,7 @@ packages:
         optional: true
     dependencies:
       '@typescript-eslint/parser': registry.npmmirror.com/@typescript-eslint/parser/5.41.0_wyqvi574yv7oiwfeinomdzmc3m
-      debug: 3.2.7
+      debug: registry.npmmirror.com/debug/3.2.7
       eslint: registry.npmmirror.com/eslint/8.26.0
       eslint-import-resolver-node: registry.npmmirror.com/eslint-import-resolver-node/0.3.6
     transitivePeerDependencies:
@@ -17081,7 +17128,7 @@ packages:
       '@typescript-eslint/parser': registry.npmmirror.com/@typescript-eslint/parser/5.41.0_wyqvi574yv7oiwfeinomdzmc3m
       array-includes: registry.npmmirror.com/array-includes/3.1.5
       array.prototype.flat: registry.npmmirror.com/array.prototype.flat/1.3.0
-      debug: 2.6.9
+      debug: registry.npmmirror.com/debug/2.6.9
       doctrine: registry.npmmirror.com/doctrine/2.1.0
       eslint: registry.npmmirror.com/eslint/8.26.0
       eslint-import-resolver-node: registry.npmmirror.com/eslint-import-resolver-node/0.3.6
@@ -17278,7 +17325,7 @@ packages:
       object.fromentries: registry.npmmirror.com/object.fromentries/2.0.5
       object.hasown: registry.npmmirror.com/object.hasown/1.1.1
       object.values: registry.npmmirror.com/object.values/1.1.5
-      prop-types: 15.8.1
+      prop-types: registry.npmmirror.com/prop-types/15.8.1
       resolve: registry.npmmirror.com/resolve/2.0.0-next.4
       semver: registry.npmmirror.com/semver/6.3.0
       string.prototype.matchall: registry.npmmirror.com/string.prototype.matchall/4.0.7
@@ -21023,12 +21070,6 @@ packages:
     version: 4.17.21
     dev: false
 
-  registry.npmmirror.com/lodash.debounce/4.0.8:
-    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz}
-    name: lodash.debounce
-    version: 4.0.8
-    dev: false
-
   registry.npmmirror.com/lodash.includes/4.3.0:
     resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash.includes/-/lodash.includes-4.3.0.tgz}
     name: lodash.includes
@@ -21074,6 +21115,7 @@ packages:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz}
     name: lodash.memoize
     version: 4.1.2
+    dev: true
 
   registry.npmmirror.com/lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash.merge/-/lodash.merge-4.6.2.tgz}

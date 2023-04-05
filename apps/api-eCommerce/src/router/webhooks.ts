@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { Request, Response, Router } from "express";
 import { updatePaymentStatus } from "../useCases/webhookUseCases";
 import { IWebSocket } from "../providers/websobket/IWebSocket";
 // import { verifyers } from "../middlewares/verifyers";
@@ -10,6 +10,12 @@ const WebhookRoutes = (socket: IWebSocket): Router => {
     updatePaymentStatus(req.body, socket);
     res.status(200).send();
   });
+
+  webhookRoutes.post("/me", (req: Request, res: Response) => {
+    console.log("meWebhook", req.body);
+    res.status(200).send();
+  });
+
   return webhookRoutes;
 };
 

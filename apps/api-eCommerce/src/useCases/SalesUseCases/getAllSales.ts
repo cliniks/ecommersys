@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { ISalesRepository } from "../../repositories/Interfaces";
+
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
+
 import {
   AddressesRepository,
   SellersRepository,
@@ -9,7 +11,7 @@ import {
 
 const storeRepo = SellersRepository;
 
-export const getMyUserBuys = async (
+export const getAllSales = async (
   req: Request,
   res: Response,
   repo: ISalesRepository
@@ -17,18 +19,10 @@ export const getMyUserBuys = async (
   try {
     const { page = 0, size = 10, filter }: any = req.query;
 
-    const user = await returnUserFromToken(req);
-
-    const userId = user._id.toString();
-
     let getSales: any = await repo.getAll({
       page,
       size,
-      filter: {
-        key: "userId" + " " + filter?.key || "",
-        value: userId + " " + filter?.value || "",
-        fields: filter?.fields || "",
-      },
+      filter,
     });
 
     let salesReturn = [];
@@ -78,11 +72,9 @@ export const getMyUserBuys = async (
       salesReturn.push(newSale);
     }
 
-    let returnData = { ...getSales._doc };
+    getSales.result = salesReturn;
 
-    returnData.result = salesReturn;
-
-    res.json(returnData);
+    res.json(getSales);
   } catch (err: any) {
     res.status(400).send(err.toString());
   }

@@ -11,7 +11,7 @@ export const getMyClients = async (user: User) => {
   console.log(user.storeId);
 
   const getMySales = await salesRepo.getAll({
-    size: 30,
+    size: 100,
     page: 0,
     filter: { key: "storeIds", value: user.storeId },
   });

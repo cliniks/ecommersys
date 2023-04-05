@@ -30,6 +30,8 @@ import http from "http";
 import { ChatsRoutes } from "./router/chatsRouter";
 import { IWebSocket } from "./providers/websobket/IWebSocket";
 import { TestsRoutes } from "./router/tests";
+import { ShippingRoutes } from "./router/shippingRoutes";
+import { ordersRoutes } from "./router/ordersRouter";
 
 class App {
   public server: any;
@@ -80,6 +82,8 @@ class App {
     this.app.use("/clients", verifyers.verifyAppToken, ClientsRouter);
     this.app.use("/notify", verifyers.verifyAppToken, NotifyRouter);
     this.app.use("/chats", verifyers.verifyAppToken, ChatsRoutes);
+    this.app.use("/orders", verifyers.verifyAppToken, ordersRoutes);
+    this.app.use("/shipping", verifyers.verifyAppToken, ShippingRoutes);
     this.app.use("/webhooks", WebhookRoutes(this.websocket));
     this.app.use("/tests", TestsRoutes(this.websocket));
     this.app.use("/bulk", BulkRoutes);

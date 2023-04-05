@@ -56,7 +56,7 @@ MEApi.interceptors.request.use((config) => {
   if (token) {
     config.headers = {
       Accept: "application/json",
-      "User-Agent": "Aplicação (dev@cliniks.com.br)",
+      "User-Agent": "Aplicação (front.ikiradev.com)",
       Authorization: `Bearer ${token}`,
     };
     return config;

@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { Product } from "./product.entitie";
+import { Store } from "./store.entitie";
 
 export const CartSchema = new Schema(
   {
@@ -45,4 +46,5 @@ export type ProductsReturn = ProductInfo &
     discountValue: string;
     couponApplied: string;
     totalValue: string;
+    store: Partial<Store>;
   };

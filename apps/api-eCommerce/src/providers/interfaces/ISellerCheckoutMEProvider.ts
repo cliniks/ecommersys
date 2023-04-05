@@ -1,4 +1,4 @@
-export interface ISellerCheckoutProvider {
+export interface ISellerCheckoutMEProvider {
   // Pré visualização de etiquetas
   previewTags(orders: string): Promise<any>;
   // Geração de etiquetas

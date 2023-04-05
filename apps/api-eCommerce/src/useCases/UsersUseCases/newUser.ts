@@ -11,6 +11,7 @@ import { IUsersRepository, fileType } from "../../repositories/Interfaces";
 import { clientAssasProvider } from "../../providers";
 import { Address, Cart } from "../../entities";
 import { makeApi } from "../../services/axiosInstance";
+import { createChat } from "../ChatsUseCases/createChat";
 const s3 = new S3Repository();
 const unlinkFile = util.promisify(fs.unlink);
 
@@ -71,6 +72,8 @@ export const newUser = async (
     await cartRepo.addOne({ owner: `${user._id}` } as Cart);
 
     const createAsaasIntegration = await asaasClients.newClient({ data: user });
+
+    createChat(user._id.toString());
 
     return res.json(createAsaasIntegration);
   } catch (err: any) {

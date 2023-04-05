@@ -4,6 +4,7 @@ import { Cart, CartReturn, ProductsReturn } from "../../entities";
 import { ICartsRepository } from "../../repositories/Interfaces";
 import { User } from "../../entities";
 import { getCartProducts } from "./getCartProducts";
+import { CartsRepository } from "../../repositories";
 
 export const getMyCart = async (
   req: Request,
@@ -53,4 +54,44 @@ export const getMyCart = async (
     console.log(err);
     return res.status(400).send("não foi possível solicitar.");
   }
+};
+
+const cartRepo = CartsRepository;
+
+export const getMyCartFunction = async (user: User) => {
+  let findMyCart: any = await cartRepo.getOne({
+    key: "owner",
+    value: `${user._id}`,
+  });
+
+  if (!findMyCart) {
+    const create: any = await cartRepo.addOne({ owner: `${user._id}` } as Cart);
+    findMyCart = create;
+  }
+
+  let cart: Partial<CartReturn> = findMyCart._doc;
+
+  let productItems: any = cart?.products || [];
+
+  let couponItems: any = cart?.coupons || [];
+
+  const getMYCartProducts: ProductsReturn[] = await getCartProducts(
+    productItems,
+    couponItems
+  );
+
+  let totalValues = { totalPrice: 0, totalDiscount: 0 };
+
+  for (let product of getMYCartProducts) {
+    totalValues.totalPrice = +totalValues.totalPrice + +product.totalValue;
+    totalValues.totalDiscount =
+      +totalValues.totalDiscount + +product.discountValue || 0;
+  }
+
+  const cartReturn: Partial<CartReturn> = {
+    ...cart,
+    products: getMYCartProducts,
+    ...totalValues,
+  };
+  return cartReturn;
 };

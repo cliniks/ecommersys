@@ -46,6 +46,7 @@ import {
   notificationTypes,
   NotificationSchema,
 } from "../../entities";
+import { OrderSchema, OrderType } from "../../entities/order.entitie";
 
 class Model<E> {
   public model: mongooseModel<E>;
@@ -159,4 +160,7 @@ export const storeSolicitationModel = new Model<StoreSolicitate>(
 ).model;
 
 export const storeModel = new Model<Store>("store", StoreSchema, "stores")
+  .model;
+
+export const orderModel = new Model<OrderType>("order", OrderSchema, "orders")
   .model;

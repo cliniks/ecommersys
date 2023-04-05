@@ -1,10 +1,12 @@
 import fs from "fs";
-import { ISellerCheckoutProvider } from "../interfaces/ISellerCheckoutProvider";
 import FormData from "form-data";
-import { generateTagPropsType } from "../interfaces/ISellerCheckoutProvider copy";
+import {
+  ISellerCheckoutMEProvider,
+  generateTagPropsType,
+} from "../interfaces/ISellerCheckoutMEProvider";
 import { MEApi } from "../../services/axiosInstance";
 
-export class SellerCheckoutMEProvider implements ISellerCheckoutProvider {
+export class SellerCheckoutMEProvider implements ISellerCheckoutMEProvider {
   constructor() {}
   // Pré visualização de etiquetas
   async addStore(orders: any) {
@@ -205,8 +207,8 @@ export class SellerCheckoutMEProvider implements ISellerCheckoutProvider {
   async uploadImageStore(storeID: any, file: any) {
     try {
       const form: any = new FormData();
-      const stream = fs.readFileSync(file.path);
-      const bufferToBase64 = Buffer.from(file.Buffer).toString("base64");
+      // const stream = fs.readFileSync(file.path);
+      // const bufferToBase64 = Buffer.from(file.Buffer).toString("base64");
       form.append("file", fs.createReadStream(file.path));
 
       const uploadImageResponse = await MEApi.post(
@@ -230,3 +232,5 @@ export class SellerCheckoutMEProvider implements ISellerCheckoutProvider {
     }
   }
 }
+
+export default new SellerCheckoutMEProvider();

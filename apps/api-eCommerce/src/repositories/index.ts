@@ -10,6 +10,7 @@ import {
   globalCommissionModel,
   messageModel,
   notifyModel,
+  orderModel,
   paymentMethodModel,
   productCommissionsModel,
   productModel,
@@ -59,6 +60,7 @@ import {
   StoreCommissionImplementation,
 } from "./implementations/AdminImplementation";
 import { NotifyImplementation } from "./implementations/NotifyImplementation";
+import OrdersImplementation from "./implementations/OrdersImplementation";
 
 export const AddressesRepository = new AddressImplementation(addressModel);
 
@@ -112,6 +114,8 @@ export const PaymentMethodRepository = new PaymentMethodsImplementation(
 );
 
 export const UsersRepository = new UsersImplementation(userModel);
+
+export const OrdersRepository = new OrdersImplementation(orderModel);
 
 export * from "./implementations/GatewayPagImplements";
 

@@ -71,7 +71,6 @@ export const prepareResponse = (
     totalValue,
     couponApplied: `${coupon._id}/${coupon.name}`,
   };
-  console.log({ response });
   return response;
 };
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IStoreSolicitate } from "../../repositories/Interfaces/IStoreSolicitationRepository";
 import { returnUserFromToken } from "../../utils/returnUserFromToken";
-import { makeApi } from "../../services/axiosInstance";
+// import { makeApi } from "../../services/axiosInstance";
 
 export const solicitate = async (
   req: Request,
@@ -10,7 +10,9 @@ export const solicitate = async (
 ) => {
   try {
     const { name, storeInfo } = req.body;
+
     console.log(name, storeInfo);
+
     const getUser = await returnUserFromToken(req);
 
     const hasSolicitation = await repo.getOne({
@@ -18,13 +20,13 @@ export const solicitate = async (
       value: getUser._id,
     });
 
-    makeApi.post("", {
-      type: "sellerSolicitation",
-      userInfo: getUser.userInfo,
-      storeInfo: hasSolicitation.storeInfo,
-    });
+    // makeApi.post("", {
+    //   type: "sellerSolicitation",
+    //   userInfo: getUser.userInfo,
+    //   storeInfo: hasSolicitation.storeInfo,
+    // });
 
-    if (!hasSolicitation || hasSolicitation.owner !== `${getUser._id}`) {
+    if (!hasSolicitation || hasSolicitation?.owner !== `${getUser._id}`) {
       const add = await repo.addOne({
         name,
         storeInfo,
@@ -38,6 +40,7 @@ export const solicitate = async (
     return res.json(hasSolicitation);
   } catch (err: any) {
     console.log(err.message);
+    console.log(err);
     return res.status(400).send("não foi possível solicitar.");
   }
 };

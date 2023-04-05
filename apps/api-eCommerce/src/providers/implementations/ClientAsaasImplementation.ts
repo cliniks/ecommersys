@@ -200,6 +200,13 @@ export class ClientAsaasImplementation {
     }
   }
 
+  async cancelOrder(): Promise<any> {
+    try {
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
   async tokenizeCard(cardData: tokenizeType): Promise<TokenCard> {
     try {
       const calculateResponse = await AsassAPI.post(

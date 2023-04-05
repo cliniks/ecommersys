@@ -1,7 +1,12 @@
-import { CalculateProps, clientProps } from "../IUserCheckoutProvider";
-import { Request, Response, Router } from "express";
+import FormData from "form-data";
 import { MEApi } from "../../services/axiosInstance";
-export class UserCheckoutMEProvider {
+import {
+  CalculateProps,
+  IUserCheckoutMEProvider,
+  clientProps,
+} from "../interfaces/IUserCheckoutMEProvider";
+
+export class UserCheckoutMEProvider implements IUserCheckoutMEProvider {
   constructor() {}
 
   // adicionar usuário
@@ -10,11 +15,11 @@ export class UserCheckoutMEProvider {
       let form = new FormData();
       Object.keys(client).forEach((item) => {
         if (item === "address") {
-          Object.keys(item).forEach((addressItem) => {
+          Object.keys(item).forEach((addressItem: any) => {
             form.append(item[addressItem], item[addressItem]);
           });
         }
-        form.append(item, client[item]);
+        form.append(item, client[item as keyof clientProps]);
       });
       console.log("addClient", { form });
       const add = await MEApi.post("/api/v2/register", form, {
@@ -22,7 +27,7 @@ export class UserCheckoutMEProvider {
       });
       console.log(add.data);
       return add.data;
-    } catch (err) {
+    } catch (err: any) {
       console.log("ME error addClient", err.response.data);
       throw new Error(err);
     }
@@ -36,7 +41,8 @@ export class UserCheckoutMEProvider {
       );
 
       return calculateResponse.data;
-    } catch (err) {
+    } catch (err: any) {
+      console.log(err);
       throw new Error(err);
     }
   }
@@ -49,7 +55,7 @@ export class UserCheckoutMEProvider {
     products,
     volumes,
     options,
-  }) {
+  }: any) {
     try {
       const insertCartResponse = await MEApi.post("/api/v2/me/cart", {
         service,
@@ -62,7 +68,7 @@ export class UserCheckoutMEProvider {
       });
 
       return insertCartResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
@@ -72,39 +78,39 @@ export class UserCheckoutMEProvider {
       const listCartResponse = await MEApi.get("/api/v2/me/cart");
 
       return listCartResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
   // Exibir informações de um item do carrinho
-  async cartItemsInfo(orderID) {
+  async cartItemsInfo(orderID: string) {
     try {
       const cartInfoResponse = await MEApi.get(`/api/v2/me/cart/${orderID}`);
 
       return cartInfoResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
   // Remoção de items do carrinho
-  async removeCartItems(orderID) {
+  async removeCartItems(orderID: string) {
     try {
       const cartInfoResponse = await MEApi.delete(`/api/v2/me/cart/${orderID}`);
 
       return cartInfoResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
   // Compra de fretes (Checkout)
-  async buyShipping(orders) {
+  async buyShipping(orders: string) {
     try {
       const ordersResponse = await MEApi.post("/api/v2/me/shipment/checkout", {
         orders,
       });
 
       return ordersResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
@@ -115,7 +121,7 @@ export class UserCheckoutMEProvider {
       const infoUserResponse = await MEApi.get("/api/v2/me");
 
       return infoUserResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
@@ -126,7 +132,7 @@ export class UserCheckoutMEProvider {
       const creditBalanceResponse = await MEApi.get("/api/v2/me/balance");
 
       return creditBalanceResponse.data;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(err);
     }
   }
@@ -141,3 +147,5 @@ export class UserCheckoutMEProvider {
     // }
   }
 }
+
+export default new UserCheckoutMEProvider();

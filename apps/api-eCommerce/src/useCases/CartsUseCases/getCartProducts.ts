@@ -1,5 +1,10 @@
 import { Coupon, ProductsReturn } from "../../entities";
-import { CouponsRepository, ProductsRepository } from "../../repositories";
+import {
+  CouponsRepository,
+  ProductsRepository,
+  SellersRepository,
+  UsersRepository,
+} from "../../repositories";
 
 const productRepo = ProductsRepository;
 
@@ -24,9 +29,16 @@ export const getCartProducts = async (
       fields: "name,price,imgs,owner,shippingInfo,stockInfo,categories",
     });
 
+    const getStore = await SellersRepository.getOne({
+      key: "_id",
+      value: getProduct.owner,
+      fields: "name,storeInfo,img",
+    });
+
     const product: ProductsReturn = {
       amount,
       productId,
+      store: getStore,
       ...getProduct._doc,
       totalValue: (+getProduct.price * amount).toString(),
     };

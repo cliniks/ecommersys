@@ -5,6 +5,7 @@ import {
   AddressesRepository,
   CartsRepository,
   CouponsRepository,
+  OrdersRepository,
   ProductsRepository,
   SellersRepository,
 } from "../../../repositories";
@@ -22,13 +23,16 @@ import { getCartProducts } from "../../CartsUseCases/getCartProducts";
 import { UpdateProductStock } from "../../ProductsUseCases/updateStockInfo";
 import { applyCommission } from "../../CommissionUseCases/validateComission";
 import { addDot, removeDot } from "../../../utils/monetary";
+import { createRoom } from "../../ChatsUseCases/createRoom";
+import { OrderType } from "../../../entities/order.entitie";
+import { shippingType } from "../../../router/shippingRoutes";
 // import { makeApi } from "../../../services/axiosInstance";
 
-const cartRepo = CartsRepository;
 const addressRepo = AddressesRepository;
 const productRepo = ProductsRepository;
-const storeRepo = SellersRepository;
 const couponRepo = CouponsRepository;
+const storeRepo = SellersRepository;
+const cartRepo = CartsRepository;
 
 const gatewayPag = new ClientAsaasImplementation();
 
@@ -43,11 +47,13 @@ export const createPayment2 = async (
       cardToken,
       installmentCount,
       documents = [],
+      shipping = [],
     }: {
       billingType: billingType;
       cardToken: string;
       installmentCount: number;
       documents: SaleDocuments[];
+      shipping: ShippingOptions[];
     } = req.body;
 
     const user = await returnUserFromToken(req);
@@ -71,12 +77,13 @@ export const createPayment2 = async (
 
     let stores: StoreMapped[] = [];
 
-    let coupons: Coupon[] = [];
+    // let coupons: Coupon[] = [];
 
     for (let product of cartProducts) {
       const includesAlready = stores.find(
         (item: any) => item.storeId === product.owner
       );
+
       const hasStock = product.stockInfo.qnt;
 
       if (hasStock - product.amount <= 0)
@@ -87,6 +94,8 @@ export const createPayment2 = async (
           key: "_id",
           value: product.owner,
         });
+
+        createRoom(getStore.owner.toString(), user._id.toString());
 
         const filterStoreProducts = cartProducts.filter(
           (item) => item.owner === product.owner
@@ -127,7 +136,45 @@ export const createPayment2 = async (
       totalValue?: number;
     }[] = [];
 
+    let orders: any[] = [];
+
     for (let r = 0; r < stores.length; r++) {
+      const thisShippingSelected = shipping.find(
+        (item) => item.storeId.toString() === stores[r].storeId.toString()
+      );
+
+      orders.push({
+        coupons: stores[r].coupons,
+        meLogs: [],
+        products: stores[r].products,
+        shipping: {
+          configs: {
+            additional_services:
+              thisShippingSelected?.shipping.additional_services,
+            company: thisShippingSelected?.shipping.company,
+            currency: thisShippingSelected?.shipping.currency,
+            name: thisShippingSelected?.shipping.name,
+          },
+          estimated: {
+            custom_delivery_range:
+              thisShippingSelected?.shipping.custom_delivery_range,
+            custom_delivery_time:
+              thisShippingSelected?.shipping.custom_delivery_time,
+            custom_price: thisShippingSelected?.shipping.custom_price,
+            delivery_range: thisShippingSelected?.shipping.delivery_range,
+            delivery_time: thisShippingSelected?.shipping.delivery_time,
+          },
+          packages: thisShippingSelected?.shipping.packages,
+        },
+        shippingStatus: "",
+        storeId: thisShippingSelected?.storeId,
+        storeName: thisShippingSelected?.storeName,
+        totalDiscount: stores[r]?.totalDiscount.toString(),
+        totalValue: stores[r]?.totalPrice.toString(),
+        userId: user._id?.toString(),
+        userName: user?.userInfo.name,
+      });
+
       const totalprice = +stores[r].totalPrice;
 
       const comissionApplied = +(await applyCommission(
@@ -270,12 +317,19 @@ export const createPayment2 = async (
 
     await cartRepo.update(userCart._id, { products: [], coupons: [] });
 
+    orders.map((item) => {
+      OrdersRepository.addOne(item);
+    });
+
     return res.json({
       insertOnRepo,
       generatePayment,
       getQRCodePix,
       getBoleto,
+      orders,
     });
+
+    // return res.json(orders);
   } catch (err) {
     console.log(err.toString());
     return res.status(400).send(false);
@@ -298,4 +352,10 @@ export type ProductMapped = {
   couponApplied: string;
   discountValue: number;
   totalValue: number;
+};
+
+export type ShippingOptions = {
+  storeId: string;
+  storeName: string;
+  shipping: shippingType;
 };

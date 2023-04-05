@@ -28,7 +28,10 @@ export const createRoom = async (userId: string, clientId: string) => {
       clientChat.rooms.includes(item.toString())
     );
 
-    if (verifyExistence) throw new Error("Usuários já possuem chat criado");
+    if (verifyExistence) {
+      console.log("Usuários já possuem chat criado");
+      return;
+    }
 
     const create = await repos.roomRepo.addOne({
       users: [userId.toString(), clientId.toString()],

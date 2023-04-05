@@ -1,6 +1,6 @@
 import { MECartProduct } from "../../entities/melhor-envio.entitie";
 
-export interface IUserCheckoutProvider {
+export interface IUserCheckoutMEProvider {
   // adicionar usuário
   addClient(client: clientProps): Promise<any>;
   // calculo de frete (produtos)
@@ -60,8 +60,8 @@ export type clientProps = {
 };
 
 export type CalculateProps = {
-  from: string;
-  to: string;
+  from: { postal_code: string };
+  to: { postal_code: string };
   products?: MECartProduct[];
 };
 

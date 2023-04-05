@@ -9,6 +9,7 @@ export const StoreSolicitateSchema = new Schema(
     storeInfo: {
       cnpj: String,
       cnae: String,
+      cpf: String,
       address: String,
       number: String,
       complement: String,

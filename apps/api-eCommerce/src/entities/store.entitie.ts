@@ -20,6 +20,7 @@ export const StoreSchema = new Schema(
     storeInfo: {
       cnpj: String,
       cnae: String,
+      cpf: String,
       address: String,
       number: String,
       complement: String,
@@ -32,6 +33,10 @@ export const StoreSchema = new Schema(
       district: String,
       zipCode: String,
       email: String,
+    },
+    freeShippingMinPrice: {
+      value: 0,
+      hasFreeShipping: { type: Boolean, defaultValue: false },
     },
     isActive: { type: Boolean, default: true },
     melhorEnvioID: String,
@@ -93,6 +98,7 @@ export type wallet = {
 export type storeInfo = {
   cnpj: string;
   cnae: string;
+  cpf: string;
   address: string;
   number: string;
   complement: string;

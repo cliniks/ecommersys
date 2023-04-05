@@ -25,7 +25,6 @@ export class CrudRepo<E> implements ICrudRepository<E> {
     if (!idArray || idArray.length === 0) return [];
     const verifyArray = idArray.map((item) => {
       const includesSlash = item.includes("/");
-      console.log({ includesSlash });
       if (includesSlash) {
         return item.split("/")[0];
       }
@@ -33,7 +32,7 @@ export class CrudRepo<E> implements ICrudRepository<E> {
     });
 
     const fieldsAdjust = fields?.includes(",")
-      ? fields.replace(",", " ")
+      ? fields.replaceAll(",", " ")
       : fields;
 
     return await this.model

@@ -40,6 +40,7 @@ export const UserSchema = new Schema(
       email: String,
       defaultAddress: String,
     },
+    lastLogin: Date,
     melhorEnvioID: String,
     gatewayPagId: String,
     gatewayPagApiKey: String,
@@ -81,6 +82,7 @@ export type User = {
   isActive: boolean;
   access: 0 | 1 | 2 | 99;
   orders: number;
+  lastLogin: Date;
   createdAt?: Date;
   updatedAt?: Date;
 };

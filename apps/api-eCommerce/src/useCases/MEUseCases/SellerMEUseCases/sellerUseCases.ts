@@ -1,19 +1,15 @@
 import { Request, Response } from "express";
-import {
-  generateTagPropsType,
-  ISellerCheckoutProvider,
-} from "../../providers/ISellerCheckoutProvider";
-import { IUserCheckoutProvider } from "../../providers/IUserCheckoutProvider";
-import { IMailSenderProvider } from "../../providers/IMailSenderProvider";
-const { uploadImage, deleteFile } = require("../../databases/s3");
+import { ISellerCheckoutMEProvider } from "../../../providers/interfaces/ISellerCheckoutMEProvider";
+import { IUserCheckoutMEProvider } from "../../../providers/interfaces/IUserCheckoutMEProvider";
+import { IMailSenderProvider } from "../../../providers/interfaces/IMailSenderProvider";
 const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
 
 export class SellerUseCases {
   constructor(
-    private SellerProvider: ISellerCheckoutProvider,
-    private UserProvider: IUserCheckoutProvider,
+    private SellerProvider: ISellerCheckoutMEProvider,
+    private UserProvider: IUserCheckoutMEProvider,
     private MailProvider: IMailSenderProvider
   ) {}
   // Pré visualização de etiquetas
@@ -42,10 +38,10 @@ export class SellerUseCases {
         /**
          * Envia email notificado limite baixo
          */
-        const send = await this.MailProvider.sendMail({
+        await this.MailProvider.sendMail({
           to: "expertusdigital@gmail.com",
           subject: "[URGENTE] Saldo do Melhor envio baixo.",
-          text: "Clique no link para acessar a plataforma e fazer uma recarga.",
+          body: "Clique no link para acessar a plataforma e fazer uma recarga.",
           html: '<div style="text-align:center"><a href="https://cliniks.com.br/"> Acessar painel </a></div>',
         });
 
