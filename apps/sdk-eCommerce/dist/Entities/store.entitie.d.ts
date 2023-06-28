@@ -1,4 +1,8 @@
 export declare type Store = {
+  valueFreshipping: number;
+  limiteParcelas: number;
+  valorParcelas: number;
+} & {
   _id?: string;
   name: string;
   wallet?: wallet;
@@ -34,6 +38,7 @@ export declare type storeInfo = {
   number: string;
   complement: string;
   cpf: string;
+  birthDate: string;
   enterpriseSocial: string;
   enterpriseName: string;
   phone: string;

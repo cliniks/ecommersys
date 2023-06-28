@@ -2,7 +2,6 @@ import axios from "axios";
 import { configInterceptors } from "../configs/axiosInterceptors";
 
 const apiEcommerce = axios.create({
-  // baseURL: "http://localhost:3010",
   baseURL: "https://api.ikiradev.com",
   headers: configInterceptors,
 });
